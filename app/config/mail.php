@@ -53,7 +53,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'joel.design@icloud.com', 'name' => 'Joel Cox'),
+	'from' => array('address' => 'joel.design@icloud.com', 'name' => 'JoelCox'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -79,7 +79,7 @@ return array(
 	|
 	*/
 
-	'username' => 'Joel.design@icloud.com',
+	'username' => 'joel.design@icloud.com',
 
 	/*
 	|--------------------------------------------------------------------------
