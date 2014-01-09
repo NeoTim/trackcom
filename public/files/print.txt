@@ -1,0 +1,27 @@
+
+<!DOCUMENT html>
+<html>
+	<head>
+	<meta name="description" content="Free Web tutorials">
+
+THIS ONE !!!!!!! 
+	<meta name="keywords" content="keyword keyword keyword keyword">
+
+
+	<meta name="author" content="Hege Refsnes">
+	<meta charset="UTF-8">
+	</head>
+	<body>
+	</body>
+	<html>
+
+
+
+in the body of the HTML when you input images, add alt text to the image
+
+EXAMPLE
+<body>
+<img src=“http://the-url.domain” alt=“keyword keyword keyword keyword” >
+</body>
+
+Also look up Google adds
