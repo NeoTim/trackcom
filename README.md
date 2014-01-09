@@ -1,22 +1,60 @@
-## Laravel 4 with Sentry 2 - Version 2.0
+## TrackCom Beta - 1.0, A Laravel 4 Administration app For managing Communication and order processing.
 
-This is a demo of [Sentry 2](https://github.com/cartalyst/sentry) integrated with [Laravel 4](https://github.com/laravel/laravel/tree/develop) and [Bootstrap 3.0](http://getbootstrap.com).
+I do not recommend cloning the project just yet. If you would like to be emailed when the app is ready, functional and readable, then send me an email at the following, without the //'s j//o//e//l//.//d//e//s//i//g//n//@icloud.com
 
-Version 2.0 has been completely revamped using strategies suggested in *Laravel: From Apprentice to Artisan* by Taylor Otwell, *Implementing Laravel* by Chris Fidao and the Laracast videos.   Version 1.0 still exists in its original version. 
+# TrackCom is a responsive and mutipurpose administration app with fully integrated and custamizable CMS backend.
 
-### Instructions
+## Features
 
-Before you begin, make sure you have both ```git``` and ```composer``` installed on your system. 
+# FrameWork
+ - [Laravel 4](https://github.com/laravel/laravel/tree/develop),
+ - [Sentry 2](https://github.com/cartalyst/sentry),
+ - [Bootstrap 3.0](http://getbootstrap.com),
+ - [Metronic admin](http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes),
+ - [jQuery 1.10.2](http://jquery.com),
+# plugins
+ - Open Sans Google Font
+ - Multilevel Menu
+ - Custom UI Tabs and Accordions
+ - Metro Style Buttons & Form Elements
+ - Glyphicons Pro(Value 59$)
+ - Font Awesome Icons(Font Awesome v3.2.0)
+ - Charts & Graphs(jQuery Flot)
+ - Circle Dials(jQuery Knob)
+ - Metro Stylish Sliders(jQuery UI)
+ - Metro Style Radio Button and Checkbox(jQuery Uniform)
+ - Sticky Notifications(jQuery Gritter)
+ - Pulsate
+ - Custom Toggle Buttons(Bootstrap Toggle Buttons)
+ - jQuery UI Modals
+ - Windows 8 style Tiles
+ - Toastr Notifications
+ - Integrated Tree Views(Bootstrap Tree)
+ - Integrated Nestable Lists(jQuery Nestable)
+ - Ion Range Sliders
+ - NoUI Range Sliders
+ - Knob Circle Dials
+ - UI progress bar(jQuery BlockUI)
+ - Tag Input(jQuery Tags Input)
 
-1. Clone the repo
-2. Run ```php composer.phar update```
-3. Set up your datbase configuration in ```app/config/database.php```
-4. Edit ```app/config/mail.php``` to work with your mail setup.
-5. Run the migrations: ```php artisan migrate```
-6. Seed the Database: ```php artisan db:seed```
+# User
+ - User Profile
+ - Extended Profile Overview
+ - Extended Account Manage(Personal Info, Change Avatar, Change Password, Privacy Settings)
+ - Login, Registration
 
-### Seeds
-The seeds in this repo will create two groups and two user accounts.
+ - Full Featured Inbox
+ - Mail List
+ - Mail Compose with WYSIWYG Editor, File Upload etc
+ 
+
+ - Search Forms & Results
+   
+ - Company Search
+ - User Search
+ - Invoice View&Print
+ - Pricing Tables
+ - Error Pages(5 options)
 
 __Groups__
 * Users
@@ -26,6 +64,30 @@ __Users__
 * user@user.com  *Password: sentryuser*
 * admin@admin.com *Password: sentryadmin*
 
+#DataTables
+ - Basic Tables
+ - Responsive Tables
+ - Managed Tables
+ - Editable Tables
+ - Advanced Tables
+ - Normal & Draggable Portlets
+ - Integrated Google Maps(jQuery GMaps)
+ - Interactive Vector Maps of World, USA, Europe, Russia & Germany(jQuery JQVMap)
+ - Easy Cookies(jQuery Cookie)
+ - Responsive Layout For Internet Explorer 8(Respond.js)
+ - Image Slider(jQuery Fancybox)
+ - Custom Scrollbar For Vertical Scrollable Contents(jQuery Slim Scroll)
+ - And more features coming soon. Stay tuned!
+
+
+### Instructions
+
+Instructions have not been prepared
+
+
+
+
+
 ### Links
 * [Sentry 2.0 Documentation](https://cartalyst.com/manual/sentry)
 * [Laravel 4 Documentation](http://laravel.com/docs)
@@ -34,14 +96,14 @@ __Users__
 * [Laracasts](http://laracasts.com)
 
 ### Tests
-1. Make sure you've run `composer update`.
-2. cd to the L4withSentry project root directory.
-3. Execute `phpunit` to run tests or `phpunit --coverage-text` to see text based code coverage summary.
+
+
+
 4. If you're interested in more dynamic code coverage, check out the [instructions](COVERAGE.md).
 
 ### Notes
 
-* Tests are currently very limited.  
+* Documentation is are currently very limited.  
 
 =======
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
