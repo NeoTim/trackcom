@@ -1,0 +1,11 @@
+
+{{{formOpen}}}
+	<div class="form-body">
+{{{formElements}}}
+
+		<div class="form-group">
+			{{=<% %>=}}
+			{{ Form::submit() }}
+		</div>
+	</div>
+{{ Form::close() }}
