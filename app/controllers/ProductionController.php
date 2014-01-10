@@ -57,9 +57,9 @@ class ProductionController extends BaseController {
 		$orders = $this->order->all();
 		$pmethods = $this->pmethod->all();
 		$ptypes = $this->ptype->all();
-		$entries = $this->entry->all();
-
-        return View::make('productions.index', compact('orders', 'pmethods', 'ptypes', 'entries'));
+		$entries = DB::table('entries')->orderBy('priority', 'asc')->get();
+		//print_r($entries);
+       return View::make('productions.index', compact('orders', 'pmethods', 'ptypes', 'entries'));
 	}
 
 	/**
@@ -112,37 +112,49 @@ class ProductionController extends BaseController {
 	 */
 	public function update($id)
 	{
-		
 		$entry = $this->entry->find($id);
 		$order = $this->order->find($entry['order_id']);
-		$entry->status = Input::get('status');
-		$entry->color = Input::get('color');
-		$entry->save();
+		if(Input::get('status'))
+		{
 
-		if(Input::get('status') == '10')
-		{
-			$message = $entry['sku'] . ' from ' . $order['title'] . ' Is not in production!';
-		}
-		elseif(Input::get('status') == '25')
-		{
-			$message = $entry['sku'] . ' from ' . $order['title'] . ' was just moved to production!';
-		}
-		elseif(Input::get('status') == '50')
-		{
-			$message = $entry['sku'] . ' from ' . $order['title'] . ' was just sent to the lab!';
-		}
-		elseif(Input::get('status') == '75')
-		{
-			$message = 'Production has started filling ' . $entry['sku'] . ' from ' . $order['title'];
-		}
-		elseif(Input::get('status') == '100')
-		{
-			$message = $entry['sku'] . ' from ' . $order['title'] . ' Is complete!!!';
-		}
+			$entry->status = Input::get('status');
+			$entry->color = Input::get('color');
+			$entry->save();
+		
 
 
-		$this->activity->store($entry['sku'], 'Product from Order # ' . $order['number'] . ' updated', $message, 'production', 'update');
-		Event::fire(UpdateEntriesEventHandler::EVENT, array($entry));	
+			
+			if(Input::get('status') == '10')
+			{
+				$message = $entry['sku'] . ' from ' . $order['title'] . ' Is not in production!';
+			}
+			elseif(Input::get('status') == '25')
+			{
+				$message = $entry['sku'] . ' from ' . $order['title'] . ' was just moved to production!';
+			}
+			elseif(Input::get('status') == '50')
+			{
+				$message = $entry['sku'] . ' from ' . $order['title'] . ' was just sent to the lab!';
+			}
+			elseif(Input::get('status') == '75')
+			{
+				$message = 'Production has started filling ' . $entry['sku'] . ' from ' . $order['title'];
+			}
+			elseif(Input::get('status') == '100')
+			{
+				$message = $entry['sku'] . ' from ' . $order['title'] . ' Is complete!!!';
+			}
+
+			$this->activity->store($entry['sku'], 'Product from Order # ' . $order['number'] . ' updated', $message, 'production', 'update');
+		}
+		if(Input::get('priority'))
+		{
+			$entry->priority = Input::get('priority');
+			$entry->save();
+			$message = $entry['sku'] . ' from ' . $order['title'] . ' set to priority - ' . $entry['priority'];
+			$this->activity->store($entry['sku'], 'Product from Order # ' . $order['number'] . ' updated', $message, 'production', 'update');
+		}
+		//Event::fire(UpdateEntriesEventHandler::EVENT, array($entry));	
 		return Response::json(array(
 			'status' => $entry->status,
 			'color' => $entry->color,
@@ -156,7 +168,8 @@ class ProductionController extends BaseController {
 			'qty1'	=> $entry->qty1,
 			'qty2'	=> $entry->qty2,
 			'qty3'	=> $entry->qty3,
-			'pmethod_id' => $entry->pmethod_id
+			'pmethod_id' => $entry->pmethod_id,
+			'priority' => $entry->priority
 			));
 	}
 

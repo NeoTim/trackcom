@@ -109,6 +109,10 @@ class CalendarController extends BaseController {
 			
 			$order->title = Input::get('title');
 			$order->start = $start_day;
+			if(Input::get('start') == '1969-12-31')
+			{
+				$order->start == null;
+			}
 			$order->save();
 			return Response::json(array('title' => $order->title, 'start' => $order->start, 'dtype_id' => $order->dtype_id, 'backgroundColor' => $order->backgroundColor));
 		}
@@ -118,6 +122,10 @@ class CalendarController extends BaseController {
 		
 		$order->title = Input::get('title');
 		$order->start = $start_day;
+		if(Input::get('start') == '1969-12-31')
+		{
+			$order->start == null;
+		}
 		$order->backgroundColor = Input::get('backgroundColor');
 
 		$order->save();

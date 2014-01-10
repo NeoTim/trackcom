@@ -57,6 +57,31 @@ class EloquentEntryRepository implements EntryRepositoryInterface
 		$order = $this->order->find($input['order_id']);
 		$ptype = $this->ptype->find($input['ptype_id']);
 		$pmethod = $this->pmethod->find($input['pmethod_id']);
+		if(\Input::get('container1'))
+		{
+			$gal1 = \Input::get('container1') * \Input::get('qty1');
+			$input['gal1'] = $gal1;
+		}
+		if(\Input::get('container2'))
+		{
+			$gal2 = \Input::get('container2') * \Input::get('qty2');
+			$input['gal2'] = $gal2;
+		}
+		if(\Input::get('container3'))
+		{
+			$gal3 = \Input::get('container3') * \Input::get('qty3');
+			$input['gal3'] = $gal3;
+		}	
+		if($input['ready_date'])
+		{
+			$end_day_old = \Input::get('ready_date');
+			$end_day = date("Y-m-d H:i:s", strtotime($end_day_old));
+			$input['ready_date'] = $end_day;
+		}
+		else
+		{
+			$input['ready_date'] = null;
+		}
 		if(\Input::get('newsku'))
 		{
 			$product = new \Product;
@@ -84,6 +109,7 @@ class EloquentEntryRepository implements EntryRepositoryInterface
 		}
 		elseif (\Input::get('product_id'))
 		{
+			
 			$product = $this->product->find($input['product_id']);
 			$input['sku'] = $product->sku;
 			$result['entry'] = $this->entry->create($input);
@@ -107,8 +133,33 @@ class EloquentEntryRepository implements EntryRepositoryInterface
 		$input['sku'] = $product->sku;
 		$order = $this->order->find($entry['order_id']);
 
-		if($entry->update($input))
-		{
+			if($entry->update($input))
+			{
+				if(\Input::get('container1'))
+			{
+				$gal1 = \Input::get('container1') * \Input::get('qty1');
+				$input['gal1'] = $gal1;
+			}
+			if(\Input::get('container2'))
+			{
+				$gal2 = \Input::get('container2') * \Input::get('qty2');
+				$input['gal2'] = $gal2;
+			}
+			if(\Input::get('container3'))
+			{
+				$gal3 = \Input::get('container3') * \Input::get('qty3');
+				$input['gal3'] = $gal3;
+			}	
+			if($input['ready_date'])
+			{
+				$end_day_old = \Input::get('ready_date');
+				$end_day = date("Y-m-d H:i:s", strtotime($end_day_old));
+				$input['ready_date'] = $end_day;
+			}
+			else
+			{
+				$input['ready_date'] = null;
+			}
 			$result['success'] = true;
 			$result['message'] = $entry['sku'] . " Was updated successfully";
 			$this->activity->store($input['sku'], 'Product from Order # ' . $order['number'] . ' updated', $input['sku'] . ' from ' . $order['title'] . ' was just updated', 'entry', 'update');
@@ -140,7 +191,7 @@ class EloquentEntryRepository implements EntryRepositoryInterface
 		}
 		else
 		{
-			$result['success'] = fasle;
+			$result['success'] = false;
 			$result['message'] = "There was an error deleteing " . $entry['sku'] ;
 			return $result;
 		}

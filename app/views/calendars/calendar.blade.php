@@ -63,37 +63,37 @@
 				
 			</div>
 @foreach($orders as $order)
-<div class="modal fade" id="order_modal_{{{$order->id}}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-wide">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel_{{$order->id}}">Update Order</h4>
-      </div>
-      <div class="modal-body">
-        <form id="modal_form" method="PUT" action="{{URL::to('calendars')}}">
-            <div class="form-group">
-                <div class="btn-group" data-toggle="buttons">
-                    {{Form::label('dtype_id_$order->id', 'Delivery Type', 'control-label')}}
-                    <select id="dtype_id_{{$order->id}}" name="dtype_id" class="form-control">
-                    @foreach($dtypes as $dtype)
-                        <option value="{{$dtype->id}}">{{$dtype->name}}</option>
-                    @endforeach
-                    </select>
-                </div>
-        
-            </div>
+    <div class="modal fade" id="order_modal_{{{$order->id}}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-wide">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel_{{$order->id}}">Update Order</h4>
+          </div>
+          <div class="modal-body">
+            <form id="modal_form" method="PUT" action="{{URL::to('calendars')}}">
+                <div class="form-group">
+                    <div class="btn-group" data-toggle="buttons">
+                        {{Form::label('dtype_id_$order->id', 'Delivery Type', 'control-label')}}
+                        <select id="dtype_id_{{$order->id}}" name="dtype_id" class="form-control">
+                        @foreach($dtypes as $dtype)
+                            <option value="{{$dtype->id}}">{{$dtype->name}}</option>
+                        @endforeach
+                        </select>
+                    </div>
             
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="submit_order_{{$order->id}}">Save</button>
-        <button type="button" class="btn btn-danger" id="remove_order_{{$order->id}}">Remove from Calendar</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </form>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                </div>
+                
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="submit_order_{{$order->id}}">Save</button>
+            <button type="button" class="btn btn-danger" id="remove_order_{{$order->id}}">Remove from Calendar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </form>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 @endforeach
 	
 	@stop
@@ -144,7 +144,20 @@ var Calendar = function () {
             var y = date.getFullYear();
 
             var h = {};
-
+            function Date_toYMD(d)
+            {
+                var year, month, day;
+                year = String(d.getFullYear());
+                month = String(d.getMonth() + 1);
+                if (month.length == 1) {
+                    month = "0" + month;
+                }
+                day = String(d.getDate());
+                if (day.length == 1) {
+                    day = "0" + day;
+                }
+                return year + "-" + month + "-" + day;
+            }
             if (App.isRTL()) {
                  if ($('#calendar').parents(".portlet").width() <= 720) {
                     $('#calendar').addClass("mobile");
@@ -274,7 +287,7 @@ var Calendar = function () {
                 editable: true,
                 droppable: true, // this allows things to be dropped onto the calendar !!!
                 drop: function (date, allDay, jsEvent, ui) { // this function is called when something is dropped
-                    console.log(ui);
+                    
                     // retrieve the dropped element's stored Event Object
                     var originalEventObject = $(this).data('eventObject');
                     // we need to copy it, so that multiple events don't have a reference to the same object
@@ -298,7 +311,7 @@ var Calendar = function () {
                         // if so, remove the element from the "Draggable Events" list
                         $(this).remove();
                     }
-
+                    console.log(copiedEventObject.start + '-' + originalEventObject.start);
                     $.ajax({
 			        	url: "{{URL::to('calendars/')}}/" + originalEventObject.id,
 			        	method: "PUT",
@@ -306,7 +319,7 @@ var Calendar = function () {
 			        	cache: false,
 			        	success: function(data){
 			        		//console.log(data);
-
+                            console.log(data);
                             $('#metro_deliveries').html("");
                             $('#outbound_deliveries').html("");
                             $('#shipping').html("");

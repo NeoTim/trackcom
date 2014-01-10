@@ -106,9 +106,9 @@
 									</a>
 								</li>
 								<li class="lite-blue info">
-									<a href="{{URL::to('activities')}}">
-										<i class="fa fa-tasks"></i>
-										<span>Activity</span>
+									<a href="{{URL::to('deliveries')}}">
+										<i class="fa fa-truck"></i>
+										<span>Deliveries</span>
 									</a>
 								</li>
 							</ul>
@@ -215,7 +215,7 @@
 
 	<script>
 	$(document).ready(function(){
-		SetStats();
+		//SetStats();
 		var menu = "#main_top_menu";
 
 
@@ -242,35 +242,7 @@
 
 		$(".bsControl :input").addClass("form-control");
 
-		function SetStats()
-		{
-			$.get("{{ URL::to('collect/entries') }}").done(function(data)
-		{ 												
-				var entries = eval(data);
-				selectVars(entries);
-			});
-		}
 		
-		
-		function placeOrdersStatus(id, sku, status, color)
-		{
-
-			$("<li id=status_menu_'" + id + "'><a href='{{ URL::to('orders') }}'><span class='task'><span class='desc'>" + sku + "</span><span class='percent'>" + status + "%</span></span><span class='progress progress-striped'><span style='width: " + status + "%;' class='progress-bar progress-bar-" + color + "' aria-valuenow='" + status + "' aria-valuemin='0' aria-valuemax='100'><span class='sr-only'>" + status + "%% Complete</span></span></span></a></li>").appendTo("#drop_down_status");
-
-		}
-		function selectVars(entries)
-		{
-			$("#entry_count").text(entries.length);
-			$("#drop_down_status_title").text('You have ' + entries.length + ' orders pending!');
-			$.each($(entries), function(i){
-				var status 	= entries[i].status;
-				var color 	= entries[i].color;
-				var sku		= entries[i].sku;
-				var id 		= entries[i].id;
-
-				placeOrdersStatus(id, sku, status, color);
-			});
-		}
 // <![CDATA[
             var socket = io.connect('http://192.184.87.145:3000');
             //socket.on('connect', function(data){

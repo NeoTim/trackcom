@@ -148,20 +148,20 @@ class OrdersController extends BaseController {
 	public function update($id)
 	{
 		$input = array_except(Input::all(), '_method');
-		
+		$result = $this->order->update($id, $input);
 
-		if ($this->order->update($id, $input))
+		if ($result['success'])
 		{
-			Session::flash('success', $input['number'] . ' Was Successfully updated');
+			Session::flash('success', $result['message']);
 			return Redirect::route('orders.show', $id);
 		}
 		else
 		{
-			Session::flash('error', 'There was an error updating ' . $input['number']);
+			Session::flash('error', $result['message']);
 			return Redirect::route('orders.edit', $id)
-				->withInput()
-				->withErrors($validation)
-				->with('message', 'There were validation errors.');
+				->withInput();
+				
+				
 			
 		}
 

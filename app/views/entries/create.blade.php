@@ -102,10 +102,26 @@
 	            {{ Form::label('batch', 'Batch:', ['class' => 'control-label']) }}
 	                {{ Form::text('batch', null, array('class' => 'form-control')) }}
 	            </div>
-	            <div class="col-md-4">
+	            <div class="col-md-3">
 	            {{ Form::label('tank', 'Tank:', ['class' => 'control-label']) }}
 	                {{ Form::text('tank', null, array('class' => 'form-control')) }}
 	            </div>
+	            
+				<div class="col-md-5">
+						<label class="control-label">Date Ready</label>
+						<div class="input-group date form_meridian_datetime" data-date="2012-12-21T15:25:00Z">
+							<input type="text" name="ready_date" size="16"  class="form-control">
+							<span class="input-group-btn">
+								<button class="btn default date-reset" type="button"><i class="fa fa-times"></i></button>
+							</span>
+							<span class="input-group-btn">
+								<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+							</span>
+						</div>
+				</div>
+				
+
+
 	        </div>
 	        <!-- END BATCH AND ORDER # -->
 

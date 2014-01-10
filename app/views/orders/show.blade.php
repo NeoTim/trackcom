@@ -120,9 +120,54 @@
 						<tr>
 							<td>Order</td>
 							<td>
-								
+								@foreach($order->entries as $entry)
+									@if($entry->ptype_id == 1 OR $entry->ptype_id == 2)
+										@if($entry->container1 > 0)
+										<dl class="dl-horizontal">
+											<dt>{{{$entry->sku}}}-{{{$entry->container1}}}</dt>
+											<dd></dd>
+											<dt>Ordered:</dt>
+											<dd>
+											{{{$entry->gal1}}} gallons in {{{$entry->container1}}}s
+											</dd>
+											<dt>Customer:</dt>
+											<dd>{{{$order->customer->company}}}</dd>
+											<dt>{{{$order->dmethod->name}}}</dt>
+											<dd>{{{$entry->date_ready}}}</dd>
+										</dl>
+										@endif
+										@if($entry->container2 > 0)
+										<dl class="dl-horizontal">
+											<dt>{{{$entry->sku}}}-{{{$entry->container2}}}</dt>
+											<dd></dd>
+											<dt>Ordered:</dt>
+											<dd>
+											{{{$entry->gal2}}} gallons in {{{$entry->container2}}}s
+											</dd>
+											<dt>Customer:</dt>
+											<dd>{{{$order->customer->company}}}</dd>
+											<dt>{{{$order->dmethod->name}}}</dt>
+											<dd>{{{$entry->date_ready}}}</dd>
+										</dl>
+										@endif
+										@if($entry->container3 > 0)
+										<dl class="dl-horizontal">
+											<dt>{{{$entry->sku}}}-{{{$entry->container3}}}</dt>
+											<dd></dd>
+											<dt>Ordered:</dt>
+											<dd>
+											{{{$entry->gal3}}} gallons in {{{$entry->container3}}}s
+											</dd>
+											<dt>Customer:</dt>
+											<dd>{{{$order->customer->company}}}</dd>
+											<dt>{{{$order->dmethod->name}}}</dt>
+											<dd>{{{$entry->date_ready}}}</dd>
+										</dl>
+										@endif
+									@endif
+									
+								@endforeach
 									<div id="email_set"></div>
-							
 							</td>
 						</tr>
 					</table>
@@ -208,9 +253,30 @@
 									<div class="btn-group">
 										
 										<a href="{{{URL::to('orders/' . $order->id . '/entries/' . $entry->id . '/edit')}}}" class="btn btn-primary">Edit</a>
-										<button type="button" class='btn btn-danger' id="DEbtn_{{$entry->id}}" data-toggle="modal" data-target="#delete_Modal">Delete</button>
+										<button type="button" class='btn btn-danger' id="DEbtn_{{$entry->id}}" data-toggle="modal" data-target="#delete_modal_{{$entry->id}}">Delete</button>
 									</div>
-									
+									<div class="modal fade" id="delete_modal_{{$entry->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									  <div class="modal-dialog modal-wide">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									      	{{ Form::open(array('id' => 'delete_form', 'method' => 'DELETE', 'url' => array('orders/' . $order->id . '/entries/' . $entry->id))) }}
+									        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									        <h2 class="modal-title" id="myModalLabel">Confirm Delete</h2>
+									      </div>
+															
+									      <div class="modal-body">	                        	
+									      	<h4 >Are you sure you want to delete <strong id=""> {{$entry->sku}} from {{$order->number}} </strong></h4>
+									      </div>
+									      <div class="modal-footer">
+									      	<div class="btn-group">
+												{{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
+									        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									        </div>
+											{{ Form::close() }}
+									      </div>
+									    </div><!-- /.modal-content -->
+									  </div><!-- /.modal-dialog -->
+									</div><!-- /.modal -->	
 								</td>
 							</tr>
 							@endforeach

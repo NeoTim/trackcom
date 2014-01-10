@@ -154,7 +154,7 @@ class EntriesController extends BaseController {
 		{
 			Session::flash('success', $result['message']);
 			Event::fire(DeleteEntriesEventHandler::EVENT, array($entry));	
-			return Redirect::route('orders.show', $order_id);
+			return Redirect::previouse();
 		}
 		else
 		{

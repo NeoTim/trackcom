@@ -1,96 +1,79 @@
 @extends('layouts.blueprint')
-
 	@section('page_styles')
-	
 		<!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
-		
-		
 		<link href="{{ asset('assets/plugins/fullcalendar/fullcalendar/fullcalendar.css') }}" rel="stylesheet" type="text/css"/>
-		
-		
 		<!-- END PAGE LEVEL PLUGIN STYLES -->
 	@stop
-	
 	@section('page_title')
 		Dashboard
 	@stop
-	
 	@section('content')
-	
-
-				<div class="col-md-6 col-sm-6">
-					<!-- BEGIN CALENDAR PORTLET-->
-						@include('dashboard.portlets.calendar')
-					<!-- END CALENDAR PORTLET-->
-				</div>
-				<div class="col-md-6 col-sm-6">
-					<!-- BEGIN PORTLET-->
-						
-					<!-- END PORTLET-->
-					
-					<!-- BEGIN PORTLET-->
-						@include('dashboard.portlets.feeds')
-					<!-- END PORTLET-->
-				</div>
+		<div class="col-md-6 col-sm-6">
+			<!-- BEGIN CALENDAR PORTLET-->
+				@include('dashboard.portlets.calendar')
+			<!-- END CALENDAR PORTLET-->
+		</div>
+		<div class="col-md-6 col-sm-6">
+			<!-- BEGIN PORTLET-->
+				
+			<!-- END PORTLET-->
 			
-
-
-
-			<div class="clearfix">
-			</div>
+			<!-- BEGIN PORTLET-->
+				@include('dashboard.portlets.feeds')
+			<!-- END PORTLET-->
+		</div>
 			
-
-			
-			
-	
-	
-	
 	@stop
 	@section('page_plugins')
-		<!-- BEGIN PAGE LEVEL PLUGINS -->
-
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
 	<!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
 	<script src="{{ asset('assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js') }}" type="text/javascript"></script>
-	
-	
 	<!-- END PAGE LEVEL PLUGINS -->
 	@stop
-	
-	@section('page_scripts')
+    @section('page_scripts')
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-	
-	
-	
 	<script>
 	jQuery(document).ready(function() {    
+            var title;
+            var start;
+            var newevent = [];
+            newevent = $.get("{{ URL::to('collect') }}").done(function(data){
+            	var orders = eval(data);
+            	newevent = $.grep(orders, function(idx, order){
+            		return $.push(order);
+            	});
+            	$.push(newevent);
+            });
 	   
-	  // Index.init();
-	   
-	    // init index page's custom scripts
-	   
-	   
-	   
-	   
-	   
-	   
+    	   function SetStats()
+            {
+                $.get("{{ URL::to('collect/entries') }}").done(function(data)
+            {                                               
+                    var entries = eval(data);
+                    selectVars(entries);
+                });
+            }
+            
+            
+            function placeOrdersStatus(id, sku, status, color)
+            {
 
+                $("<li id=status_menu_'" + id + "'><a href='{{ URL::to('orders') }}'><span class='task'><span class='desc'>" + sku + "</span><span class='percent'>" + status + "%</span></span><span class='progress progress-striped'><span style='width: " + status + "%;' class='progress-bar progress-bar-" + color + "' aria-valuenow='" + status + "' aria-valuemin='0' aria-valuemax='100'><span class='sr-only'>" + status + "%% Complete</span></span></span></a></li>").appendTo("#drop_down_status");
 
+            }
+            function selectVars(entries)
+            {
+                $("#entry_count").text(entries.length);
+                $("#drop_down_status_title").text('You have ' + entries.length + ' orders pending!');
+                $.each($(entries), function(i){
+                    var status  = entries[i].status;
+                    var color   = entries[i].color;
+                    var sku     = entries[i].sku;
+                    var id      = entries[i].id;
 
-var title;
-	   var start;
-	   var newevent = [];
-	   
-	  
-	  
-	  newevent = $.get("{{ URL::to('collect') }}").done(function(data){
-	  					var orders = eval(data);
-	  					newevent = $.grep(orders, function(idx, order){
-	  						return $.push(order);
-	  					});
-	  					$.push(newevent);
-	  });
-	   
-	   console.log(newevent);
+                    placeOrdersStatus(id, sku, status, color);
+                });
+            }
 
 var Calendar = function () {
 

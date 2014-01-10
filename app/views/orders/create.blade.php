@@ -144,16 +144,16 @@
 						            <div class="col-md-9">
 							            <div class="btn-group" data-toggle="buttons">
 
-							            	<label class="btn btn-info">
+							            	<label class="btn btn-info" data-toggle="tab" data-target="metro_tab">
 							            		<input name="dtype_id" type="radio" class="toggle" value="1"> Metro Delivery
 							            	</label>
-							            	<label class="btn btn-info">
+							            	<label class="btn btn-info" data-toggle="tab" data-target="outbound_tab">
 							            		<input name="dtype_id" type="radio" class="toggle" value="4"> Outbound Delivery
 							            	</label>
-							            	<label class="btn btn-info">
+							            	<label class="btn btn-info" data-toggle="tab" data-target="shipping_tab">
 							            		<input name="dtype_id" type="radio" class="toggle" value="2"> Shipping
 							            	</label>
-							            	<label class="btn btn-info">
+							            	<label class="btn btn-info" data-toggle="tab" data-target="pickup_tab">
 							            		<input name="dtype_id" type="radio" class="toggle" value="3"> Pickup
 							            	</label>
 

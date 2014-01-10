@@ -46,12 +46,17 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 
 				if($customer->save())
 				{
-					$start_day_old = \Input::get('start');
-					$end_day_old = \Input::get('end');
-					$start_day = date("Y-m-d", strtotime($start_day_old));
-					$end_day = date("Y-m-d", strtotime($end_day_old));
-					$input['start'] = $start_day;
-					$input['end'] = $end_day;
+					
+					if($input['est_delivery'])
+					{
+						$end_day_old = \Input::get('est_delivery');
+						$end_day = date("Y-m-d", strtotime($end_day_old));
+						$input['est_delivery'] = $end_day;
+					}
+					else
+					{
+						$input['est_delivery'] = null;
+					}
 					$input['customer_id'] = $customer->id;
 					$input['title'] = $customer->company . ' - ' . $input['number'];
 					
@@ -67,12 +72,17 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 			}
 			elseif (\Input::get('customer_id')) 
 			{
-				$start_day_old = \Input::get('start');
-				$end_day_old = \Input::get('end');
-				$start_day = date("Y-m-d", strtotime($start_day_old));
-				$end_day = date("Y-m-d", strtotime($end_day_old));
-				$input['start'] = $start_day;
-				$input['end'] = $end_day;
+				
+				if($input['est_delivery'])
+				{
+					$end_day_old = \Input::get('est_delivery');
+					$end_day = date("Y-m-d", strtotime($end_day_old));
+					$input['est_delivery'] = $end_day;
+				}
+				else
+				{
+					$input['est_delivery'] = null;
+				}
 				$customer = $this->customer->find(\Input::get('customer_id'));
 
 				$input['title'] = $customer->company . ' - ' . $input['number'];
@@ -102,18 +112,30 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 		if ($validation->passes())
 		{
 			$order = $this->order->find($id);
-			$start_day_old = \Input::get('start');
-			$end_day_old = \Input::get('end');
-			$start_day = date("Y-m-d", strtotime($start_day_old));
-			$end_day = date("Y-m-d", strtotime($end_day_old));
-			$input['start'] = $start_day;
-			$input['end'] = $end_day;
-		
-			$this->activity->store('Order - ' . $input['number'], 'Update Order', $input['title'] . ' Was updated and stored', 'order', 'update');
-			return $order->update($input);
+			if($input['est_delivery'])
+			{
+				$end_day_old = \Input::get('est_delivery');
+				$end_day = date("Y-m-d", strtotime($end_day_old));
+				$input['est_delivery'] = $end_day;
+			}
+			else
+			{
+				$input['est_delivery'] = null;
+			}
+			$order->update($input);
+			$this->activity->store('Order - ' . $order['number'], 'Update Order', $order['title'] . ' Was updated and stored', 'order', 'update');
+			$result['success'] = true;
+			$result['message'] = $order['title'] . ' was Successfully updated';
+			return $result;
+		}
+		else
+		{
+			$result['success'] = false;
+			$result['message'] = "There was an error updating the order";
+			return $result;
 		}
 
-		return $validation;		
+		
 		
 	}
 

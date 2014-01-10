@@ -58,6 +58,7 @@ you can optionally include the following CSS and JavaScript to work around this 
 */
 @-webkit-viewport { 
   width: device-width; 
+  
 }
 
 @-moz-viewport { 

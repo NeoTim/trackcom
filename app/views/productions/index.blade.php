@@ -2,58 +2,28 @@
 @section('page_title')
 	Production
 @stop
-@section('header')
-	<div class="row">
-		<div class="col-md-12">
-			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-			<blockquote><h3 class="page-title">
-				Production
-			</h3></blockquote>
-			<ul class="page-breadcrumb breadcrumb">
-				<li>
-					<i class="fa fa-home"></i>
-					<a href="{{URL::to('/')}}">HIS</a>
-					<i class="fa fa-angle-right"></i>
-				</li>
-				<li>
-					<a href="{{URL::to('dashboard')}}">Dashboard</a>
-					<i class="fa fa-angle-right"></i>
-				</li>
-				<li>
-					<a href="{{ URl::to('productions') }}">Production</a>
-					
-				</li>
-				
-					
-			</ul>
-							
-		</div>
-	</div>
-<div class="clearfix"></div>
-	<div class="row">
-		<div class='col-md-12'>	
-			<div class="dashboard-stat blue">
-				<div class="visual">
-					<i class="fa fa-list"></i>
-				</div>
-				<div class="details">
-					<div class="number">
-						
-						{{count($entries)}}
-						
-					</div>
-					<div class="desc">
-						Total Products in Production
-					</div>
-				</div>
-				<a href="{{ URL::to('orders') }}" class="more" >
-				View orders <i class="m-icon-swapright m-icon-white"></i>
-				</a>
-			</div>
 
-		</div>
-	</div>	
+@section('extra')
+<style type="text/css">
+
+	
+	html>body .dropTbody tr { height: 1.5em; line-height: 1.2em; cursor: move;}
+  	.dropTbody .ui-state-highlight { height: 6em; line-height: 3.2em;}
+  	.dropTbody .ui-state-highlight,
+	.dropTbody .ui-widget-content .ui-state-highlight,
+	.dropTbody .ui-widget-header .ui-state-highlight {
+	border: 1px solid #fcefa1;
+	background: #fbf9ee url({{ asset('assets/plugins/jquery-ui/images/ui-bg_glass_55_fbf9ee_1x400.png')}}) 50% 50% repeat-x;
+	color: #363636;
+	}
+	.dropTbody .ui-state-highlight td,
+	.dropTbody .ui-widget-content .ui-state-highlight td,
+	.dropTbody .ui-widget-header .ui-state-highlight td {
+		color: #363636;
+	}
+</style>
 @stop
+
 
 @section('content')		
 						
@@ -87,18 +57,26 @@
 					
 							<thead>
 								<tr>
-									<th style="width:5%;">Sku</th>
-									<th style="width:5%;">Batch</th>
-									<th style="width:5%;">Tank</th>
-									<th style="width:5%;">Containers</th>
-									<th style="width:5%;">Quantity</th>
-									<th>Status</th>
-									<th style="width:10%;">Options</th>
+									<th style="display:none;">ID</th>
+									<th style="width:100px;">Sku</th>
+									<th style="width:50px;">Batch</th>
+									<th style="width:15px;">Tank</th>
+									<th style="width:30px;">Containers</th>
+									<th style="width:15px;">Quantity</th>
+									<th style="width:100%;">Status</th>
+									<th style="min-width:200px;">Options</th>
 								</tr>
 							</thead>
 	
-							<tbody class="dropTbody" id="tbody_{{ $pmethod->id }}">
+							<tbody class="dropTbody" id="tbody_{{ $pmethod->id }}" style="width:100%;">
+								@foreach ($entries as $entry)
+									@if($entry->pmethod_id == $pmethod->id)
 								
+										<tr class="table_tr_{{ $entry->id }}" id="{{ $entry->id }}" style="">
+											
+										</tr>
+										@endif
+								@endforeach
 							</tbody>
 						
 				</table>
@@ -167,7 +145,7 @@ $(document).ready(function(){
 				qty2 = entries[i].qty2;
 				qty3 = entries[i].qty3;
 				pmethod_id = entries[i].pmethod_id;
-				setTR(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid);
+				setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid);
 				setBars(id, status, color);
 				setButtons(id);
 				ESUbtn = "#ESUbtn_" + id;
@@ -194,7 +172,8 @@ $(document).ready(function(){
 		qty2 = entry.qty2;
 		qty3 = entry.qty3;
 		pmethod_id = entry.pmethod_id;
-		setTR(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid);
+		setTR(id, pmethod_id);
+		setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid);
 		setBars(id, status, color);
 		setButtons(id);
 		ESUbtn = "#ESUbtn_" + id;
@@ -206,8 +185,8 @@ $(document).ready(function(){
 	function removeEntry(data)
 	{
 		var entry = jQuery.parseJSON(data);
-		$("#table_tr_" + entry.id).fadeOut("slow");
-		$("#table_tr_" + entry.id).delay(1000).remove();
+		$(".table_tr_" + entry.id).fadeOut("slow");
+		$(".table_tr_" + entry.id).delay(1000).remove();
 	}
 	
 	function resetStatus(data)
@@ -226,8 +205,14 @@ $(document).ready(function(){
 		
 	
 	}
+	function setTR(id, pmethod_id)
+	{
+		var temp = ['<tr class="table_tr_' + id + '" id="' + id + '" style="display:none;"></tr>'].join('');
+			$(temp).appendTo("#tbody_" + pmethod_id).fadeIn();
+			$("#tbody_" + pmethod_id).fadeIn("fast");
+	}
 
-	function setTR(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid)
+	function setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid)
 	{	
 		 if(container1 == 0 ){
 		 	 container1 = "";
@@ -248,21 +233,22 @@ $(document).ready(function(){
 		 	 qty3 = "";
 		 }	
 			var temp = [
-				'<tr id="table_tr_' + id + '" style="display:none;">',
-					'<td>' + sku + '</td>',
-					'<td>' + batch + '</td>',
-					'<td>' + tank + '</td>',
-					'<td>',
+				//'<tr class="table_tr_' + id + '" id="' + id + '" style="display:none;">',
+					
+					'<td  id="' + id + ' style="min-width:100px;">' + sku + '</td>',
+					'<td style="min-width:50px; width:50px;">' + batch + '</td>',
+					'<td style="min-width:15px; width:15px;">' + tank + '</td>',
+					'<td style="min-width:30px; width:30px;">',
 						'<p>' + container1 + '</p>',
 						'<p>' + container2 + '</p>',
 						'<p>' + container3 + '</p>',
 					'</td>',
-					'<td>',
+					'<td style="min-width:15px; width:15px;">',
 						'<p>' + qty1 + '</p>',
 						'<p>' + qty2 + '</p>',
 						'<p>' + qty3 + '</p>',
 					'</td>',
-					'<td>',
+					'<td style="width:100%;">',
 						'<div clas="col-md-12">',
 							'<div class="progress progress-striped active dropStatus" id="statusBar_' + id + '">',
 							'</div>',
@@ -274,16 +260,15 @@ $(document).ready(function(){
 							'<div class="col-md-3">Complete</div>',
 						'</div>',
 					'</td>',
-	                '<td>',
+	                '<td style="min-width:200px; width:200px;">',
 	                   '<div class="btn-group dropButtons" id="buttons_' + id + '">',
 	                    '</div>',
 	                    '<h4 id="status_show_' + id + '">' + status + '%</h4>',
-	                '</td>',
-				'</tr>'].join('');
+	                '</td>'].join('');
 
 			
-			$(temp).appendTo("#tbody_" + pmethod_id).fadeIn();
-			$("#tbody_" + pmethod_id).fadeIn("fast");
+			$(temp).appendTo(".table_tr_" + id).fadeIn();
+			$(".table_tr_" + id).fadeIn("fast");
 			
 
 	
@@ -400,7 +385,38 @@ $(document).ready(function(){
             
  
 // ]]>
+		
 
+		$.each($(methods), function(i, method){
+
+			$("#tbody_" + method.id).sortable({
+				 placeholder: "ui-state-highlight",
+				 handle: "td",
+				 stop: function(e, ui) {
+			            var priorities = $.map($(this).find('tr'), function(el) {
+			                //return el.id + ' = ' + $(el).index();
+			                return { id: el.id, p: $(el).index() + 1  };
+			        	});
+			        	$.each($(priorities), function(i, priority)
+			        	{
+			        		console.log(priority.id + '=' + priority.p);
+			        		$.ajax({
+								url: "{{ URL::to('productions') }}/" + priority.id,
+								method: "PUT",
+								data: { priority: priority.p },
+								cache: false,
+								success: function(data){
+									console.log(data);
+								}
+
+							});
+			        		
+			        	});
+			     }
+			});
+			$("#tbody_" + method.id).disableSelection();
+		});
+		//$( "#draggable" ).draggable({ opacity: 0.7, handle:'#drag' });
 });
 
 </script>

@@ -112,6 +112,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Cox\Storage\StorageServiceProvider',
 		'Way\Console\GuardLaravelServiceProvider',
+		
 
 	),
 

@@ -1,293 +1,91 @@
 @extends('layouts.blueprint')
 
-@section('header')
-	<div class="row">
-		<div class="col-md-12">
-			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
-			<blockquote><h3 class="page-title">
-				Deliveries
-			</h3></blockquote>
-			<ul class="page-breadcrumb breadcrumb">
-				<li>
-					<i class="fa fa-home"></i>
-					<a href="{{URL::to('/')}}">HIS</a>
-					<i class="fa fa-angle-right"></i>
-				</li>
-				<li>
-					<a href="{{URL::to('dashboard')}}">Dashboard</a>
-					<i class="fa fa-angle-right"></i>
-				</li>
-				<li>
-					<a href="{{ URl::to('deliveries') }}">Deliveries</a>
-					
-				</li>
-					
-			</ul>
-							
-		</div>
-	</div>
-<div class="clearfix"></div>
-	<div class="row">
-		<div class='col-md-12'>	
-			<div class="dashboard-stat bg-green">
-				<div class="visual">
-					<i class="fa fa-truck"></i>
-				</div>
-				<div class="details">
-					<div class="number">
-						
-						
-						
-					</div>
-					<div class="desc">
-						
-					</div>
-				</div>
-				<a href="{{ URL::to('orders/create') }}" class="more" style="background-color:#444444;">
-				Add Order <i class="m-icon-swapright m-icon-white"></i>
-				</a>
-			</div>
+@section('extra')
+<style type="text/css">
 
-		</div>
-	</div>	
+	#box_metro, #box_shipping, #box_outbound, #box_pickup { list-style-type: none; margin: 0; padding: 0;  }
+  	#box_metro li, #box_shipping li, #box_outbound li, #box_pickup li { margin: 0 3px 3px 3px;  font-size: 1.4em; height: 18px; }
+  	#box_metro li button, #box_shipping li button, #box_outbound li button, #box_pickup li button  { position: absolute; margin-left: -1.3em; }
+</style>
 @stop
+
+@section('page_title')
+Deliveries
+@stop
+
+
 @section('content')
-
 	<div class="col-md-3">
-		<ul class="ver-inline-menu tabbable margin-bottom-10">
-			<li class="active">
-				<a data-toggle="tab" href="#tab_1">
-				<i class="fa fa-truck"></i> Deliveries </a>
-				<span class="after">
-				</span>
-			</li>
-			<li>
-				<a data-toggle="tab" href="#tab_2"><i class="fa fa-truck"></i> Shipping</a>
-			</li>
-			<li>
-				<a data-toggle="tab" href="#tab_3"><i class="fa fa-leaf"></i> Terms Of Service</a>
-			</li>
-			<li>
-				<a data-toggle="tab" href="#tab_1"><i class="fa fa-info-circle"></i> License Terms</a>
-			</li>
-			<li>
-				<a data-toggle="tab" href="#tab_2"><i class="fa fa-tint"></i> Payment Rules</a>
-			</li>
-			<li>
-				<a data-toggle="tab" href="#tab_3"><i class="fa fa-plus"></i> Other Questions</a>
-			</li>
-		</ul>
-	</div>
-	<div class="col-md-9">
-		<div class="tab-content">
-			<div id="tab_1" class="tab-pane active fade in">
-				@foreach($dmethods as $method)
-					@if($method->dtype_id == 1)
-						<div class="col-md-3">
-							<div class="pricing hover-effect">
-								<div class="pricing-head">
-									<h3>{{{$method->name}}}
-									<span>
-										{{{$method->orders->count()}}}
-									</span>
-									</h3>
-									<h4><i></i><i></i>
-									<span>
-										
-									</span>
-									</h4>
-								</div>
-								<ul class="pricing-content list-unstyled">
-									@foreach($method->orders as $order)
-									<li>
-										<a href="{{{URL::to('orders/' . $order->id)}}}"> <i class="fa fa-tags"></i> {{{$order->customer->company}}} - {{{$order->number}}}</a>
-									</li>
-									@endforeach
-								</ul>
-								<div class="pricing-footer">
-									<p>
-										
-									</p>
-									<a href="#" class="btn green">
-									Details <i class="m-icon-swapright m-icon-white"></i>
-									</a>
-								</div>
-							</div>
-						</div>	
-
+		<div class="panel panel-inverse order_btns">
+			  <div class="panel-heading">
+					<h3 class="panel-title">Orders</h3>
+			  </div>
+			  <div id="docked_orders" class="panel-body">
+			  	
+				Metro Deliveries
+				<hr>
+				<div id="box_metro">
+			  	@foreach($orders as $order)
+					@if($order->dtype_id == 1)
+						<li class=" ui-state-defadivt"><button  class="btn btn-primary ">{{$order->title}}</button></li>
 					@endif
 				@endforeach
-			</div>
-			<div id="tab_2" class="tab-pane fade">
-				<div class="col-md-3">
-					<div class="pricing hover-effect">
-						<div class="pricing-head">
-							<h3>FedEx
-							<span>
-								Shipping
-							</span>
-							</h3>
-							<h4><i></i><i></i>
-							<span>
-								
-							</span>
-							</h4>
-						</div>
-						<ul class="pricing-content list-unstyled">
-							
-							<li>
-								<a href="{{{URL::to('orders/')}}}"> <i class="fa fa-tags"></i> </a>
-							</li>
-							
-						</ul>
-						<div class="pricing-footer">
-							<p>
-								
-							</p>
-							<a href="#" class="btn green">
-							Details <i class="m-icon-swapright m-icon-white"></i>
-							</a>
-						</div>
-					</div>
 				</div>
-				<div class="col-md-3">
-					<div class="pricing hover-effect">
-						<div class="pricing-head">
-							<h3>UPS
-							<span>
-								Shipping
-							</span>
-							</h3>
-							<h4><i></i><i></i>
-							<span>
-								
-							</span>
-							</h4>
-						</div>
-						<ul class="pricing-content list-unstyled">
-							
-							<li>
-								<a href="{{{URL::to('orders/')}}}"> <i class="fa fa-tags"></i> </a>
-							</li>
-							
-						</ul>
-						<div class="pricing-footer">
-							<p>
-								
-							</p>
-							<a href="#" class="btn green">
-							Details <i class="m-icon-swapright m-icon-white"></i>
-							</a>
-						</div>
-					</div>
+				<br>
+				<br>
+				Outbound Deliveries
+				<hr>
+				<div id="box_outbound">
+				@foreach($orders as $order)
+					@if($order->dtype_id == 4)
+						<li class=" ui-state-defadivt"><button disabled="disabled" class="btn btn-warning ">{{$order->title}}</button></li>
+					@endif
+				@endforeach
 				</div>
-			</div>
-			<div id="tab_3" class="tab-pane fade">
-				<div id="accordion3" class="panel-group">
-					<div class="panel panel-danger">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#accordion3_1">
-							1. Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry ? </a>
-							</h4>
-						</div>
-						<div id="accordion3_1" class="panel-collapse collapse in">
-							<div class="panel-body">
-								<p>
-									 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-								</p>
-								<p>
-									 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-								</p>
-								<p>
-									 Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-success">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#accordion3_2">
-							2. Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry ? </a>
-							</h4>
-						</div>
-						<div id="accordion3_2" class="panel-collapse collapse">
-							<div class="panel-body">
-								 Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#accordion3_3">
-							3. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor ? </a>
-							</h4>
-						</div>
-						<div id="accordion3_3" class="panel-collapse collapse">
-							<div class="panel-body">
-								 Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#accordion3_4">
-							4. Wolf moon officia aute, non cupidatat skateboard dolor brunch ? </a>
-							</h4>
-						</div>
-						<div id="accordion3_4" class="panel-collapse collapse">
-							<div class="panel-body">
-								 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#accordion3_5">
-							5. Leggings occaecat craft beer farm-to-table, raw denim aesthetic ? </a>
-							</h4>
-						</div>
-						<div id="accordion3_5" class="panel-collapse collapse">
-							<div class="panel-body">
-								 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#accordion3_6">
-							6. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth ? </a>
-							</h4>
-						</div>
-						<div id="accordion3_6" class="panel-collapse collapse">
-							<div class="panel-body">
-								 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#accordion3_7">
-							7. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft ? </a>
-							</h4>
-						</div>
-						<div id="accordion3_7" class="panel-collapse collapse">
-							<div class="panel-body">
-								 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et
-							</div>
-						</div>
-					</div>
+				<br>
+				<br>
+				Shipping
+				<hr>
+				<div id="box_shipping">
+				@foreach($orders as $order)
+					@if($order->dtype_id == 2)
+						<li class="btn btn-succes ui-state-defadivt"><button disabled="disabled" class="btn btn-success ">{{$order->title}}</button></li>
+					@endif
+				@endforeach
+				</div>
+				<br/>
+				<br/>
+				Pickup
+				<hr>
+				<div id="box_pickup">
+				@foreach($orders as $order)
+					@if($order->dtype_id == 3)
+						<li class="btn btn-danger ui-state-defadivt"><button disabled="disabled" class="btn btn-danger ">{{$order->title}}</button></li>
+					@endif
+				@endforeach
 				</div>
 			</div>
 		</div>
 	</div>
 
+
+
+@stop
+@section('page_scripts')
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".order_btns .btn").css('margin', '2px 0 2px 0');
+		$("#box_metro").sortable();			
+		$("#box_outbound").sortable();			
+		$("#box_shipping").sortable();			
+		$("#box_pickup").sortable();			
+		 $("#box_metro").disableSelection();			
+		 $("#box_outbound").disableSelection();			
+		 $("#box_shipping").disableSelection();			
+		 $("#box_pickup").disableSelection();			
+
+	});
+</script>
 
 
 
