@@ -15,7 +15,7 @@ use Cox\Storage\Product\ProductRepositoryInterface as Product;
 class OrdersController extends BaseController {
 
 	/**
-	 * Order Repository
+	 * Order Cox Repository
 	 *
 	 * @var Order
 	 */

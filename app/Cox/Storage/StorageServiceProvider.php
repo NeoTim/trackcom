@@ -67,6 +67,10 @@ class StorageServiceProvider extends ServiceProvider
             'Cox\Storage\Activity\ActivityRepositoryInterface',
             'Cox\Storage\Activity\EloquentActivityRepository'
         );
+        $this->app->bind(
+            'Cox\Storage\Umessage\UmessageRepositoryInterface',
+            'Cox\Storage\Umessage\EloquentUmessageRepository'
+        );
 
 	}	
 }

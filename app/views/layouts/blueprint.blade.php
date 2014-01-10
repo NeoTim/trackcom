@@ -191,7 +191,10 @@
 	<!-- BEGIN PAGE PLUGINS -->
 	@yield('page_plugins')
 	<!-- END PAGE PLUGINS -->
-
+	<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
+	<!--[if (gte IE 8)&(lt IE 10)]>
+	<script src="assets/plugins/jquery-file-upload/js/cors/jquery.xdr-transport.js"></script>
+	<![endif]-->
 	<!-- BEGIN GLOBAL SCRIPTS -->
 	
 	<script type="text/javascript" src="{{ asset('assets/plugins/gritter/js/jquery.gritter.js') }}"></script>

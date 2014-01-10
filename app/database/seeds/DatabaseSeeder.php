@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('CategoriesTableSeeder');
 		$this->call('Sub_catsTableSeeder');
 		$this->call('ContactsTableSeeder');
+		$this->call('UmessagesTableSeeder');
 	}
 
 }

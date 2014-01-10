@@ -172,6 +172,9 @@ Route::get('collect/entries', function(){
 	return Entry::all()->toArray();
 });
 
+Route::get('umessages/inbox', function(){
+	return View::make('umessages.inbox');
+});
 
 // App::missing(function($exception)
 // {
@@ -221,3 +224,5 @@ Route::resource('categories', 'CategoriesController');
 Route::resource('contacts', 'ContactsController');
 
 Route::controller('deliveries', 'DeliveriesController');
+
+Route::resource('umessages', 'UmessagesController');

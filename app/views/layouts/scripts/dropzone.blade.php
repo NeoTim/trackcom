@@ -17,7 +17,7 @@ var FormDropzone = function () {
         init: function () {  
 
             Dropzone.options.myDropzone = {
-            	url: "{{URL::to('dropzone/store')}}",
+            	url: "{{URL::to('dropzone')}}",
 
                 init: function() {
                 	this.on("sending", function(file, xhr, formdata){
