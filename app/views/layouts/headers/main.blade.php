@@ -17,7 +17,13 @@
 		</div>
 		<div class="navbar-collapse collapse" style="height: 1px;">
 			
-			<ul class="nav navbar-nav navbar-right">
+			<ul class="nav navbar-nav navbar-right visible-xs">
+				<li>
+					<img src="{{ asset('assets/img/Empty_profile.png') }}" class="user-avatar"> 
+					<a href="{{URL::route('users.show', Sentry::getUser()->id)}}">{{{Sentry::getUser()->username}}}</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right hidden-xs">
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<img src="{{ asset('assets/img/Empty_profile.png') }}" class="user-avatar"> 
@@ -25,6 +31,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li class="dropdown-header">Admin</li>
+						<li><a href="#" data-toggle="modal" data-target="#notify_modal">Notify</a></li>
 						<li><a href="{{URL::to('/')}}">Dashboard</a></li>
 						<li><a href="{{URL::to('calendars')}}">Calendar</a></li>
 						<li><a href="{{URL::to('documents')}}">Documents</a></li>
@@ -47,8 +54,10 @@
 		</div><!--/.nav-collapse -->
 	</div><!--/.container -->
 </div>
+<!-- Button trigger modal -->
 
 
+<!-- Modal -->
 
-
+<
 

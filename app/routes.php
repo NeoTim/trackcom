@@ -226,3 +226,5 @@ Route::resource('contacts', 'ContactsController');
 Route::controller('deliveries', 'DeliveriesController');
 
 Route::resource('umessages', 'UmessagesController');
+
+Route::resource('notifications', 'NotificationsController');

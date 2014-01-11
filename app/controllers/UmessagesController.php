@@ -9,7 +9,7 @@ class UmessagesController extends BaseController {
 	 */
 	public function index()
 	{
-		
+
         return View::make('umessages.index');
 	}
 
@@ -77,4 +77,5 @@ class UmessagesController extends BaseController {
 		//
 	}
 
+	
 }

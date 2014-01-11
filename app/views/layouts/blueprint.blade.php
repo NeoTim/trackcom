@@ -220,6 +220,7 @@
 	$(document).ready(function(){
 		//SetStats();
 		var menu = "#main_top_menu";
+		
 
 
 		function setAdminMenu(cat)

@@ -1,8 +1,8 @@
 <?php
 
-namespace Cox\Storage\Dtype;
+namespace Cox\Storage\Umessage;
 
-interface DtypeRepositoryInterface {
+interface UmessageRepositoryInterface {
 
 	public function all();
 

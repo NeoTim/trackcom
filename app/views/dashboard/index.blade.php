@@ -8,12 +8,22 @@
 		Dashboard
 	@stop
 	@section('content')
-		<div class="col-md-6 col-sm-6">
+
+    
+                  <div id="notify_block" class="panel-body">
+                       
+                  </div>
+    
+    
+
+    
+    <div class="row">
+		<div class="col-md-6">
 			<!-- BEGIN CALENDAR PORTLET-->
 				@include('dashboard.portlets.calendar')
 			<!-- END CALENDAR PORTLET-->
 		</div>
-		<div class="col-md-6 col-sm-6">
+		<div class="col-md-6">
 			<!-- BEGIN PORTLET-->
 				
 			<!-- END PORTLET-->
@@ -22,6 +32,7 @@
 				@include('dashboard.portlets.feeds')
 			<!-- END PORTLET-->
 		</div>
+    </div>
 			
 	@stop
 	@section('page_plugins')
@@ -37,13 +48,56 @@
             var title;
             var start;
             var newevent = [];
-            newevent = $.get("{{ URL::to('collect') }}").done(function(data){
-            	var orders = eval(data);
-            	newevent = $.grep(orders, function(idx, order){
-            		return $.push(order);
-            	});
-            	$.push(newevent);
+
+
+            $.get("{{URL::route('notifications.show')}}").done(function(data){
+                //var notifies = jQuery.parseJSON(data);
+                var notifies = eval(data);
+                $.each($(notifies), function(i, notify){
+                    var temp = [
+                                    '<blockquote class=" alert goonote note-' + notify.label + '">',
+                                            '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>',
+                                            '<h2 class="block">',
+                                            notify.title,
+                                            '<small style="font-size:12px;">',
+                                            notify.subject,
+                                            '</small>',
+                                            '</h2>',
+                                            '<p>',
+                                            notify.body,
+                                            '</p>',
+                                    '</blockquote>'
+                                ].join('');
+                    $(temp).prependTo("#notify_block").fadeIn('slow');
+                });
             });
+            $("#notify_submit").click(function(){
+                $.ajax({
+                    url: "{{URL::route('notifications.store')}}",
+                    type: "POST",
+                    cache: false,
+                    data: { title: $("#notify_title").val(), subject: $("#notify_subject").val(), body: $("#notify_body").val(), label: $("#notify_label").val() },
+                    success: function(data){
+                        console.log(data);
+                        var temp = [
+                                    '<blockquote class="note note-' + data.label + '">',
+                                        '<h2 class="block">',
+                                        data.title,
+                                        '<small style="font-size:12px;">',
+                                        data.subject,
+                                        '</small>',
+                                        '</h2>',
+                                        '<p>',
+                                        data.body,
+                                        '</p>',
+                                    '</blockquote>'
+                                    ].join('');
+                        $(temp).prependTo("#notify_block").fadeIn('slow');
+                        $("#notify_modal").modal('hide');
+                    }
+                });
+            });
+
 	   
     	   function SetStats()
             {

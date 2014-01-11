@@ -17,7 +17,7 @@ class EloquentUmessageRepository implements UmessageRepositoryInterface
 	{
 		return $this->umessage->all();
 	}
-
+	
 	public function find($id)
 	{
 		return $this->umessage->find($id);
