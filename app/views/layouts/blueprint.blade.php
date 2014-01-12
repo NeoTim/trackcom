@@ -35,10 +35,10 @@
 	<link href="{{ asset('assets/css/themes/default.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
 
 	<link href="{{ asset('css/bootstrap-switch.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
-	<link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
 	<link href="{{ asset('css/jquery.sidr.dark.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
 	<link href="{{ asset('css/docs.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
 	<link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="{{ asset('js/boot-select/bootstrap-select.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
 	
 
 
@@ -166,7 +166,7 @@
 	<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('js/jquery.equalheights.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('js/bootstrap-switch.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('js/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('js/boot-select/bootstrap-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('js/bootstrap-filestyle.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('js/jquery.sidr.min.js') }}" type="text/javascript"></script>
 
@@ -208,6 +208,10 @@
 	   App.init();
 	   TableAdvanced.init();
 	   FormComponents.init();
+	    $('.selectpicker').selectpicker();
+	    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+		    $('.selectpicker').selectpicker('mobile');
+		}
 	});
 	</script>
 	<!-- END GLOBAL SCRIPTS -->

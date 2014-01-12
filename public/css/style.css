@@ -1114,15 +1114,26 @@ fieldset legend {
   background: #333333;
 }
 .panel {
-  border-width: 1px;
+  border-width: 0px;
   border-radius: 2px;
-  -webkit-border-radius: 2px;
+  -webkit-border-radius: 4px;
 }
 .panel .panel-heading {
   padding: 0;
   position: relative;
-  border-radius: 0;
-  -webkit-border-radius: 0;
+  box-shadow: 10px 10px 80px rgba(0,0,0,.1);
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
+  -webkit-border-top-left-radius: 4px;
+}
+
+.panel .panel-body {
+  box-shadow: 10px 10px 80px rgba(0,0,0,.1);
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
 }
 .panel .panel-heading:after,
 .panel .panel-heading:before {
@@ -1233,7 +1244,7 @@ fieldset legend {
   text-align: center;
 }
 .panel.panel-default {
-  border-color: #e0e0e0;
+  /*border-color: #e0e0e0;*/
 }
 .panel.panel-default a {
   color: #a1a1a1;
@@ -1271,7 +1282,7 @@ fieldset legend {
   color: #a1a1a1;
 }
 .panel.panel-primary {
-  border-color: #15aaff;
+  /*border-color: #15aaff;*/
 }
 .panel.panel-primary a {
   color: #006fae;
@@ -1306,7 +1317,7 @@ fieldset legend {
   color: #c7ebff;
 }
 .panel.panel-info {
-  border-color: #6ab2ee;
+  /*border-color: #6ab2ee;*/
 }
 .panel.panel-info a {
   color: #1982d9;
@@ -1341,7 +1352,7 @@ fieldset legend {
   color: #ffffff;
 }
 .panel.panel-success {
-  border-color: #4fa950;
+  /*border-color: #4fa950;*/
 }
 .panel.panel-success a {
   color: #2f632f;
@@ -1376,7 +1387,7 @@ fieldset legend {
   color: #c6e4c6;
 }
 .panel.panel-warning {
-  border-color: #ef9e2a;
+  /*border-color: #ef9e2a;*/
 }
 .panel.panel-warning a {
   color: #a6670d;
@@ -1411,7 +1422,7 @@ fieldset legend {
   color: #fbead0;
 }
 .panel.panel-danger {
-  border-color: #ea4519;
+  /*border-color: #ea4519;*/
 }
 .panel.panel-danger a {
   color: #90290d;
@@ -1446,7 +1457,7 @@ fieldset legend {
   color: #f9c9bd;
 }
 .panel.panel-inverse {
-  border-color: #333333;
+  /*border-color: #333333;*/
 }
 .panel.panel-inverse a {
   color: #000000;

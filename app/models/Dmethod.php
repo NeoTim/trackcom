@@ -21,4 +21,12 @@ class Dmethod extends Eloquent {
 	{
 		return $this->belongsTo('Category');
 	}
+
+	public function trucks()
+	{
+		return $this->hasMany('Truck');
+	}
+
+
+
 }

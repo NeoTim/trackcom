@@ -1,5 +1,4 @@
-
-{{ Form::open(array('route' => 'documents.store', 'class' => 'inbox-compose form-horizontal', 'id' => 'fileupload', "enctype" => "multipart/form-data")) }}
+<form class="inbox-compose form-horizontal" id="fileupload" action="#" method="POST" enctype="multipart/form-data">
 	<div class="inbox-compose-btn">
 		<button class="btn blue"><i class="fa fa-check"></i>Send</button>
 		<button class="btn">Discard</button>
@@ -8,9 +7,9 @@
 	<div class="inbox-form-group mail-to">
 		<label class="control-label">To:</label>
 		<div class="controls controls-to">
-			<input type="text" class="form-control" name="to">
+			<input type="text" class="form-control" name="to" value="fiona.stone@arthouse.com, lisa.wong@pixel.com, jhon.doe@gmail.com">
 			<span class="inbox-cc-bcc">
-				<span class="inbox-cc">
+				<span class="inbox-cc " style="display:none">
 					 Cc
 				</span>
 				<span class="inbox-bcc">
@@ -19,11 +18,11 @@
 			</span>
 		</div>
 	</div>
-	<div class="inbox-form-group input-cc display-hide">
+	<div class="inbox-form-group input-cc">
 		<a href="javascript:;" class="close"></a>
 		<label class="control-label">Cc:</label>
 		<div class="controls controls-cc">
-			<input type="text" name="cc" class="form-control">
+			<input type="text" name="cc" class="form-control" value="jhon.doe@gmail.com, kevin.larsen@gmail.com">
 		</div>
 	</div>
 	<div class="inbox-form-group input-bcc display-hide">
@@ -36,11 +35,27 @@
 	<div class="inbox-form-group">
 		<label class="control-label">Subject:</label>
 		<div class="controls">
-			<input type="text" class="form-control" name="subject">
+			<input type="text" class="form-control" name="subject" value="Urgent - Financial Report for May, 2013">
 		</div>
 	</div>
 	<div class="inbox-form-group">
-		<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
+		<div class="controls-row">
+			<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
+			<!--blockquote content for reply message, the inner html of reply_email_content_body element will be appended into wysiwyg body. Please refer Inbox.js loadReply() function. -->
+			<div id="reply_email_content_body" class="hide">
+				<input type="text">
+				<br>
+				<br>
+				<blockquote>
+					 Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <br>
+					<br>
+					 Consectetuer adipiscing elit, sed diam nonummy nibh euismod exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <br>
+					<br>
+					 All the best,<br>
+					 Lisa Nilson, CEO, Pixel Inc.
+				</blockquote>
+			</div>
+		</div>
 	</div>
 	<div class="inbox-compose-attachment">
 		<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
@@ -82,7 +97,7 @@
         {% } %}</td>
     </tr>
 {% } %}
-																																																																																																																																																																																																					</script>
+																																																																																																																																																	</script>
 	<!-- The template to display files available for download -->
 	<script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
@@ -105,7 +120,7 @@
         </td>
     </tr>
 {% } %}
-																																																																																																																																																																																																														</script>
+																																																																																			</script>
 	<div class="inbox-compose-btn">
 		<button class="btn blue"><i class="fa fa-check"></i>Send</button>
 		<button class="btn">Discard</button>

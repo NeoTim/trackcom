@@ -1,6 +1,17 @@
 <?php
 
+use Cox\Storage\Umessage\UmessageRepositoryInterface as Umessage;
+
+
 class UmessagesController extends BaseController {
+
+	protected $umessage;
+
+	public function __construct(Umessage $umessage)
+	{
+		$this->umessage = $umessage;
+	}
+
 
 	/**
 	 * Display a listing of the resource.
@@ -9,8 +20,14 @@ class UmessagesController extends BaseController {
 	 */
 	public function index()
 	{
-
-        return View::make('umessages.index');
+		$userId = Sentry::getUser()->id;
+		$inboxes = $this->umessage->findInbox($userId);
+		$sents = $this->umessage->findSent($userId);
+		$drafts = $this->umessage->findDraft($userId);
+		$trashes = $this->umessage->findTrash($userId);
+		//$umessages = $this->umessage->all();
+		
+        return View::make('umessages.index', compact('inboxes', 'sents', 'drafts', 'trashes'));
 	}
 
 	/**
@@ -20,7 +37,7 @@ class UmessagesController extends BaseController {
 	 */
 	public function create()
 	{
-        return View::make('umessages.create');
+        return View::make('umessages.compose');
 	}
 
 	/**
@@ -30,7 +47,12 @@ class UmessagesController extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		$data = Input::all();
+
+	    Mail::send('emails.test',$data, function($message)
+	    {
+	        $message->to('joel.design@icloud.com')->subject('Welcome!');
+	    });
 	}
 
 	/**
@@ -75,6 +97,39 @@ class UmessagesController extends BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+
+	public function inbox()
+	{
+		$userId = Sentry::getUser()->id;
+		$umessages = $this->umessage->findInbox($userId);
+		//$umessages = $this->umessage->all();
+		
+        return View::make('umessages.inbox', compact('umessages'));
+	}
+
+	public function sent()
+	{
+		$userId = Sentry::getUser()->id;
+		$umessages = $this->umessage->findSent($userId);
+
+        return View::make('umessages.inbox', compact('umessages'));
+	}
+
+	public function draft()
+	{
+		$userId = Sentry::getUser()->id;
+		$umessages = $this->umessage->findDraft($userId);
+
+        return View::make('umessages.inbox', compact('umessages'));
+	}
+
+	public function trash()
+	{
+		$userId = Sentry::getUser()->id;
+		$umessages = $this->umessage->findTrash($userId);
+
+        return View::make('umessages.inbox', compact('umessages'));
 	}
 
 	

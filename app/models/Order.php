@@ -6,7 +6,10 @@ class Order extends Eloquent {
 	public static $rules = array(
 		'number' => 'required',
 	);
-
+	public function truck()
+	{
+		return $this->belongsTo('Truck');
+	}
 	public function entries()
 	{
 		return $this->hasMany('Entry');
@@ -38,4 +41,7 @@ class Order extends Eloquent {
              // do the rest of the cleanup...
         });
     }
+
+
+    
 }

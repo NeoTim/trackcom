@@ -23,6 +23,8 @@ class EloquentUmessageRepository implements UmessageRepositoryInterface
 		return $this->umessage->find($id);
 	}
 
+	
+
 	// STORE Production type
 	public function store($input)
 	{
@@ -80,8 +82,48 @@ class EloquentUmessageRepository implements UmessageRepositoryInterface
 			return $result;
 		}
 	}
-	public function listUmessages()
+
+	public function findInbox($userId)
 	{
-		return \DB::table('umessages')->lists('name', 'id');
+		return \DB::table('umessages')->where('user_id', '=', $userId)
+									  ->where('inbox', '=', '1')
+									  ->orderBy('created_at', 'asc')->get();
 	}
+
+	public function findSent($userId)
+	{
+		return \DB::table('umessages')->where('user_id', '=', $userId)
+									  ->where('sent', '=', '1')
+									  ->orderBy('created_at', 'asc')->get();
+	}
+
+	public function findDraft($userId)
+	{
+		return \DB::table('umessages')->where('user_id', '=', $userId)
+									  ->where('draft', '=', '1')
+									  ->orderBy('created_at', 'asc')->get();
+	}
+
+	public function findTrash($userId)
+	{
+		return \DB::table('umessages')->where('user_id', '=', $userId)
+									  ->where('trash', '=', '1')
+									  ->orderBy('created_at', 'asc')->get();
+	}
+
+	public function findFlagged($userId)
+	{
+		return \DB::table('umessages')->where('user_id', '=', $userId)
+									  ->where('flag', '=', '1')
+									  ->orderBy('created_at', 'asc')->get();
+	}
+
 }
+
+
+
+
+
+
+
+

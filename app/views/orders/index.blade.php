@@ -65,7 +65,7 @@
 	
 	@if ($orders->count())
 	<div class="table-responsive">
-		<table class="table table-striped table-bordered table-hover table-full-width dataTable" id="sample_editable_1" aria-describedby="sample_2_info" style="width: 1060px;">
+		<table class="table table-striped table-bordered table-hover table-full-width dataTable" id="sample_editable_1" aria-describedby="sample_1_info" style="width: 1060px;">
 			<thead>
 				<tr>
 					<th>ID</th>

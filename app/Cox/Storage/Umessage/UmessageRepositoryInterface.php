@@ -14,6 +14,15 @@ interface UmessageRepositoryInterface {
 
 	public function destroy($id);
 
-	public function listDtypes();
+	public function findInbox($id);
+
+	public function findSent($id);
+
+	public function findDraft($id);
+
+	public function findTrash($id);
+
+	public function findFlagged($id);
+
 
 }

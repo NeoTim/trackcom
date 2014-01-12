@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('ContactsTableSeeder');
 		$this->call('UmessagesTableSeeder');
 		$this->call('NotificationsTableSeeder');
+		$this->call('TrucksTableSeeder');
 	}
 
 }

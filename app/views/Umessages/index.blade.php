@@ -13,6 +13,13 @@
 
 @section('extra')
 <link href="{{ asset('assets/css/pages/inbox.css') }}" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+    .inbox table thead tr th {
+        background: #eef4f7;
+        border-bottom: solid 5px #fff;
+    }
+
+</style>
 @stop
 @section('page_title')
 
@@ -35,35 +42,39 @@
 							<b></b>
 						</li>
 						<li class="sent">
-							<a class="btn" href="javascript:;" data-title="Sent">Sent</a><b></b>
+							<a class="btn" href="javascript:;"  data-title="Sent">Sent</a><b></b>
 						</li>
 						<li class="draft">
 							<a class="btn" href="javascript:;" data-title="Draft">Draft</a><b></b>
 						</li>
 						<li class="trash">
-							<a class="btn" href="javascript:;" data-title="Trash">Trash</a><b></b>
+							<a class="btn" href="javascript:;"  data-title="Trash">Trash</a><b></b>
 						</li>
 					</ul>
 				</div>
 				<div class="col-md-10">
-					<div class="inbox-header">
-						<h1 class="pull-left">Inbox</h1>
-						<form class="form-inline pull-right" action="index.html">
-							<div class="input-group input-medium">
-								<input type="text" class="form-control" placeholder="Password">
-								<span class="input-group-btn">
-									<button type="submit" class="btn green"><i class="fa fa-search"></i></button>
-								</span>
-							</div>
-						</form>
-					</div>
+                    <div class="inbox-header">
+                        <h1 class="pull-left">Inbox</h1>
+                        <form class="form-inline pull-right" action="#" method="get">
+                            <div class="input-group input-medium">
+                                <input type="text" class="form-control" id="system-search" name="q" placeholder="Password">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn green"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
 					<div class="inbox-loading">
-						Loading...
-					</div>
+         
+                        Loading ...               
+                    </div>
 					<div class="inbox-content">
+
+
 					</div>
 				</div>
 			</div>
+            
 @stop
 @section('page_plugins')
 <!-- BEGIN: Page level plugins -->
@@ -100,15 +111,17 @@
 @section('page_scripts')
 <!-- BEGIN PAGE SCRIPTS -->
 
-<script src="{{ asset('js/inbox.js') }}"></script>
+
 <script>
+
+
 var Inbox = function () {
 
     var content = $('.inbox-content');
     var loading = $('.inbox-loading');
 
     var loadInbox = function (el, name) {
-        var url = "{{URL::to('umessages/inbox')}}";
+        var url = "{{URL::to('umessages')}}/" + name;
         var title = $('.inbox-nav > li.' + name + ' a').attr('data-title');
 
         loading.show();
@@ -412,9 +425,85 @@ var Inbox = function () {
 
 }();
 
-jQuery(document).ready(function() {       
+jQuery(document).ready(function() {    
+    //Inbox.init();
+    Inbox.init();
+        $('#inbox_table').dataTable({
+            sDom: '<"search_inbox"f>'
+        });
+        $('#sent_table').dataTable({
+            sDom: '<"search_sent"f>'
+        });
+        $('#draft_table').dataTable({
+            sDom: '<"search_draft"f>'
+        });
+        $('#trash_table').dataTable({
+            sDom: '<"search_trash"f>'
+        });
+        $("#inbox_table_filter :input").addClass("form-control").attr('placeholder', 'Search').prependTo("#inbox_search_box");
+        $("#sent_table_filter :input").addClass("form-control").attr('placeholder', 'Search').prependTo("#sent_search_box");
+        $("#draft_table_filter :input").addClass("form-control").attr('placeholder', 'Search').prependTo("#draft_search_box");
+        $("#trash_table_filter :input").addClass("form-control").attr('placeholder', 'Search').prependTo("#trash_search_box");
+        $("#inbox_table_filter label, #sent_table_filter label, #draft_table_filter label, #trash_table_filter label ").remove();
 
-   Inbox.init();
+        $("table th").css("background-color", "#eef4f7");
+        
+
+        
+       var activeSystemClass = $('.list-group-item.active');
+
+    //something is entered in search form
+    $('#system-search').keyup( function() {
+       var that = this;
+        // affect all table rows on in systems table
+        var tableBody = $('.table-list-search tbody');
+        var tableRowsClass = $('.table-list-search tbody tr');
+        $('.search-sf').remove();
+        tableRowsClass.each( function(i, val) {
+        
+            //Lower text for case insensitive
+            var rowText = $(val).text().toLowerCase();
+            var inputText = $(that).val().toLowerCase();
+            if(inputText != '')
+            {
+                $('.search-query-sf').remove();
+                tableBody.prepend('<tr class="search-query-sf"><td colspan="6"><strong>Searching for: "'
+                    + $(that).val()
+                    + '"</strong></td></tr>');
+            }
+            else
+            {
+                $('.search-query-sf').remove();
+            }
+
+            if( rowText.indexOf( inputText ) == -1 )
+            {
+                //hide rows
+                tableRowsClass.eq(i).hide();
+                
+            }
+            else
+            {
+                $('.search-sf').remove();
+                tableRowsClass.eq(i).show();
+            }
+        });
+        //all tr elements are hidden
+        if(tableRowsClass.children(':visible').length == 0)
+        {
+            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">No entries found.</td></tr>');
+        }
+    });
+        
+    // var oTable = $('#').dataTable( {
+    //         "bPaginate": false,
+    //         "bLengthChange": false,
+    //         "bFilter": true,
+    //         "bSort": true,
+    //         "bInfo": false,
+    //         "bAutoWidth": true
+    //     });
+   
 });
 
 </script>

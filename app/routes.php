@@ -172,9 +172,11 @@ Route::get('collect/entries', function(){
 	return Entry::all()->toArray();
 });
 
-Route::get('umessages/inbox', function(){
-	return View::make('umessages.inbox');
-});
+
+Route::get('umessages/inbox', 'UmessagesController@inbox');
+Route::get('umessages/sent', 'UmessagesController@sent');
+Route::get('umessages/draft', 'UmessagesController@draft');
+Route::get('umessages/trash', 'UmessagesController@trash');
 
 // App::missing(function($exception)
 // {
@@ -223,8 +225,11 @@ Route::resource('categories', 'CategoriesController');
 
 Route::resource('contacts', 'ContactsController');
 
-Route::controller('deliveries', 'DeliveriesController');
+Route::resource('deliveries', 'DeliveriesController');
+
 
 Route::resource('umessages', 'UmessagesController');
 
 Route::resource('notifications', 'NotificationsController');
+
+Route::resource('trucks', 'TrucksController');

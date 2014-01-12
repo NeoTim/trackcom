@@ -1,4 +1,4 @@
-<table id="inbox_table_2" class="table table-list-search table-striped table-advance table-hover dataTable sample_editable_1" aria-describedby="inbox_info_2">
+<table id="inbox_table_2" class="table table-striped table-advance table-hover dataTable sample_editable_1" aria-describedby="inbox_info_2">
 <thead>
 <tr>
 	<th ><input type="checkbox" class="mail-checkbox"></th>
