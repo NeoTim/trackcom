@@ -9,7 +9,7 @@ use Order;
 class EloquentOrderRepository implements OrderRepositoryInterface
 {
 	protected $order;
-
+	protected $softDelete = true;
 	public function __construct(Order $order, Activity $activity, Customer $customer)
 	{
 		$this->order = $order;
@@ -130,6 +130,36 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 			$result['message'] = 'There was an error deleting the entries within the order.';
 			return $result;
 		}
+
+	}
+	public function trash()
+	{
+		return $this->order->onlyTrashed()->get();
+	}
+
+	public function restoreOrder($id)
+	{
+		$result = array();
+		$order = $this->order->withTrashed()->find($id);
+		$order->restore();
+		if($order->save())
+		{
+			$result['success'] 	= true;
+			$result['message']	= $order['number'] . ' Was Successfully restored!!';
+		}else{
+			$result['success'] 	= false;
+			$result['message']	= 'There was an error restoring ' . $order['number'];
+		}
+		return $result;
+	}
+
+	public function hardDelete($id)
+	{
+
+	}
+
+	public function emptyTrash()
+	{
 
 	}
 

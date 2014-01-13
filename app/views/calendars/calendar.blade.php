@@ -9,6 +9,8 @@
 @section('page_title')
     Calendar
 @stop
+
+
     @section('content')
     
     
@@ -420,7 +422,7 @@ var Calendar = function () {
                  
                     $.ajax({
                         url: "{{URL::to('calendars/')}}/" + event.id,
-                        method: "PUT",testest
+                        method: "PUT",
                         data: { start: event.start, title: event.title, backgroundColor: event.backgroundColor },
                         cache: false,
                         success: function(data){

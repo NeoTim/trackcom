@@ -191,6 +191,26 @@ class OrdersController extends BaseController {
 
 	}
 
+
+	public function trash()
+	{
+		$orders = $this->order->trash();
+		return View::make('orders.trash', compact('orders'));
+	}
+
+	public function restore($id)
+	{
+		$result = $this->order->restoreOrder($id);
+		if($result['success'])
+		{
+			Session::flash('success', $result['message']);
+			return Redirect::to('trashed/orders');
+		}else{
+			Session::flash('error', $result['message']);
+			return Redirect::to('trashed/orders');
+		}
+	}
+
 	
 
 }

@@ -14,6 +14,15 @@ interface OrderRepositoryInterface {
 
 	public function destroy($id);
 
+	public function trash();
+
+	public function restoreOrder($id);
+
+	public function hardDelete($id);
+
+	public function emptyTrash();
+
+
 	
 	
 

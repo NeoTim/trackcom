@@ -86,6 +86,7 @@
 	
 			<tbody>
 				@foreach ($orders as $order)
+
 					<tr>
 						<td>
 	                    	
@@ -163,6 +164,11 @@
 	@else
 		There are no orders
 	@endif
+	<br />
+	<br />
+	<div class=" aligncenter">
+		<div class=" aligncenter" style="text-align:center;"><a id="" href="{{URL::to('trashed/orders')}}" class="btn btn-danger aligncenter"><i class="fa fa-trash-o"></i> Trash</a></div>
+	</div>
 @stop
 
 @section('page_plugins')

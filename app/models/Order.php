@@ -3,6 +3,9 @@
 class Order extends Eloquent {
 	protected $guarded = array();
 
+	protected $softDelete = true;
+
+
 	public static $rules = array(
 		'number' => 'required',
 	);

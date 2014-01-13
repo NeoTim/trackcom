@@ -189,7 +189,10 @@ Route::get('umessages/trash', 'UmessagesController@trash');
 //     //return Response::view('errors.missing', array(), 404);
 // });
 
-
+// Route::get('trashed/orders', function(){
+// 	$orders = Order::onlyTrashed('orders')->get();
+// 	return View::make('trashed.orders', compact('orders'));
+// });
 
 
 Route::get("toentries/", function($id){
@@ -201,6 +204,8 @@ Route::resource('calendars', 'CalendarController');
 Route::resource('productions', "ProductionController");
 
 Route::resource('orders', 'OrdersController');
+
+
 
 Route::resource('customers', 'CustomersController');
 
@@ -232,9 +237,15 @@ Route::resource('contacts', 'ContactsController');
 
 Route::resource('deliveries', 'DeliveriesController');
 
-
 Route::resource('umessages', 'UmessagesController');
 
 Route::resource('notifications', 'NotificationsController');
 
 Route::resource('trucks', 'TrucksController');
+
+
+Route::controller('trashed', 'TrashedController');
+Route::post('trashed/restore-order/{id}', 'TrashedController@RestoreOrder');
+
+Route::post('orders/{id}/restore', 'OrdersController@restore');
+

@@ -43,7 +43,12 @@
             -ms-transition: all .2s ease .0s;
             -o-transition: all .2s ease .0s;
         }
-        
+        #formID\3A scheduleID table.fc-agenda-slots{
+            display:none
+        }
+        table.fc-agenda-slots, div.fc-agenda-divider.fc-widget-header {
+            display: none;
+        }
     </style>
 
     @stop
@@ -127,7 +132,8 @@
             $.initCalendar("{{ URL::to('calendars/show') }}");
             //Calendar.init("{{ URL::to('calendars/show') }}");
             
-
+            $("div.fc-view.fc-view-agendaWeek.fcagenda div div").hide();
+            
 
 
             var URLto           = "{{URL::to('/')}}";
