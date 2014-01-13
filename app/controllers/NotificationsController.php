@@ -4,6 +4,11 @@ use Cox\Storage\Notification\NotificationRepositoryInterface as Notification;
 
 class NotificationsController extends BaseController {
 
+	/**
+	 * Notification Repository
+	 *
+	 * @var Notification
+	 */
 	protected $notification;
 
 	public function __construct(Notification $notification)
@@ -18,7 +23,9 @@ class NotificationsController extends BaseController {
 	 */
 	public function index()
 	{
-        return View::make('notifications.index');
+		$notifications = $this->notification->all();
+
+		return View::make('notifications.index', compact('notifications'));
 	}
 
 	/**
@@ -28,7 +35,7 @@ class NotificationsController extends BaseController {
 	 */
 	public function create()
 	{
-        return View::make('notifications.create');
+		return View::make('notifications.create');
 	}
 
 	/**
@@ -43,7 +50,7 @@ class NotificationsController extends BaseController {
 		if($notify['success'])
 		{
 
-			return Response::json(array('title' => $notify['title'], 'subject' => $notify['subject'], 'body' => $notify['body'], 'color' => $notify['color'], 'label' => $notify['label']));
+			return Response::json(array('id' => $notify['id'] ,'title' => $notify['title'], 'subject' => $notify['subject'], 'body' => $notify['body'], 'color' => $notify['color'], 'label' => $notify['label']));
 			//return $notify;
 
 		}else{
@@ -59,9 +66,9 @@ class NotificationsController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show()
+	public function show($id)
 	{
-        return $this->notification->all();
+		return $this->notification->all();
 	}
 
 	/**
@@ -72,7 +79,14 @@ class NotificationsController extends BaseController {
 	 */
 	public function edit($id)
 	{
-        return View::make('notifications.edit');
+		$notification = $this->notification->find($id);
+
+		if (is_null($notification))
+		{
+			return Redirect::route('notifications.index');
+		}
+
+		return View::make('notifications.edit', compact('notification'));
 	}
 
 	/**
@@ -83,7 +97,20 @@ class NotificationsController extends BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$input = array_except(Input::all(), '_method');
+		
+		$result = $this->notify->update($input);
+		if($result['success'])
+		{
+			Session::flash('success', $result['message']);
+			return Redirect::route('notifications.index');
+		}
+		else
+		{
+			Session::flash('error', $result['message']);
+			return Redirect::route('notifications.index')
+				->withInput();
+		}
 	}
 
 	/**
@@ -94,7 +121,9 @@ class NotificationsController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$this->notification->find($id)->delete();
+
+		return Redirect::route('notifications.index');
 	}
 
 }

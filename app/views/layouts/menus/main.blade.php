@@ -1,4 +1,4 @@
-	<div class="container hidden-xs">
+	<div class="container hidden-xs hidden-sm">
 		 <div class="navbar navbar-default">
 	        <div class="navbar-header">
 	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -46,7 +46,7 @@
 	    </div>
 	    
 	    
-	<div class="container visible-xs">
+	<div class="container visible-xs visible-sm ">
 		 <div class="navbar navbar-default navbar-fixed-top">
 	        <div class="navbar-header">
 	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

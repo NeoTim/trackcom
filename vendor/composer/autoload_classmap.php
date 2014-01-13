@@ -158,7 +158,7 @@ return array(
     'CreateDocumentsTable' => $baseDir . '/app/database/migrations/2013_12_29_023002_create_documents_table.php',
     'CreateDtypesTable' => $baseDir . '/app/database/migrations/2013_12_27_064748_create_dtypes_table.php',
     'CreateEntriesTable' => $baseDir . '/app/database/migrations/2013_12_27_064718_create_entries_table.php',
-    'CreateNotificationsTable' => $baseDir . '/app/database/migrations/2014_01_10_141441_create_notifications_table.php',
+    'CreateNotificationsTable' => $baseDir . '/app/database/migrations/2014_01_13_105129_create_notifications_table.php',
     'CreateOrdersTable' => $baseDir . '/app/database/migrations/2013_12_27_063843_create_orders_table.php',
     'CreatePmethodsTable' => $baseDir . '/app/database/migrations/2013_12_27_064401_create_pmethods_table.php',
     'CreateProductsTable' => $baseDir . '/app/database/migrations/2013_12_27_064652_create_products_table.php',

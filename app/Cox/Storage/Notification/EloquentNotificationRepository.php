@@ -52,15 +52,15 @@ class EloquentNotificationRepository implements NotificationRepositoryInterface
 
 		if ($validation->passes())
 		{
-			$this->notification->find($id)->update($input);
+			
 			$result['success'] = true;
-			$result['message'] = 'Your Delivery type was successfully updated !!';
+			$result['message'] = 'Your Notification was successfully updated !!';
 			return $result;
 		}
 		else
 		{
 			$result['success'] = false;
-			$result['message'] = 'There was an error updating this delivery type!!';
+			$result['message'] = 'There was an error Notification this product!!';
 			return $result;		
 		}
 	}

@@ -54,6 +54,12 @@
 				<span>Activity</span>
 			</a>
 		</li>
+		<li class=" {{ (Request::is('notifications*') ? 'active' : '') }} ">
+			<a href="{{URL::to('notifications')}}">
+				<i class="fa fa-bullhorn"></i>
+				<span>Notify</span>
+			</a>
+		</li>
 
 	</ul>
 </aside>

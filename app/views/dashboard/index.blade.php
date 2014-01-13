@@ -36,7 +36,13 @@
             color:#4fa950;
         }
 
-
+        #entry_content {
+            transition: all .2s ease .0s;
+            -webkit-transition: all .2s ease .0s;
+            -moz-transition: all .2s ease .0s;
+            -ms-transition: all .2s ease .0s;
+            -o-transition: all .2s ease .0s;
+        }
         
     </style>
 
@@ -69,7 +75,7 @@
                         </div>
                         <div id="order_status" class="portlet-body">
                             <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:110%; right:5%;">
-                                <div id="entry_content" class="carousel-inner" style="width:100%;">
+                                <div id="entry_content" class="carousel-inner" style="width:100%; min-height:250px;">
                                     
                                 </div>
                                 <!-- <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a> -->
@@ -151,9 +157,9 @@
             for(var i=0; i<=entries.last_page; i++)
             {
                 var ii = i+1;
-                $('<div class="item"><ul id="entries_page_' + ii + '" class="feeds"></ul></div>').appendTo("#entry_content");
+                $('<div class="item"><ul id="entries_page_' + i + '" class="feeds"></ul></div>').appendTo("#entry_content");
 
-                $("#entries_page_" + ii).load("{{URL::to('dashboard/entries?page=')}}" + ii);
+                $("#entries_page_" + i).load("{{URL::to('dashboard/entries?page=')}}" + i);
             }
             $(".item:first").addClass("active");
             
@@ -191,18 +197,18 @@
            
             // SUBMIT NOTIFICATIONS
             $("#notify_submit").click(function(){
-                $.ajax({
-                    url: "{{URL::route('notifications.store')}}",
-                    type: "POST",
-                    cache: false,
-                    data: { title: $("#notify_title").val(), subject: $("#notify_subject").val(), body: $("#notify_body").val(), label: $("#notify_label").val() },
-                    success: function(data){
-                        var temp = $.get_notifies_temp(data.label, data.title, data.subject, data.body);
-                        $(temp).prependTo("#notify_block").fadeIn('slow');
-                        $("#notify_modal").modal('hide');
-                    }
+                    $.ajax({
+                        url: "{{URL::route('notifications.store')}}",
+                        type: "POST",
+                        cache: false,
+                        data: { title: $("#notify_title").val(), subject: $("#notify_subject").val(), body: $("#notify_body").val(), label: $("#notify_label").val() },
+                        success: function(data){
+                            var temp = $.get_notifies_temp(data.label, data.title, data.subject, data.body);
+                            $(temp).prependTo("#notify_block").fadeIn('slow');
+                            $("#notify_modal").modal('hide');
+                        }
+                    });
                 });
-            });
 
             
 

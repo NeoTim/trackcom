@@ -253,6 +253,7 @@
 		$(".bsControl :input").addClass("form-control");
 
 		
+		
 // <![CDATA[
             var socket = io.connect('http://192.184.87.145:3000');
             //socket.on('connect', function(data){
