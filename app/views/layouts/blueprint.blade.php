@@ -203,6 +203,8 @@
 	<script src="{{ asset('assets/scripts/table-advanced.js') }}"></script>
 	<script src="{{ asset('assets/scripts/form-components.js') }}"></script>
 	<script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('js/jquery.getajax.js') }}" type="text/javascript"></script>
+	
 	<script>
 	jQuery(document).ready(function() {
 	   App.init();

@@ -11,21 +11,19 @@
 |
 */
 
+
+Route::get("*", function(){
+	if(!Sentry::check())
+	{
+		return Redirect::to('login');
+	}
+});
+
 Route::get('/', array('as' => 'home', function()
 {
 	if(Sentry::check())
 	{
-		$activities = DB::table('activities')->orderBy('id', 'desc')->take(200)->get();
-		$order_activities = DB::table('activities')->where('section', '=', 'order')
-													->orWhere('section', '=', 'entry')
-													->orWhere('section', '=', 'production')
-													->orderBy('id', 'desc')->take(100)->get();
-		$production_activities = DB::table('activities')->where('section', '=', 'production')->orderBy('id', 'desc')->take(100)->get();
-		$customer_activities = DB::table('activities')->where('section', '=', 'customer')->orderBy('id', 'desc')->take(100)->get();
-		$stores = DB::table('activities')->where('type', '=', 'store')->orderBy('id', 'desc')->take(100)->get();
-		$updates = DB::table('activities')->where('type', '=', 'update')->orderBy('id', 'desc')->take(100)->get();
-		$deletes = DB::table('activities')->where('type', '=', 'delete')->orderBy('id', 'desc')->take(100)->get();
-		return View::make('dashboard.index', compact('activities', 'orders', 'order_activities', 'production_activities', 'customer_activities', 'stores', 'updates', 'deletes'));
+		return Redirect::to('dashboard');
 	}
 	else
 	{
@@ -36,23 +34,26 @@ Route::get('/dashboard', array('as' => 'home', function()
 {
 	if(Sentry::check())
 	{	
-		$activities = DB::table('activities')->orderBy('id', 'desc')->take(200)->get();
+		$activities = DB::table('activities')->orderBy('id', 'desc')->take(10)->get();
 		$order_activities = DB::table('activities')->where('section', '=', 'order')
 													->orWhere('section', '=', 'entry')
 													->orWhere('section', '=', 'production')
-													->orderBy('id', 'desc')->take(100)->get();
-		$production_activities = DB::table('activities')->where('section', '=', 'production')->orderBy('id', 'desc')->take(100)->get();
-		$customer_activities = DB::table('activities')->where('section', '=', 'customer')->orderBy('id', 'desc')->take(100)->get();
-		$stores = DB::table('activities')->where('type', '=', 'store')->orderBy('id', 'desc')->take(100)->get();
-		$updates = DB::table('activities')->where('type', '=', 'update')->orderBy('id', 'desc')->take(100)->get();
-		$deletes = DB::table('activities')->where('type', '=', 'delete')->orderBy('id', 'desc')->take(100)->get();
-		return View::make('dashboard.index', compact('activities', 'orders', 'order_activities', 'production_activities', 'customer_activities', 'stores', 'updates', 'deletes'));
+													->orderBy('id', 'desc')->take(10)->get();
+		$production_activities = DB::table('activities')->where('section', '=', 'production')->orderBy('id', 'desc')->take(10)->get();
+		$updates = DB::table('activities')->where('type', '=', 'update')->orderBy('id', 'desc')->take(10)->get();
+		$trucks = Truck::all();
+		$entries = Entry::paginate(5);
+		return View::make('dashboard.index', compact('activities', 'orders', 'order_activities', 'production_activities', 'updates', 'trucks', 'entries'));
 	}
 	else
 	{
 		return Redirect::to('login');
 	}
 }));
+Route::get('dashboard/entries', function(){
+	$entries = Entry::paginate(5);
+	return View::make('dashboard.sections.slider', compact('entries'));
+});
 
 // Session Routes
 Route::get('login',  array('as' => 'login', 'uses' => 'SessionController@create'));
@@ -170,6 +171,10 @@ Route::get('collect/categories', function(){
 Route::get('collect/entries', function(){
 
 	return Entry::all()->toArray();
+});
+Route::get('collect/entries/paginate', function(){
+
+	return Entry::paginate(5)->toArray();
 });
 
 

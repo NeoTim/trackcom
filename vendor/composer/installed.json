@@ -2434,5 +2434,51 @@
             "datetime",
             "time"
         ]
+    },
+    {
+        "name": "kmd/pagination",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mikemand/pagination.git",
+            "reference": "69b94f961d66adf4c34a18128e17201eefcc856e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mikemand/pagination/zipball/69b94f961d66adf4c34a18128e17201eefcc856e",
+            "reference": "69b94f961d66adf4c34a18128e17201eefcc856e",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "~4",
+            "php": ">=5.3.7"
+        },
+        "time": "2014-01-09 17:15:40",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+
+            ],
+            "psr-0": {
+                "Kmd\\Pagination": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Micheal Mand - KMDWebDesigns",
+                "email": "micheal@kmdwebdesigns.com"
+            }
+        ],
+        "description": "Extend Laravel 4 basic Bootstrap Pagination",
+        "keywords": [
+            "laravel",
+            "pagination"
+        ]
     }
 ]

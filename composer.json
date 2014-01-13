@@ -8,7 +8,8 @@
 		"cartalyst/sentry": "2.0.*",
 		"mockery/mockery": "dev-master@dev",
 		"phpunit/phpunit": "3.7.*",
-		"iron-io/iron_mq": "1.4.8"
+		"iron-io/iron_mq": "1.4.8",
+		"kmd/pagination": "dev-master"
 	},
 	"require-dev": {
 		"way/generators": "1.0.*@dev",

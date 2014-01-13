@@ -65,10 +65,10 @@ class TrucksController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show()
 	{
 		$trucks = $this->truck->all();
-
+		$array = array('trucks' => $trucks);
 		return $trucks->toArray();
 	}
 
