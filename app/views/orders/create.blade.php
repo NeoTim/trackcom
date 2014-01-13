@@ -125,13 +125,25 @@
 							</div>
 							<div class="col-md-6">
 						        <div class="form-group">
-						            {{ Form::label('start', 'Est Deliery', ['class' => 'control-label col-md-3']) }}
+						            {{ Form::label('est_delivery', 'Est Deliery', ['class' => 'control-label col-md-3']) }}
 						            <div class="col-md-9">
 						                {{ Form::text('est_delivery', null, array('class' => 'form-control form-control-inline input-medium date-picker')) }}
 						            </div>
 						        </div>
 							</div>
 
+						</div>
+						<div class="row">
+							<div class="col-md-6 col-md-offset-6">
+							
+						        <div class="form-group">
+						            {{ Form::label('start', 'Ready Date', ['class' => 'control-label col-md-3']) }}
+						            <div class="col-md-9">
+						                {{ Form::text('start', null, array('class' => 'form-control form-control-inline input-medium date-picker')) }}
+						            </div>
+						        </div>
+							
+							</div>
 						</div>
 						
 
@@ -230,6 +242,10 @@
 				   
 
 					$('#dmethod_id').multiSelect();
+					$.fn.datepicker.defaults.format = "mm/dd/yyyy";
+					$('.date-picker').datepicker({
+					    startDate: '-3d'
+					})
 					 
 				});   
 			</script>

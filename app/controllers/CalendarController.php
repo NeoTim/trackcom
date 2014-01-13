@@ -93,7 +93,7 @@ class CalendarController extends BaseController {
 		if(Input::get('droporder'))
 		{
 			
-			$order->start = null;
+			$order->start = 0;
 			$order->save();
 			return Response::json(array('id' => $order['id'], 'title' => $order['title'] , 'start' => $order['start'], 'dtype_id' => $order['dtype_id'], 'backgroundColor' => $order['backgroundColor']));
 		}
@@ -104,28 +104,21 @@ class CalendarController extends BaseController {
 			$order->dtype_id = Input::get('dtype_id');
 			$order->backgroundColor = $dtype['color'];
 
-			$start_day_old = Input::get('start');
-			$start_day = date("Y-m-d", strtotime($start_day_old));
+			
 			
 			$order->title = Input::get('title');
-			$order->start = $start_day;
-			if(Input::get('start') == '1969-12-31')
-			{
-				$order->start == null;
-			}
+			$order->start = Input::get('start');
+			
 			$order->save();
 			return Response::json(array('title' => $order->title, 'start' => $order->start, 'dtype_id' => $order->dtype_id, 'backgroundColor' => $order->backgroundColor));
 		}
 
-		$start_day_old = Input::get('start');
-		$start_day = date("Y-m-d", strtotime($start_day_old));
+		
+		
 		
 		$order->title = Input::get('title');
-		$order->start = $start_day;
-		if(Input::get('start') == '1969-12-31')
-		{
-			$order->start == null;
-		}
+		$order->start = Input::get('start');
+		
 		$order->backgroundColor = Input::get('backgroundColor');
 
 		$order->save();

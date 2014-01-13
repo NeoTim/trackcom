@@ -65,20 +65,20 @@
 	
 	@if ($orders->count())
 	<div class="table-responsive">
-		<table class="table table-striped table-bordered table-hover table-full-width dataTable" id="sample_editable_1" aria-describedby="sample_1_info" style="width: 1060px;">
+		<table class="table table-striped table-bordered table-hover table-full-width dataTable" id="sample_editable_1" aria-describedby="sample_1_info">
 			<thead>
 				<tr>
+					<th style="min-width:200px;">Options</th>
 					<th>ID</th>
 					<th>Customer</th>
 					<th>Number</th>
 					<th>Delivery Type</th>
 					<th>Delivery Method</th>
-					<th>Finished</th>
+					<th>Ready Date</th>
 					<th>Est Delivery</th>
 					<th>Freight</th>
 					<th>Tracking</th>
 					<th>Instructions</th>
-					<th>Options</th>
 				
 					
 				</tr>
@@ -87,37 +87,7 @@
 			<tbody>
 				@foreach ($orders as $order)
 					<tr>
-						<td>{{{$order->id}}}</td>
 						<td>
-							@if(isset($order->customer->company))
-								{{{ $order->customer->company }}}
-							@endif
-						</td>
-						<td>{{{ $order->number }}}</td>
-						<td>
-							@if($order->dtype_id == 1)
-							Metro Delivery
-							@elseif($order->dtype_id == 2)
-							Shipping
-							@elseif($order->dtype_id == 3)
-							Pickup
-							@elseif($order->dtype_id == 4)
-							Outbound Delivery
-							@endif
-							
-						</td>
-						<td>
-							@if(isset($order->dmethod->name))
-								{{{ $order->dmethod->name }}}
-							@endif
-						</td>
-						<td>{{{ $order->start }}}</td>
-						<td>{{{ $order->est_delivery }}}</td>
-						<td>{{{ $order->freight }}}</td>
-						<td>{{{ $order->tracking }}}</td>
-						<td>{{{ $order->instructions }}}</td>
-	                    
-	                    <td>
 	                    	
 	                    		
 	                    		
@@ -151,6 +121,37 @@
 							</div> 
 	                        	
 	                    </td>
+						<td>{{{$order->id}}}</td>
+						<td>
+							@if(isset($order->customer->company))
+								{{{ $order->customer->company }}}
+							@endif
+						</td>
+						<td>{{{ $order->number }}}</td>
+						<td>
+							@if($order->dtype_id == 1)
+							Metro Delivery
+							@elseif($order->dtype_id == 2)
+							Shipping
+							@elseif($order->dtype_id == 3)
+							Pickup
+							@elseif($order->dtype_id == 4)
+							Outbound Delivery
+							@endif
+							
+						</td>
+						<td>
+							@if(isset($order->dmethod->name))
+								{{{ $order->dmethod->name }}}
+							@endif
+						</td>
+						<td>{{ date("F d Y",strtotime($order->start)) }}</td>
+						<td>{{ date("F d Y",strtotime($order->est_delivery)) }}</td>
+						<td>{{{ $order->freight }}}</td>
+						<td>{{{ $order->tracking }}}</td>
+						<td>{{{ $order->instructions }}}</td>
+	                    
+	                    
 
 					</tr>
 				@endforeach

@@ -315,7 +315,7 @@
 
 			var orderID = "{{$order->id}}";
 			var orderCustomer = "{{$order->customer->company}}";
-			var method = "{{$order->dtype->name}}";
+			var method = "{{$order->dtype_id}}";
 	  		var orderDate = "{{ date('F d Y',strtotime($order->start)) }}";
 	  		var orderEntries = eval({{$order->entries}});
 

@@ -124,6 +124,16 @@
 						
 
 					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-6">
+							<div class="form-group">
+					            {{ Form::label('start', 'Finished Date', ['class' => 'control-label col-md-3']) }}
+					            <div class="col-md-9">
+					                {{ Form::text('start', $order->start, array('class' => 'form-control form-control-inline input-medium date-picker')) }}
+					            </div>
+					        </div>
+						</div>
+					</div>
 					
 
 				<hr />
@@ -209,7 +219,11 @@
 			<script>
 				jQuery(document).ready(function() {       
 	
-					$('#dmethod_id').multiSelect();				 
+					$('#dmethod_id').multiSelect();	
+					$.fn.datepicker.defaults.format = "mm/dd/yyyy";
+					$('.date-picker').datepicker({
+					    startDate: '-3d'
+					})
 				});   
 			</script>
 	<!-- END PAGLE LEVEL SCRIPTS -->
