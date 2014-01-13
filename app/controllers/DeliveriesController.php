@@ -19,13 +19,21 @@ class DeliveriesController extends BaseController {
 
 	public function index()
 	{
+		
+		$actives = array(007,11,12,13,14,33,42,88);
+		$active = DB::table('trucks')->where('active', '=', '1')
+									 ->lists('number');
+		$numbers = array_diff($actives, $active);
 		$dtypes = $this->dtype->all();
 		$dmethods = $this->dmethod->all();
 		$trucks = $this->truck->all();
 		$orders = $this->order->all();
-		$methods = $this->dmethod->listName();
+		$methods = $this->dmethod->listD();
+		$ddmethods = DB::table('dmethods')->where('dtype_id', '=', '1')
+										->lists('name', 'id');
 
-		return View::make('deliveries.index', compact('dtypes', 'dmethods', 'orders', 'trucks', 'methods'));
+		
+		return View::make('deliveries.index', compact('dtypes', 'dmethods', 'orders', 'trucks', 'methods', 'actives'));
 	}
 
 	public function creat()
@@ -47,10 +55,20 @@ class DeliveriesController extends BaseController {
 
 	public function update($id)
 	{
-		$order = $this->order->find($id);
-		$truck = $this->truck->find(Input::get('truck_id'));
-		$order->update(Input::all());
-		return Response::json(array('number' => $order->number, 'position' => $order->position, 'truck' => $truck['number'], 'dtype_id' => $order->dtype_id));
+		if(Input::get('truck_id') == 0)
+		{
+			$order = $this->order->find($id);
+			$order->truck_id = Input::get('truck_id');
+			$order->save();
+			return Response::json(array('id' => $order->id, 'number' => $order->number, 'position' => $order->position, 'dtype_id' => $order->dtype_id));
+		}
+		else
+		{
+			$order = $this->order->find($id);
+			$truck = $this->truck->find(Input::get('truck_id'));
+			$order->update(Input::all());
+			return Response::json(array('number' => $order->number, 'position' => $order->position, 'truck' => $truck['number'], 'dtype_id' => $order->dtype_id));
+		}
 	}
 
 	public function destroy()

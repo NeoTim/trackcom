@@ -49,14 +49,14 @@ class TrucksController extends BaseController {
 		if ($validation->passes())
 		{
 			$truck = $this->truck->create($input);
-			return Response::json(array('dmethod_id' => $truck->dmethod_id));
+			return Response::json(array('id' => $truck->id, 'dmethod_id' => $truck->dmethod_id, 'dmethod_name' => $truck->dmethod_name, 'driver' => $truck->driver ));
 			//return Redirect::route('trucks.index');
 		}
-
-		return Redirect::route('trucks.create')
-			->withInput()
-			->withErrors($validation)
-			->with('message', 'There were validation errors.');
+		return Response::json(array('data' => 'did not work'));
+		// return Redirect::route('trucks.create')
+		// 	->withInput()
+		// 	->withErrors($validation)
+		// 	->with('message', 'There were validation errors.');
 	}
 
 	/**
@@ -67,9 +67,9 @@ class TrucksController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$truck = $this->truck->findOrFail($id);
+		$trucks = $this->truck->all();
 
-		return View::make('trucks.show', compact('truck'));
+		return $trucks->toArray();
 	}
 
 	/**
@@ -100,17 +100,20 @@ class TrucksController extends BaseController {
 	{
 		$input = array_except(Input::all(), '_method');
 		$validation = Validator::make($input, Truck::$rules);
+		
+		$truck = $this->truck->find($id);
+		
+
 
 		if ($validation->passes())
 		{
-			$truck = $this->truck->find($id);
 			$truck->update($input);
 
-			return Response::json(array('dmethod_id' => $truck->dmethod_id, 'dmethod_name' => $truck->dmethod_name, 'driver' => $truck->driver ));
+			return Response::json(array('id' => $truck->id, 'dmethod_id' => $truck->dmethod_id, 'dmethod_name' => $truck->dmethod_name, 'driver' => $truck->driver, 'number' => $truck->number ));
 			//return Redirect::route('trucks.show', $id);
 		}
 
-			return Response::json(array('data' => 'did not work'));
+			return Response::json(array('error' => 'Please make sure the truck number is not already Selected', 'id' => $truck->id));
 		// return Redirect::route('trucks.edit', $id)
 		// 	->withInput()
 		// 	->withErrors($validation)
@@ -125,9 +128,10 @@ class TrucksController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$this->truck->find($id)->delete();
+		$truck = $this->truck->find($id);
+		$truck->delete();
 
-		return Redirect::route('trucks.index');
+		return Response::json(array('data' => 'Truck was removed'));
 	}
 
 }

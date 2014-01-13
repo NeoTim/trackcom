@@ -16,4 +16,6 @@ interface DmethodRepositoryInterface {
 
 	public function listName();
 
+	public function listD();
+
 }

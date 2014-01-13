@@ -85,4 +85,10 @@ class EloquentDmethodRepository implements DmethodRepositoryInterface
 	{
 		return \DB::table('dmethods')->lists('name', 'id');
 	}
+
+	public function listD()
+	{
+		return \DB::table('dmethods')->whereIn('dtype_id', array(1, 4))
+									 ->lists('name', 'id');
+	}
 }

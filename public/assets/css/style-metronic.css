@@ -960,30 +960,30 @@ h7 .label {
 
 .badge-primary,
 .label-primary {
-  background-color: #428bca !important;
+  background-color: #15aaff !important;
 }
 
 .label-success, 
 .badge-success {
-  background-color: #3cc051;
+  background-color: #4fa950;
   background-image: none !important;
 }
 
 .label-warning, 
 .badge-warning {
-  background-color: #fcb322;
+  background-color: #ef9e2a;
   background-image: none !important;
 }
 
 .label-danger, 
 .badge-danger {
-  background-color: #ed4e2a;
+  background-color: #ea4519;
   background-image: none !important;
 }
 
 .label-info, 
 .badge-info {
-  background-color: #57b5e3;
+  background-color: #6ab2ee;
   background-image: none !important;
 }
 
