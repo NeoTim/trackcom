@@ -18,7 +18,7 @@ interface OrderRepositoryInterface {
 
 	public function restoreOrder($id);
 
-	public function hardDelete($id);
+	public function remove($id);
 
 	public function emptyTrash();
 

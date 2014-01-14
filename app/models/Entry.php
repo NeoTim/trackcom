@@ -3,6 +3,8 @@
 class Entry extends Eloquent {
 	protected $guarded = array();
 
+	protected $softDelete = true;
+
 	public static $rules = array(
 		'order_id' => 'required',
 	);

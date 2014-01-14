@@ -142,20 +142,34 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 		$result = array();
 		$order = $this->order->withTrashed()->find($id);
 		$order->restore();
+		$order->entries()->restore();
 		if($order->save())
 		{
 			$result['success'] 	= true;
-			$result['message']	= $order['number'] . ' Was Successfully restored!!';
+			$result['message']	= 'order - ' . $order['number'] . ' Was Successfully restored!!';
 		}else{
 			$result['success'] 	= false;
-			$result['message']	= 'There was an error restoring ' . $order['number'];
+			$result['message']	= 'There was an error restoring order - ' . $order['number'];
 		}
 		return $result;
 	}
 
-	public function hardDelete($id)
+	public function remove($id)
 	{
+		$result = array();
 
+		$order = $this->order->withTrashed()->find($id);
+		
+		if($order->entries()->withTrashed()->forceDelete())
+		{
+			$order->forceDelete();
+			$result['success'] 	= true;
+			$result['message']	= 'Order - ' . $order['number'] . ' Was Successfully Deleted!!';
+		}else{
+			$result['success'] 	= false;
+			$result['message']	= 'There was an error Deleting order - ' . $order['number'];
+		}
+		return $result;
 	}
 
 	public function emptyTrash()

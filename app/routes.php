@@ -248,4 +248,5 @@ Route::controller('trashed', 'TrashedController');
 Route::post('trashed/restore-order/{id}', 'TrashedController@RestoreOrder');
 
 Route::post('orders/{id}/restore', 'OrdersController@restore');
+Route::post('orders/{id}/remove', 'OrdersController@remove');
 

@@ -211,6 +211,19 @@ class OrdersController extends BaseController {
 		}
 	}
 
+	public function remove($id)
+	{
+		$result = $this->order->remove($id);
+		if($result['success'])
+		{
+			Session::flash('success', $result['message']);
+			return Redirect::to('trashed/orders');
+		}else{
+			Session::flash('error', $result['message']);
+			return Redirect::to('trashed/orders');
+		}
+	}
+
 	
 
 }

@@ -40,13 +40,14 @@
 							  <div class="modal-dialog modal-wide">
 							    <div class="modal-content">
 							      <div class="modal-header">
-							      	{{ Form::open(array('id' => 'delete_form', 'method' => 'DELETE', 'url' => array('orders'))) }}
+							      	{{Form::open(array('url' => 'orders/' . $order->id . '/remove', 'method' => 'post'))}}
 							        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							        <h2 class="modal-title" id="myModalLabel">Confirm Delete</h2>
 							      </div>
 													
 							      <div class="modal-body">	                        	
 							      	<h4 id="">Are you sure you want to delete <strong> {{$order->number}} </strong></h4>
+							      	<h5>This Cannot be undone!</h5>
 							      </div>
 							      <div class="modal-footer">
 							      	<div class="btn-group">
