@@ -70,7 +70,8 @@ require __DIR__.'/../filters.php';
 // Require the Observables file.
 require __DIR__.'/../observables.php';
 
-require __DIR__.'/../listeners.php';
+//require __DIR__.'/../listeners.php';
+require app_path().'/listeners.php';
 
 /*
 |--------------------------------------------------------------------------

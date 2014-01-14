@@ -301,7 +301,7 @@ $(document).ready(function(){
 			cache: false,
 			success: function(data){
 				resetStatus(data);
-				console.log(data);
+				//console.log(data);
 			}
 
 		});
@@ -350,7 +350,7 @@ $(document).ready(function(){
 			}
 		});
 	}
-		function addGritter(head, message)
+	function addGritter(head, message)
 		{
 			$.gritter.add({
                 // (string | mandatory) the heading of the notification
@@ -363,7 +363,7 @@ $(document).ready(function(){
 		}
 
 // <![CDATA[
-            var socket = io.connect('http://192.184.87.145:3000');
+            var socket = io.connect('http://joels-imac.local:3000/');
             //socket.on('connect', function(data){
             //    socket.emit('subscribe', {channel:'score.update'});
             //});
@@ -382,6 +382,9 @@ $(document).ready(function(){
                 setBars(entry.id, entry.status, entry.color);
                 setStatusCount(entry.id, entry.status);
             });
+            
+ 
+// ]]>
             
  
 // ]]>

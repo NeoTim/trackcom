@@ -154,7 +154,7 @@ class ProductionController extends BaseController {
 			$message = $entry['sku'] . ' from ' . $order['title'] . ' set to priority - ' . $entry['priority'];
 			$this->activity->store($entry['sku'], 'Product from Order # ' . $order['number'] . ' updated', $message, 'production', 'update');
 		}
-		//Event::fire(UpdateEntriesEventHandler::EVENT, array($entry));	
+		Event::fire(UpdateEntriesEventHandler::EVENT, array($entry));
 		return Response::json(array(
 			'status' => $entry->status,
 			'color' => $entry->color,
