@@ -214,6 +214,7 @@
 	    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
 		    $('.selectpicker').selectpicker('mobile');
 		}
+		
 	});
 	</script>
 	<!-- END GLOBAL SCRIPTS -->
@@ -225,6 +226,11 @@
 	<script>
 	$(document).ready(function(){
 		//SetStats();
+
+		$(".dataTables_filter :input").addClass("form-control").attr('placeholder', 'Search...').appendTo(".dataTables_filter");
+		$(".dataTables_filter").addClass('input-group col-md-8 pull-right');
+		$(".dataTables_filter label").html('');
+		$("<span class='input-group-addon'><i class='fa fa-search'></span></i></button>").appendTo(".dataTables_filter");
 		var menu = "#main_top_menu";
 		
 

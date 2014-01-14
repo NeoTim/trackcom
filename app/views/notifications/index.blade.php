@@ -12,13 +12,13 @@ Notifications
 		<br />
 		<br />
 	
-	@if ($notifications->count())
+	
 		
-		<div class="table-responsive">
-		<table class="table table-striped table-bordered table-hover table-full-width dataTable" id="sample_2" aria-describedby="sample_2_info" style="width: 1060px;">
+		<div class="col-md-12">
+		<table class="table table-striped table-bordered table-hover dataTable" id="sample_2" aria-describedby="sample_2_info" >
 			<thead>
 				<tr>
-					<th>Title</th>
+					<th style="" >Title</th>
 					<th>Subject</th>
 					<th>Body</th>
 					<th style="min-width:200px; width:200px;">Options</th>
@@ -30,14 +30,10 @@ Notifications
 					<tr>
 						<td>{{{ $notification->title }}}</td>
 						<td>{{{ $notification->subject }}}</td>
-						<td>{{{ $notification->body }}}</td>
+						<td>{{{Str::limit($notification->body, $limit = 100, $end = '...')  }}}</td>
 	                    <td>
-	                        {{ Form::open(array('method' => 'DELETE', 'url' => "URL::to('notifications/' . $notification->id)")) }}
-	                        <input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden">
-	                    	
-	                        	
+	                        {{ Form::open(array('id' => 'delete_form', 'method' => 'DELETE', 'route' => array('notifications.destroy', $notification->id))) }}
 	                            {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
-	                        
 	                        {{ Form::close() }}
 	                    </td>
 					</tr>
@@ -45,7 +41,7 @@ Notifications
 			</tbody>
 		</table>
 	</div>
-	
+	@if ($notifications->count())
 	@else
 		There are no notifications
 	@endif

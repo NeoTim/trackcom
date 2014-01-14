@@ -146,8 +146,8 @@
 								{{{ $order->dmethod->name }}}
 							@endif
 						</td>
-						<td>{{ date("F d Y",strtotime($order->start)) }}</td>
-						<td>{{ date("F d Y",strtotime($order->est_delivery)) }}</td>
+						<td>{{ date("m/d/y",strtotime($order->start)) }}</td>
+						<td>{{ date("m/d/y",strtotime($order->est_delivery)) }}</td>
 						<td>{{{ $order->freight }}}</td>
 						<td>{{{ $order->tracking }}}</td>
 						<td>{{{ $order->instructions }}}</td>
