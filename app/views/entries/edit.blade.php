@@ -107,6 +107,18 @@
 	            {{ Form::label('tank', 'Tank:', ['class' => 'control-label']) }}
 	                {{ Form::text('tank', null, array('class' => 'form-control')) }}
 	            </div>
+	            <div class="col-md-3">
+			<label class="control-label">Date Ready</label>
+			<div class="input-group date form_meridian_datetime" data-date="">
+				<input type="text" name="ready_date" size="16"  class="form-control" value="{{$entry->ready_date}}">
+				<span class="input-group-btn">
+					<button class="btn default date-reset" type="button"><i class="fa fa-times"></i></button>
+				</span>
+				<span class="input-group-btn">
+					<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+				</span>
+			</div>
+		</div>
 	        </div>
 	        <!-- END BATCH AND ORDER # -->
 

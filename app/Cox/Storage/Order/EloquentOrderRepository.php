@@ -47,7 +47,10 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 				if($customer->save())
 				{
 					
-					
+					if(\Input::get('start') == " ")
+					{
+						$input['start'] = " ";
+					}
 					$input['customer_id'] = $customer->id;
 					$input['title'] = $customer->company . ' - ' . $input['number'];
 					
@@ -64,7 +67,10 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 			elseif (\Input::get('customer_id')) 
 			{
 				
-				
+				if(\Input::get('start') == " ")
+				{
+					$input['start'] = " ";
+				}
 				$customer = $this->customer->find(\Input::get('customer_id'));
 
 				$input['title'] = $customer->company . ' - ' . $input['number'];
@@ -94,7 +100,10 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 		if ($validation->passes())
 		{
 			$order = $this->order->find($id);
-			
+			if(\Input::get('start') == "")
+			{
+				$input['start'] = " ";
+			}
 			$order->update($input);
 			$this->activity->store('Order - ' . $order['number'], 'Update Order', $order['title'] . ' Was updated and stored', 'order', 'update');
 			$result['success'] = true;

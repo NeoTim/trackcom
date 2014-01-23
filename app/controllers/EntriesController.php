@@ -64,16 +64,14 @@ class EntriesController extends BaseController {
 				
 				Session::flash('success', 'This Product ' . $sku . ' has been saved to Products');
 				$this->seteventdata($result['entry']->id);
-
 				return Redirect::route('orders.show', $id);
 				
 
 			}
 			else 
 			{
-				Session::flash('success', 'You Product has been added to this order');
-				$this->entry->create($input);
-				return Redirect::route('orders.show', $id);
+				Session::flash('error', $result['message']);
+				return Redirect::back()->withInput();
 			}
 		
 		
@@ -154,7 +152,7 @@ class EntriesController extends BaseController {
 		{
 			Session::flash('success', $result['message']);
 			Event::fire(DeleteEntriesEventHandler::EVENT, array($entry));	
-			return Redirect::previouse();
+			return Redirect::back();
 		}
 		else
 		{

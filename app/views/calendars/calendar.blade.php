@@ -217,7 +217,7 @@ var Calendar = function () {
                 title = title.length == 0 ? "Untitled Event" : title;
                 id = eventid;
                 backgroundColor = bg;
-                console.log(eventid);
+                //console.log(eventid);
                 var html = $('<div id="cal_order_' + id + '" class="external-event label label-' + lc + '">' + title + '</div>');
                 jQuery(box).append(html);
                 initDrag(html);

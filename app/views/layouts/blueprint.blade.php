@@ -44,7 +44,9 @@
 	<!-- END THEME STYLES -->
 
 	@yield('extra')
-	<style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style>
+	<style type="text/css">
+	.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}
+	</style>
 	<link href="{{ asset('assets/plugins/gritter/css/jquery.gritter.css') }}" rel="stylesheet" type="text/css">
 @stop
 
@@ -65,7 +67,32 @@
 
 		<div class="page-content-wrapper">
 			<div class="page-content">
-				
+				<div class="col-md-4" style="position:absolute; z-index:22200; right:3px;">
+					<div id="success_alert" class="alert alert-success alert-dismissable" style="display:none;">
+							<button  type="button" class="close" aria-hidden="true">×</button>
+							<h3 id="success_title" ></h3><p id="success_message"> </p>
+						</div>
+						<div id="default_alert" class="alert alert-default alert-dismissable" style="display:none;">
+							<button  id="default_hide"  type="button" class="close" >×</button>
+							<h3 id="default_title" ></h3><p id="default_message"> </p>
+						</div>
+					
+					<div id="warning_alert" class="alert alert-warning alert-dismissable" style="display:none;">
+							<button  type="button" class="close"  aria-hidden="true">×</button>
+							<h3 id="warning_title" ></h3><p id="warning_message"></p>
+						</div>
+					
+					<div id="info_alert" class="alert alert-info alert-dismissable" style="display:none;">
+							<button  type="button" class="close" aria-hidden="true">×</button>
+							<h3 id="info_title" ></h3><p id="info_message"> </p>
+						</div>
+					
+					<div id="danger_alert" class="alert alert-danger alert-dismissable" style="display:none;">
+							<button  type="button" class="close"  aria-hidden="true">×</button>
+							<h3 id="danger_title" ></h3><p id="danger_message"> </p>
+						</div>
+					
+				</div>
 				
 				<!-- END PAGE HEADER-->
 				<div class="row">
@@ -126,6 +153,7 @@
 				</div>
 
 				@include('layouts.notifications')
+				
 				<!-- BEGIN HEADER WRAP -->
 		
 				<div class="clearfix"></div>
@@ -226,7 +254,13 @@
 	<script>
 	$(document).ready(function(){
 		//SetStats();
-
+		var alertD 	= "#default_alert";
+		var alertDT 	= "#default_title";
+		var alertDM 	= "#default_message";
+		var alertDH 	= "#default_hide";
+		$(alertD).click(function(){
+			$(alertD).fadeOut();
+		});
 		$(".dataTables_filter :input").addClass("form-control").attr('placeholder', 'Search...').appendTo(".dataTables_filter");
 		$(".dataTables_filter").addClass('input-group col-md-8 pull-right');
 		$(".dataTables_filter label").html('');
@@ -258,28 +292,27 @@
 
 		$(".bsControl :input").addClass("form-control");
 
-		
+	function showMessage(title, message){
+		$(alertDT).text(title);
+		$(alertDM).text(message);
+		$(alertD).fadeIn();
+	}	
 		
 // <![CDATA[
             var socket = io.connect('http://127.0.0.1:3000/');
             //socket.on('connect', function(data){
             //    socket.emit('subscribe', {channel:'score.update'});
             //});
-			 socket.on('entries.store', function (data) {
+	socket.on('entries.store', function (data) {
                 var entry = jQuery.parseJSON(data);
                 placeOrdersStatus(entry.id, entry.sku, entry.status, entry.color);
-                $.gritter.add({
-                // (string | mandatory) the heading of the notification
-                	title: entry.sku,
-                // (string | mandatory) the text inside the notification
-                	text: "Was Just Added to production"
-            	});
+              	 showMessage(entry.sku, 'Just Created');
             });
             socket.on('entries.update', function (data) {
                 var entry = jQuery.parseJSON(data);
                 $("#drop_down_status").html("");
                 var message = [];
-                SetStats();
+         
                 
                 	if(entry.status == 10)
                 	{
@@ -302,44 +335,32 @@
                 		message = "Is ready";
                 	}
 
-                $.gritter.add({
-                // (string | mandatory) the heading of the notification
-
-                	title: '<h2>' + entry.sku + '</h2>',
-                // (string | mandatory) the text inside the notification
-                	
-                	text: '<p>' + message + '</p>'
-
-            	});
+                showMessage(entry.sku, message);
             });
+	
+		//$(alertD).hide();
+	
             socket.on('entries.delete', function (data) {
                 var entry = jQuery.parseJSON(data);
                 $("li#status_menu_" + entry.id).remove();
-                $.gritter.add({
-                // (string | mandatory) the heading of the notification
-                	title: entry.sku,
-                // (string | mandatory) the text inside the notification
-                	text: "Was Just removed"
-            	});
+                showMessage(entry.sku, "Was Just removed");
+             //    $.gritter.add({
+             //    // (string | mandatory) the heading of the notification
+             //    	title: entry.sku,
+             //    // (string | mandatory) the text inside the notification
+             //    	text: "Was Just removed"
+            	// });
             });
+            
             socket.on('orders.store', function () {
-                
-                $.gritter.add({
-                // (string | mandatory) the heading of the notification
-                	title: 'order',
-                // (string | mandatory) the text inside the notification
-                	text: "Was Just added"
-            	});
+                var order = jQuery.parseJSON(data);
+                showMessage(order.title, 'Just Created' );
+              
             });
 
             socket.on('orders.delete', function (data) {
                 var order = jQuery.parseJSON(data);
-                $.gritter.add({
-                // (string | mandatory) the heading of the notification
-                	title: order.number,
-                // (string | mandatory) the text inside the notification
-                	text: "Was Just Deleted"
-            	});
+                showMessage(order.title, 'was just removed' );
             });
             
  

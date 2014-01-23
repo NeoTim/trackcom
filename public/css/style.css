@@ -3100,9 +3100,6 @@ body {
 
 
 
-/***
-Calendar with full calendar
-***/
 .external-event {
   display: inline-block ;
   cursor:move;
@@ -3280,6 +3277,115 @@ Calendar with full calendar
   .portlet.calendar .mobile .fc-content {
     margin-top: 53px;
   }
+
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0px 0px 80px rgba(0,0,0,.1);
+
+}
+
+.alert h3 {
+  margin-top: 0;
+  color: inherit;
+}
+
+.alert .alert-link {
+  font-weight: bold;
+}
+
+.alert > p,
+.alert > ul {
+  margin-bottom: 0;
+}
+
+.alert > p + p {
+  margin-top: 5px;
+}
+
+.alert-dismissable {
+  padding-right: 35px;
+}
+
+.alert-dismissable .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  color: inherit;
+}
+
+.alert-success {
+  color: #ffffff;
+  background-color: #4fa950;
+  
+}
+
+.alert-success hr {
+  border-top-color: #c9e2b3;
+}
+
+.alert-success .alert-link {
+  color: #000000;
+}
+.alert-default {
+  color: #777777;
+  background-color: rgba(258,258,258,.95);
+  border-color: #777777;
+  
+}
+
+.alert-default hr {
+  border-top-color: #c9e2b3;
+}
+
+.alert-default .alert-link {
+  color: #000000;
+}
+
+.alert-info {
+  color: #ffffff;
+  background-color: #15aaff;
+  
+}
+
+.alert-info hr {
+  border-top-color: #a6e1ec;
+}
+
+.alert-info .alert-link {
+  color: #245269;
+}
+
+.alert-warning {
+  color: #ffffff;
+  background-color: #ef9e2a;
+  
+}
+
+.alert-warning hr {
+  border-top-color: #f7e1b5;
+}
+
+.alert-warning .alert-link {
+  color: #666666;
+}
+
+.alert-danger {
+  color: #ffffff;
+  background-color: #ea4519;
+  
+}
+
+.alert-danger hr {
+  border-top-color: #e4b9c0;
+}
+
+.alert-danger .alert-link {
+  color: #000000;
+}
 
 
 

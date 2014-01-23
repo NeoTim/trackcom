@@ -448,7 +448,7 @@ return array(
     'Sub_catsTableSeeder' => $baseDir . '/app/database/seeds/Sub_catsTableSeeder.php',
     'TestCase' => $baseDir . '/app/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/Text/Template.php',
-    'TrashedCOntroller' => $baseDir . '/app/controllers/TrashedController.php',
+    'TrashedController' => $baseDir . '/app/controllers/TrashedController.php',
     'Truck' => $baseDir . '/app/models/Truck.php',
     'TrucksController' => $baseDir . '/app/controllers/TrucksController.php',
     'TrucksTableSeeder' => $baseDir . '/app/database/seeds/TrucksTableSeeder.php',

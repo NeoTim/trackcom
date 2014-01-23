@@ -63,9 +63,9 @@
 		<div class=" aligncenter">
 			<div class="btn-group aligncenter" style="text-align:center;">
 				<a href="{{ URL::to('orders')}}" class="btn btn-default"><i class="fa fa-arrow-left"></i> View all</a>
-				<a href="{{URL::route('orders.entries.create', $order->id)}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add Products</a>
-				{{ link_to_route('orders.edit', 'Edit', array($order->id), array('class' => 'btn btn-warning')) }}
-				<button class="btn btn-danger" id="DObtn_{{$order->id}}" data-toggle="modal" data-target="#delete_Order">Delete</button>
+				
+				<a href="{{URL::route('orders.edit', $order->id)}}" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a>
+				<button class="btn btn-default" id="DObtn_{{$order->id}}" data-toggle="modal" data-target="#delete_Order"><i class="fa fa-trash-o"></i> Delete</button>
 			</div>
 		                        	
 		</div>
@@ -99,11 +99,11 @@
 						</tr>
 						<tr>
 							<td>Ready By</td>
-							<td>{{ $order->start }}</td>
+							<td>{{ date("F d, Y",strtotime($order->start)) }}</td>
 						</tr>
 						<tr>
 							<td>Est Date</td>
-							<td>{{ $order->end }}</td>
+							<td>{{ date("F d, Y",strtotime($order->est_delivery)) }}</td>
 						</tr>
 						<tr>
 							<td>Freight</td>
@@ -216,7 +216,7 @@
 								<th style="width:50px;">Container</th>
 								<th style="width:50px;">Quantity</th>
 								<th>Status</th>
-								<th style="width:200px;">Options</th>
+								<th style="width:200px;"><a href="{{URL::route('orders.entries.create', $order->id)}}" class="btn btn-default"><i class="fa fa-plus"></i> Products</a></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -308,10 +308,10 @@
 		$(document).ready(function(){
 	                 
 		
-			$('#product_id').select2({
-	            placeholder: "Select an option",
-	            allowClear: true
-	        });
+		$('#product_id').select2({
+		            placeholder: "Select an option",
+		            allowClear: true
+		});
 
 			var orderID = "{{$order->id}}";
 			var orderCustomer = "{{$order->customer->company}}";
@@ -387,7 +387,7 @@
 		  			var q2 = entry.qty2;
 		  			var q3 = entry.qty3;
 		  			var ptype = entry.ptype_id;
-			  		getEntries(c1, c2, c3, q1, q2, q3, sku, id, ptype);
+			  		//getEntries(c1, c2, c3, q1, q2, q3, sku, id, ptype);
 			   		
 		   });
 		   

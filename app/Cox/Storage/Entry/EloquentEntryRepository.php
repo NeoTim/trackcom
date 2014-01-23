@@ -55,8 +55,18 @@ class EloquentEntryRepository implements EntryRepositoryInterface
 	{
 		$result = array();
 		$order = $this->order->find($input['order_id']);
-		$ptype = $this->ptype->find($input['ptype_id']);
-		$pmethod = $this->pmethod->find($input['pmethod_id']);
+		if(\Input::get('ptype_id'))
+		{
+			$ptype = $this->ptype->find($input['ptype_id']);
+		}else{
+			$result['success'] = false;
+			$result['message'] = "Please choose a production type";
+			return $result;
+		}
+		if(\Input::get('pmethod_id'))
+		{
+			$pmethod = $this->pmethod->find($input['pmethod_id']);
+		}
 		if(\Input::get('container1'))
 		{
 			$gal1 = \Input::get('container1') * \Input::get('qty1');
@@ -72,16 +82,6 @@ class EloquentEntryRepository implements EntryRepositoryInterface
 			$gal3 = \Input::get('container3') * \Input::get('qty3');
 			$input['gal3'] = $gal3;
 		}	
-		if($input['ready_date'])
-		{
-			$end_day_old = \Input::get('ready_date');
-			$end_day = date("Y-m-d H:i:s", strtotime($end_day_old));
-			$input['ready_date'] = $end_day;
-		}
-		else
-		{
-			$input['ready_date'] = null;
-		}
 		if(\Input::get('newsku'))
 		{
 			$product = new \Product;
@@ -99,6 +99,7 @@ class EloquentEntryRepository implements EntryRepositoryInterface
 
 				$this->activity->store($product->sku, 'New Product', 'Product SKU - ' . $product->sku . ' Was just Created', 'product', 'store');
 				$this->activity->store($product->sku, 'Added to Order # ' . $order['number'], $product->sku . ' Was just added to ' . $order['title'], 'entry', 'store');
+				if(\Input::get('ptype_id'))
 				if($input['ptype_id'] == 1 OR $input['ptype_id'] == 2)
 				{
 					$this->activity->store($product->sku, 'Added to production', $product->sku . ' Was just added to ' . $pmethod['name'], 'production', 'store');
@@ -150,7 +151,7 @@ class EloquentEntryRepository implements EntryRepositoryInterface
 				$gal3 = \Input::get('container3') * \Input::get('qty3');
 				$input['gal3'] = $gal3;
 			}	
-			if($input['ready_date'])
+			if(\Input::get('ready_date'))
 			{
 				$end_day_old = \Input::get('ready_date');
 				$end_day = date("Y-m-d H:i:s", strtotime($end_day_old));

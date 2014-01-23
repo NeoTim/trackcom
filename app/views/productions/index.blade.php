@@ -71,11 +71,12 @@
 							<tbody class="dropTbody" id="tbody_{{ $pmethod->id }}" style="width:100%;">
 								@foreach ($entries as $entry)
 									@if($entry->pmethod_id == $pmethod->id)
-								
+										@if($entry->ptype_id !== 3)
 										<tr class="table_tr_{{ $entry->id }}" id="{{ $entry->id }}" style="">
-											
 										</tr>
 										@endif
+
+									@endif
 								@endforeach
 							</tbody>
 						
@@ -235,7 +236,7 @@ $(document).ready(function(){
 			var temp = [
 				//'<tr class="table_tr_' + id + '" id="' + id + '" style="display:none;">',
 					
-					'<td  id="' + id + ' style="min-width:100px;">' + sku + '</td>',
+					'<td  id="' + id + '" style="min-width:100px;">' + sku + '</td>',
 					'<td style="min-width:50px; width:50px;">' + batch + '</td>',
 					'<td style="min-width:15px; width:15px;">' + tank + '</td>',
 					'<td style="min-width:30px; width:30px;">',
