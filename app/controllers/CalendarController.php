@@ -58,7 +58,7 @@ class CalendarController extends BaseController {
 	 */
 	public function show()
 	{
-		$orders = DB::table('orders')->get();
+		$orders = $this->order->all();
 		$result = array();
 		foreach ($orders as $order)
 		{
