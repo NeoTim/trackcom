@@ -349,7 +349,7 @@ $(document).ready(function(){
 		$(ESUbtn).click(function(){
 
 			if(s <= 10){
-				newdata = { status: "25", color: "warning", label: "In production"};
+				newdata = { status: "25", color: "warning", label: "Production"};
 				goAjax(id, newdata);
 			}
 			if(s == 25){
@@ -378,7 +378,7 @@ $(document).ready(function(){
 				goAjax(id, newdata);
 			}
 			if(s == 50){	
-				newdata = { status: "25", color: "warning", label: "In Production" }
+				newdata = { status: "25", color: "warning", label: "Production" }
 				goAjax(id, newdata);
 			}
 			if(s == 25){
