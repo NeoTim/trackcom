@@ -11,7 +11,7 @@
 		@yield('head')
 
 	</head>
-	<body class="page-header-fixed page-sidebar-fixed">
+	<body class="page-header-fixed">
 
 
 		@yield('body')		

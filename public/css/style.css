@@ -34,7 +34,7 @@ Form Medium Devices Up To Large Devices
   }
 
     .page-content { 
-      margin-left: 90px; 
+      /*margin-left: 90px; */
       margin-top: 0px;
       min-height: 760px; 
       padding: 55px 20px 20px 20px;
@@ -2518,13 +2518,13 @@ Custom portlet tabs
   text-shadow: 0 0 0 #fff;
 }
 .progress {
-  padding: 5px;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
+  /*padding: 5px;*/
+  /*border-radius: 10px;*/
+  /*-webkit-border-radius: 10px;*/
 }
 .progress .progress-bar {
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
+  /*border-radius: 5px;*/
+  /*-webkit-border-radius: 5px;*/
 }
 .error-page {
   border: 0 !important;
@@ -3020,7 +3020,7 @@ body {
 }
 .calendar {
   
-  border-radius: 5px;
+  
   padding: 15px;
 }
 
@@ -3061,14 +3061,15 @@ body {
 }
 
 .calendar .fc-header {
-  color: #fff;
+  color: #333333;
 }
+
 .calendar .fc-header .fc-header-title h2 {
   font-size: 24px;
   font-weight: 300;
   margin: 0;
   line-height: 1;
-  color: #fff;
+ color: #333333;
 }
 .calendar .fc-header .fc-button {
   border-radius: 0;
@@ -3076,15 +3077,28 @@ body {
 }
 .calendar .fc-header .fc-button.fc-state-default {
   
+  color: #15aaff;;
+  
 }
 .calendar .fc-header .fc-button.fc-state-active {
-  background-color: #ededed;
+    background-color: #15aaff;
+  color: #ffffff;
 }
 
 .calendar .fc-content {
   background: #fff;
-  padding: 10px;
-  border-radius: 3px;
+  border-right:none;
+  border-left:none;
+
+  border-bottom:3px solid #15aaff;
+  border-top:3px solid #15aaff;
+  /*box-shadow: 0px 2px 2px rgba(0,0,0,.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0,0,0,.3);
+  -moz-box-shadow: 0px 2px 2px rgba(0,0,0,.3);
+  -ms-box-shadow: 0px 2px 2px rgba(0,0,0,.3);
+  -o-box-shadow: 0px 2px 2px rgba(0,0,0,.3);*/
+  /*padding: 10px;*/
+  
 }
 .calendar .fc-content .fc-other-month {
   background: #eaeaea;

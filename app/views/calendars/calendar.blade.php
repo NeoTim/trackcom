@@ -60,7 +60,7 @@
                 <!-- END DRAGGABLE EVENTS PORTLET-->
             </div>
             <div class="col-md-9 col-sm-9">
-                <div id="calendar" class="has-toolbar calendar inverse">
+                <div id="calendar" class="has-toolbar calendar">
                 </div>
                 
             </div>

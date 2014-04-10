@@ -91,7 +91,11 @@ class ProductionController extends BaseController {
 	public function show($id)
 	{
         $entries = $this->entry->all();
-        return $entries->toArray();
+        $orders = $this->order->all();
+        $newArray = [];
+        $newArray[0] = $orders->toArray();
+        $newArray[1] = $entries->toArray();
+        return $newArray;
 	}
 
 	/**
@@ -120,6 +124,7 @@ class ProductionController extends BaseController {
 
 			$entry->status = Input::get('status');
 			$entry->color = Input::get('color');
+			$entry->label = Input::get('label');
 			$entry->save();
 		
 
@@ -147,18 +152,19 @@ class ProductionController extends BaseController {
 			}
 
 			$this->activity->store($entry['sku'], 'Product from Order # ' . $order['number'] . ' updated', $message, 'production', 'update');
+			Event::fire(UpdateEntriesEventHandler::EVENT, array($entry));
 		}
 		if(Input::get('priority'))
 		{
 			$entry->priority = Input::get('priority');
 			$entry->save();
-			$message = $entry['sku'] . ' from ' . $order['title'] . ' set to priority - ' . $entry['priority'];
-			$this->activity->store($entry['sku'], 'Product from Order # ' . $order['number'] . ' updated', $message, 'production', 'update');
+			//$message = $entry['sku'] . ' from ' . $order['title'] . ' set to priority - ' . $entry['priority'];
+			//$this->activity->store($entry['sku'], 'Product from Order # ' . $order['number'] . ' updated', $message, 'production', 'update');
 		}
-		Event::fire(UpdateEntriesEventHandler::EVENT, array($entry));
 		return Response::json(array(
 			'status' => $entry->status,
 			'color' => $entry->color,
+			'label' => $entry->label,
 			'id' => $entry->id, 
 			'sku' => $entry['sku'], 
 			'batch' => $entry->batch, 

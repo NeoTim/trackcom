@@ -49,6 +49,7 @@ body {
   margin: 0px !important;
   font-size:13px; 
   direction: ltr;
+  background-color: #ffffff;
 }
 
 /*
@@ -133,8 +134,8 @@ General backgrounds. Can be applied to any block or panel
 
 .bg-blue {
   background-image: none !important;
-  background-color: #4b8df8 !important;
-  border-color:#4b8df8 !important;
+  background-color: #15aaff !important;
+  border-color:#15aaff !important;
   color: #fff !important;
 }
 
@@ -565,7 +566,7 @@ Page content
   }
 
 .ie8 .page-content { 
-    margin-left: 225px; 
+    /*margin-left: 225px; */
     margin-top: 0px;
     min-height: 760px; 
     padding: 25px 20px 20px 20px;
@@ -887,7 +888,7 @@ Page content
 
 .ie8 .page-content { 
     padding: 20px;
-    margin-left: 225px; 
+    /*margin-left: 225px; */
     margin-top: 0px;
     min-height: 760px;
 }
@@ -938,8 +939,8 @@ Page breadcrumb
      -moz-border-radius: 0px;
           border-radius: 0px;
   box-shadow: none;
-  padding-right: 30px;
-  padding-left: 8px;
+  /*padding-right: 30px;*/
+  /*padding-left: 8px;*/
   margin-top: 15px;
   margin-bottom: 25px;
   border:0px !important;  
@@ -4033,4 +4034,63 @@ Responsive Flip Scroll Tables
 }
 
 
+.navbar.bg-blue .navbar-brand {
+  color:#ffffff;
+}
+.navbar.bg-blue .navbar-brand:hover {
+  color:#eeeeee;
+}
+#navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav  a.navbar-icons i {
+  
+  color:#ffffff;
+  font-size: 30px;
+   line-height: 20px;
+  
+}
+#navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav  a.dropdown-toggle {color:#ffffff;}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+  background-color: #72a5f8;
+  background: #72a5f8;
+}
+#navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav  a.navbar-icons  {
+  
+  padding-top: 14px;
+  padding-bottom: 10px;
 
+  
+}
+#navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav a:hover {
+  background-color: #72a5f8;
+  background: #72a5f8;
+  
+}
+#navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav li.active a {
+  background-color: #ffffff;
+  background: #ffffff;
+}
+#navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav li.active a i {
+  color:#15aaff;
+
+}
+
+#navbarTop.navbar.bg-blue .navbar-collapse .dropdown li.dropdown-header {
+  background-color: #eeeeee;
+  text-align: center;
+} 
+#navbarTop.navbar.bg-blue .navbar-collapse .dropdown-menu a {
+  color:#72a5f8;
+} 
+#navbarTop.navbar.bg-blue .navbar-collapse .dropdown-menu a:hover {
+  color:#ffffff;
+} 
+#navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav.top-bar a.navbar-icons { 
+ 
+}
+.nav .navebar-nav .navbar-right li {
+  padding-right:20px;
+}
+
+#navbarTop {
+  padding-right:20px;
+  border:none;
+}

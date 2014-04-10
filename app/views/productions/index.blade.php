@@ -58,10 +58,10 @@
 							<thead>
 								<tr>
 									<th style="display:none;">ID</th>
+									<th style="width:15px;">Order #</th>
 									<th style="width:100px;">Sku</th>
 									<th style="width:100px;">Date</th>
 									<th style="width:50px;">Batch</th>
-									<th style="width:15px;">Tank</th>
 									<th style="width:30px;">Containers</th>
 									<th style="width:15px;">Quantity</th>
 									<th style="width:100%;">Status</th>
@@ -91,6 +91,7 @@
 {{ Form::open(array('url' => array('entries/update'), 'id' => 'status_form', 'method' => 'put')) }}
 {{ Form::hidden('status', '', array('id' => 'input_status')) }}
 {{ Form::hidden('color', '', array('id' => 'input_color')) }}
+{{ Form::hidden('label', '', array('id' => 'input_label')) }}
 @else
 	There are no orders
 @endif
@@ -114,28 +115,40 @@ $(document).ready(function(){
 	$('.nav-tabs li:nth-child(1) a').tab('show');
 	var inputS = "#input_status";
 	var inputC = "#input_color";
+	var inputL = "#input_label";
 	var formS  = "#status_form";
 
 
 	var color = [];
 	var status = [];
+	var label = [];
 	var id = [];
 	var newid = [];
+	var order_id = [];
+	var orderNumber = [];
 	var status=[];
 	var entries = [];
+	var orders = [];
 	var ESUbtn = [];
 	var ESDbtn = [];
 	var methods = {{$pmethods}};
 	setEntries();
 
+	var each = function(array, cb){
+		for (var i = 0; i < array.length; i++) {
+			cb(array[i], i);
+		};
+	}
+
 	function setEntries(newid)
 	{
 		$.get("{{URL::to('productions/show')}}").done(function(data){
-
-			entries = eval(data);
+			orders = eval(data[0]);
+			entries = eval(data[1]);
 			$.each($(entries), function(i){
 				color = entries[i].color;
 				status = entries[i].status;
+				label = entries[i].label;
 				id = entries[i].id;
 				sku = entries[i].sku;
 				batch = entries[i].batch;
@@ -150,14 +163,22 @@ $(document).ready(function(){
 				order_id = entries[i].order_id;
 				ready_date = entries[i].ready_date;
 				setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid, ready_date, order_id);
-				setBars(id, status, color);
+				setBars(id, status, color, label);
 				setButtons(id, order_id);
 				ESUbtn = "#ESUbtn_" + id;
 				ESDbtn = "#ESDbtn_" + id;
 				statusUp(status, id, ESUbtn);
 				statusDown(status, id, ESDbtn);
+				setOrderNumber(order_id, id);
 
 			});
+
+			each(orders, function(item, index){
+				console.log(item.id);
+				//$(item.number).appendTo("#order_" + item.id);
+				$(".order_" + item.id).html(item.number);
+			});
+
 		});
 	}
 	function addEntry(data)
@@ -165,6 +186,7 @@ $(document).ready(function(){
 		var entry = jQuery.parseJSON(data);
 		color = entry.color;
 		status = entry.status;
+		label = entry.label;
 		id = entry.id;
 		sku = entry.sku;
 		batch = entry.batch;
@@ -180,12 +202,13 @@ $(document).ready(function(){
 		order_id = entry.order_id;
 		setTR(id, pmethod_id);
 		setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid, ready_date, order_id);
-		setBars(id, status, color);
+		setBars(id, status, color, label);
 		setButtons(id, order_id);
 		ESUbtn = "#ESUbtn_" + id;
 		ESDbtn = "#ESDbtn_" + id;
 		statusUp(status, id, ESUbtn);
 		statusDown(status, id, ESDbtn);
+		setOrderNumber(order_id, id);
 
 	}
 	function removeEntry(data)
@@ -200,15 +223,16 @@ $(document).ready(function(){
 
 		color = data.color;
 		status = data.status;
+		label = data.label;
 		id = data.id;
 		order_id = data.order_id;
-		setBars(id, status, color);
+		setBars(id, status, color, label);
 		setButtons(id, order_id);
 		ESUbtn = "#ESUbtn_" + id;
 		ESDbtn = "#ESDbtn_" + id;
 		statusUp(status, id, ESUbtn);
 		statusDown(status, id, ESDbtn);
-		setStatusCount(id, status);
+		//setStatusCount(id, status);
 		
 	
 	}
@@ -217,6 +241,10 @@ $(document).ready(function(){
 		var temp = ['<tr class="table_tr_' + id + '" id="' + id + '" style="display:none;"></tr>'].join('');
 			$(temp).appendTo("#tbody_" + pmethod_id).fadeIn();
 			$("#tbody_" + pmethod_id).fadeIn("fast");
+	}
+
+	function setOrderNumber(order_id, id){
+
 	}
 
 	function setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid, ready_date, order_id)
@@ -242,10 +270,10 @@ $(document).ready(function(){
 			var temp = [
 				//'<tr class="table_tr_' + id + '" id="' + id + '" style="display:none;">',
 					
+					'<td  class="order_' + order_id + '" style="min-width:100px;"></td>',
 					'<td  id="' + id + '" style="min-width:100px;">' + sku + '</td>',
 					'<td  id="' + id + '" style="min-width:100px;">' + ready_date + '</td>',
 					'<td style="min-width:50px; width:50px;">' + batch + '</td>',
-					'<td style="min-width:15px; width:15px;">' + tank + '</td>',
 					'<td style="min-width:30px; width:30px;">',
 						'<p>' + container1 + '</p>',
 						'<p>' + container2 + '</p>',
@@ -258,20 +286,20 @@ $(document).ready(function(){
 					'</td>',
 					'<td style="width:100%;">',
 						'<div clas="col-md-12">',
-							'<div class="progress progress-striped active dropStatus" id="statusBar_' + id + '">',
+							'<div class="progress active dropStatus" id="statusBar_' + id + '">',
 							'</div>',
 						'</div>',
-						'<div class="col-md-12" style="text-align:right;">',
+						/*'<div class="col-md-12" style="text-align:right;">',
 							'<div class="col-md-3">Production</div>',
 							'<div class="col-md-3">Lab</div>',
 							'<div class="col-md-3">Fill</div>',
 							'<div class="col-md-3">Complete</div>',
-						'</div>',
+						'</div>',*/
 					'</td>',
 	                '<td style="min-width:200px; width:200px;">',
 	                   '<div class="btn-group dropButtons" id="buttons_' + id + '">',
 	                    '</div>',
-	                    '<h4 id="status_show_' + id + '">' + status + '%</h4>',
+	                    /*'<h4 id="status_show_' + id + '">' + status + '%</h4>',*/
 	                '</td>'].join('');
 
 			
@@ -284,19 +312,19 @@ $(document).ready(function(){
 
 	function setButtons(id, order_id){
 		$("#buttons_" + id).html("");
-		temp = ['<button class="btn btn-primary" type="button" id="ESDbtn_' + id + '"><i class="fa fa-arrow-left"></i></button>',
-				'<button class="btn btn-danger" type="button" id="ESUbtn_' + id + '"><i class="fa fa-arrow-right"></i></button>',
-				'<a class="btn btn-default" href="{{URL::to("orders")}}/'+ order_id + '/entries/' + id+ '/edit"><i class="fa fa-link"></i></a>'].join('');
+		temp = ['<button class="btn btn-primary btn-sm" type="button" id="ESDbtn_' + id + '"><i class="fa fa-arrow-left"></i></button>',
+				'<button class="btn btn-danger btn-sm" type="button" id="ESUbtn_' + id + '"><i class="fa fa-arrow-right"></i></button>',
+				'<a class="btn btn-default btn-sm" href="{{URL::to("orders")}}/'+ order_id + '/entries/' + id+ '/edit"><i class="fa fa-link"></i></a>'].join('');
 		$(temp).appendTo("#buttons_" + id);
 	}
 	function setStatusCount(id, status)
 	{
-		$("#status_show_" + id).text(status + "%");
+		/*$("#status_show_" + id).text(status + "%");*/
 	}
 
-	function setBars(id, status, color)
+	function setBars(id, status, color, label)
 	{
-		var temp=["<div class='progress-bar progress-bar-" + color + "' role='progressbar' aria-valuenow='" + status + "' aria-valuemin='0' aria-valuemax='100' style='width: " + status + "%'></div>"].join('');
+		var temp=["<div class='progress-bar progress-bar-" + color + "' role='progressbar' aria-valuenow='" + status + "' aria-valuemin='0' aria-valuemax='100' style='width: " + status + "%'>" + label + " &nbsp &nbsp" + status + "%</div>"].join('');
 		//$("#progressBar_" + data.id)
 		$("#statusBar_" + id).html(temp);
 	}
@@ -321,19 +349,19 @@ $(document).ready(function(){
 		$(ESUbtn).click(function(){
 
 			if(s <= 10){
-				newdata = { status: "25", color: "warning" };
+				newdata = { status: "25", color: "warning", label: "In production"};
 				goAjax(id, newdata);
 			}
 			if(s == 25){
-				newdata = { status: "50", color: "default" };
+				newdata = { status: "50", color: "default", label: "Lab"};
 				goAjax(id, newdata);
 			}
 			if(s == 50){
-				newdata = { status: "75", color: "info" };
+				newdata = { status: "75", color: "info", label: "Filling"};
 				goAjax(id, newdata);
 			}
 			if(s == 75){
-				newdata = { status: "100", color: "success" };
+				newdata = { status: "100", color: "success", label: "Complete"};
 				goAjax(id, newdata);
 			}
 		});
@@ -342,19 +370,19 @@ $(document).ready(function(){
 	{
 		$(ESDbtn).click(function(){
 			if(s >= 100){
-				newdata = { status: "75", color: "info" };
+				newdata = { status: "75", color: "info",  label: "Filling"};
 				goAjax(id, newdata);
 			}
 			if(s == 75){
-				newdata = { status: "50", color: "default" }
+				newdata = { status: "50", color: "default", label: "Lab" }
 				goAjax(id, newdata);
 			}
 			if(s == 50){	
-				newdata = { status: "25", color: "warning" }
+				newdata = { status: "25", color: "warning", label: "In Production" }
 				goAjax(id, newdata);
 			}
 			if(s == 25){
-				newdata = { status: "10", color: "danger" }
+				newdata = { status: "10", color: "danger", label: "Hold" }
 				goAjax(id, newdata);
 			}
 		});
@@ -388,8 +416,8 @@ $(document).ready(function(){
 
             socket.on('entries.update', function (data) {
             	var entry = jQuery.parseJSON(data);
-                setBars(entry.id, entry.status, entry.color);
-                setStatusCount(entry.id, entry.status);
+                setBars(entry.id, entry.status, entry.color, entry.label);
+                //setStatusCount(entry.id, entry.status);
             });
             
  

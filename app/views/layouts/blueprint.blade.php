@@ -38,7 +38,7 @@
 	<link href="{{ asset('css/docs.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
 	<link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
 	<link href="{{ asset('js/boot-select/bootstrap-select.css') }}" rel="stylesheet" type="text/css" id="style_color"/>
-	
+	<link href="{{ asset('css/fullcalendar.css') }}" rel="stylesheet" type="text/css"/>
 
 
 	<!-- END THEME STYLES -->
@@ -56,16 +56,12 @@
 
 	<div class="clearfix"></div>
 
-	<div class="page-container">
-		
-			@include('layouts.menus.sidebar')
-		
+	<!-- <div class="page-container"> -->
+	
 
-		@yield('page_header')
 
-		
-
-		<div class="page-content-wrapper">
+		@yield('page_header'); 
+		<!-- <div class="page-content-wrapper"> -->
 			<div class="page-content">
 				<div class="col-md-4" style="position:fixed; z-index:22200; right:3px;">
 					<div id="success_alert" class="alert alert-success alert-dismissable" style="display:none;">
@@ -95,7 +91,7 @@
 				</div>
 				
 				<!-- END PAGE HEADER-->
-				<div class="row">
+				<!-- <div class="row">
 
 					<div class="col-md-12">
 
@@ -150,7 +146,7 @@
 
 					</div>
 
-				</div>
+				</div> -->
 
 				@include('layouts.notifications')
 				
@@ -170,11 +166,11 @@
 				<!-- END CONTENT WRAP -->
 
 			</div>
-		</div>
+		<!-- </div> -->
 
 
 
-	</div>
+	<!-- </div> -->
 
 @stop
 
