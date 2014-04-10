@@ -57,7 +57,7 @@ class ProductionController extends BaseController {
 		$orders = $this->order->all();
 		$pmethods = $this->pmethod->all();
 		$ptypes = $this->ptype->all();
-		$entries = DB::table('entries')->orderBy('priority', 'asc')->get();
+		$entries = DB::table('entries')->where('deleted_at', '=', null)->orderBy('priority', 'asc')->get();
 		//print_r($entries);
        return View::make('productions.index', compact('orders', 'pmethods', 'ptypes', 'entries'));
 	}
@@ -90,7 +90,8 @@ class ProductionController extends BaseController {
 	 */
 	public function show($id)
 	{
-        return View::make('productions.show');
+        $entries = $this->entry->all();
+        return $entries->toArray();
 	}
 
 	/**

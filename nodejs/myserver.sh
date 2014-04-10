@@ -1,5 +1,5 @@
-cd /Applications/MAMP/htdocs/repos/trackcom/nodejs/Redis/src
+cd /var/www/trackcom/nodejs/Redis/src
 ./redis-server &
 
-cd /Applications/MAMP/htdocs/repos/trackcom/nodejs
+cd /var/www/trackcom/nodejs
 node server.js &

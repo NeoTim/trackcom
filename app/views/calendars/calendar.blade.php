@@ -288,6 +288,8 @@ var Calendar = function () {
                 slotMinutes: 15,
                 editable: true,
                 droppable: true, // this allows things to be dropped onto the calendar !!!
+                //hiddenDays: [ 1,3,5 ],
+                weekends: false,
                 drop: function (date, allDay, jsEvent, ui) { // this function is called when something is dropped
                     
                     // retrieve the dropped element's stored Event Object

@@ -59,6 +59,7 @@
 								<tr>
 									<th style="display:none;">ID</th>
 									<th style="width:100px;">Sku</th>
+									<th style="width:100px;">Date</th>
 									<th style="width:50px;">Batch</th>
 									<th style="width:15px;">Tank</th>
 									<th style="width:30px;">Containers</th>
@@ -71,7 +72,7 @@
 							<tbody class="dropTbody" id="tbody_{{ $pmethod->id }}" style="width:100%;">
 								@foreach ($entries as $entry)
 									@if($entry->pmethod_id == $pmethod->id)
-										@if($entry->ptype_id !== 3)
+										@if($entry->ptype_id !== 3 OR $entry->ptype_id !== 4)
 										<tr class="table_tr_{{ $entry->id }}" id="{{ $entry->id }}" style="">
 										</tr>
 										@endif
@@ -129,7 +130,7 @@ $(document).ready(function(){
 
 	function setEntries(newid)
 	{
-		$.get("{{URL::to('collect/entries')}}").done(function(data){
+		$.get("{{URL::to('productions/show')}}").done(function(data){
 
 			entries = eval(data);
 			$.each($(entries), function(i){
@@ -146,9 +147,11 @@ $(document).ready(function(){
 				qty2 = entries[i].qty2;
 				qty3 = entries[i].qty3;
 				pmethod_id = entries[i].pmethod_id;
-				setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid);
+				order_id = entries[i].order_id;
+				ready_date = entries[i].ready_date;
+				setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid, ready_date, order_id);
 				setBars(id, status, color);
-				setButtons(id);
+				setButtons(id, order_id);
 				ESUbtn = "#ESUbtn_" + id;
 				ESDbtn = "#ESDbtn_" + id;
 				statusUp(status, id, ESUbtn);
@@ -172,11 +175,13 @@ $(document).ready(function(){
 		qty1 = entry.qty1;
 		qty2 = entry.qty2;
 		qty3 = entry.qty3;
+		ready_date = entry.ready_date;
 		pmethod_id = entry.pmethod_id;
+		order_id = entry.order_id;
 		setTR(id, pmethod_id);
-		setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid);
+		setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid, ready_date, order_id);
 		setBars(id, status, color);
-		setButtons(id);
+		setButtons(id, order_id);
 		ESUbtn = "#ESUbtn_" + id;
 		ESDbtn = "#ESDbtn_" + id;
 		statusUp(status, id, ESUbtn);
@@ -196,8 +201,9 @@ $(document).ready(function(){
 		color = data.color;
 		status = data.status;
 		id = data.id;
+		order_id = data.order_id;
 		setBars(id, status, color);
-		setButtons(id);
+		setButtons(id, order_id);
 		ESUbtn = "#ESUbtn_" + id;
 		ESDbtn = "#ESDbtn_" + id;
 		statusUp(status, id, ESUbtn);
@@ -213,7 +219,7 @@ $(document).ready(function(){
 			$("#tbody_" + pmethod_id).fadeIn("fast");
 	}
 
-	function setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid)
+	function setTDS(id, sku, batch, tank, container1, container2, container3, qty1, qty2, qty3, pmethod_id, newid, ready_date, order_id)
 	{	
 		 if(container1 == 0 ){
 		 	 container1 = "";
@@ -237,6 +243,7 @@ $(document).ready(function(){
 				//'<tr class="table_tr_' + id + '" id="' + id + '" style="display:none;">',
 					
 					'<td  id="' + id + '" style="min-width:100px;">' + sku + '</td>',
+					'<td  id="' + id + '" style="min-width:100px;">' + ready_date + '</td>',
 					'<td style="min-width:50px; width:50px;">' + batch + '</td>',
 					'<td style="min-width:15px; width:15px;">' + tank + '</td>',
 					'<td style="min-width:30px; width:30px;">',
@@ -275,10 +282,11 @@ $(document).ready(function(){
 	
 	}
 
-	function setButtons(id){
+	function setButtons(id, order_id){
 		$("#buttons_" + id).html("");
 		temp = ['<button class="btn btn-primary" type="button" id="ESDbtn_' + id + '"><i class="fa fa-arrow-left"></i></button>',
-				'<button class="btn btn-danger" type="button" id="ESUbtn_' + id + '"><i class="fa fa-arrow-right"></i></button>'].join('');
+				'<button class="btn btn-danger" type="button" id="ESUbtn_' + id + '"><i class="fa fa-arrow-right"></i></button>',
+				'<a class="btn btn-default" href="{{URL::to("orders")}}/'+ order_id + '/entries/' + id+ '/edit"><i class="fa fa-link"></i></a>'].join('');
 		$(temp).appendTo("#buttons_" + id);
 	}
 	function setStatusCount(id, status)
@@ -364,7 +372,7 @@ $(document).ready(function(){
 		}
 
 // <![CDATA[
-            var socket = io.connect('http://joels-imac.local:3000/');
+            var socket = io.connect('http://192.184.87.145:3000/');
             //socket.on('connect', function(data){
             //    socket.emit('subscribe', {channel:'score.update'});
             //});

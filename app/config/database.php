@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'coatingscom',
+			'database'  => 'test1',
 			'username'  => 'root',
 			'password'  => 'root',
 			'charset'   => 'utf8',
@@ -114,7 +114,7 @@ return array(
 		'cluster' => false,
 
 		'default' => array(
-			'host'     => '127.0.0.1',
+			'host'     => '192.184.87.145',
 			'port'     => 6379,
 			'database' => 0,
 		),

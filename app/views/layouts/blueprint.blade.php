@@ -67,7 +67,7 @@
 
 		<div class="page-content-wrapper">
 			<div class="page-content">
-				<div class="col-md-4" style="position:absolute; z-index:22200; right:3px;">
+				<div class="col-md-4" style="position:fixed; z-index:22200; right:3px;">
 					<div id="success_alert" class="alert alert-success alert-dismissable" style="display:none;">
 							<button  type="button" class="close" aria-hidden="true">×</button>
 							<h3 id="success_title" ></h3><p id="success_message"> </p>
@@ -299,7 +299,7 @@
 	}	
 		
 // <![CDATA[
-            var socket = io.connect('http://127.0.0.1:3000/');
+            var socket = io.connect('http://192.184.87.145:3000/');
             //socket.on('connect', function(data){
             //    socket.emit('subscribe', {channel:'score.update'});
             //});

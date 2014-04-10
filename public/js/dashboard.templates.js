@@ -28,7 +28,7 @@ jQuery.extend
             get_notifies_temp: function(label, title, subject, body)
             {
                 var temp = [
-                    '<blockquote class=" alert goonote note-' + label + '"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h2 class="block">',
+                    '<blockquote class=" alert alert-' + label + '"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h2 class="block">',
                     title,
                     '<small style="font-size:12px;">',
                     subject,
