@@ -53,7 +53,7 @@
 				
 			</p>
 			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-hover table-full-width dataTable" id="table_{{$pmethod->id}}" aria-describedby="sample_2_info" style="width: 1060px;">
+				<table class="table table-striped table-bordered table-hover table-full-width dataTable" id="table_{{$pmethod->id}}" aria-describedby="sample_2_info" style="width: 1060px; font-weight:bold; font-size:13px; letter-spacing:1px;">
 					
 							<thead>
 								<tr>
