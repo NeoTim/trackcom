@@ -4050,8 +4050,8 @@ Responsive Flip Scroll Tables
 }
 #navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav  a.dropdown-toggle {color:#ffffff;}
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
-  background-color: #72a5f8;
-  background: #72a5f8;
+  background-color: #5bc1fb;
+  background: #5bc1fb;
 }
 #navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav  a.navbar-icons  {
   
@@ -4061,8 +4061,8 @@ Responsive Flip Scroll Tables
   
 }
 #navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav a:hover {
-  background-color: #72a5f8;
-  background: #72a5f8;
+  background-color: #5bc1fb;
+  background: #5bc1fb;
   
 }
 #navbarTop.navbar.bg-blue .navbar-collapse .navbar-nav li.active a {
@@ -4079,7 +4079,7 @@ Responsive Flip Scroll Tables
   text-align: center;
 } 
 #navbarTop.navbar.bg-blue .navbar-collapse .dropdown-menu a {
-  color:#72a5f8;
+  color:#5bc1fb;
 } 
 #navbarTop.navbar.bg-blue .navbar-collapse .dropdown-menu a:hover {
   color:#ffffff;

@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'test1',
+			'database'  => 'trackcom',
 			'username'  => 'root',
 			'password'  => 'root',
 			'charset'   => 'utf8',
