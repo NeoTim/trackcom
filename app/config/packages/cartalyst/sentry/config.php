@@ -186,7 +186,7 @@ return array(
 		|
 		*/
 
-		'attempt_limit' => 5,
+		'attempt_limit' => 15,
 
 		/*
 		|--------------------------------------------------------------------------
@@ -200,7 +200,7 @@ return array(
 		|
 		*/
 
-		'suspension_time' => 15,
+		'suspension_time' => 5,
 
 	),
 
