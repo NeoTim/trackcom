@@ -35,6 +35,10 @@ class Order extends Eloquent {
 	{
 		return $this->belongsTo('Category');
 	}
+	public function grp()
+	{
+		return $this->belongsTo('Grp');
+	}
 	protected static function boot() {
         parent::boot();
 

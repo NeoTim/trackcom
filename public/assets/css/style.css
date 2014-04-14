@@ -4095,3 +4095,10 @@ Responsive Flip Scroll Tables
   padding-right:20px;
   border:none;
 }
+
+.colorpicker .dropdown-menu li > a {
+  padding: 8px 0 8px 13px;
+}
+.pont {
+  cursor: pointer;
+}

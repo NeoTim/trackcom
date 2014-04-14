@@ -2,6 +2,8 @@
 
 use Cox\Storage\Order\OrderRepositoryInterface as Order;
 use Cox\Storage\Dtype\DtypeRepositoryInterface as Dtype;
+use Cox\Storage\Customer\CustomerRepositoryInterface as Customer;
+use Cox\Storage\Grp\GrpRepositoryInterface as Grp;
 
 class CalendarController extends BaseController {
 
@@ -13,10 +15,12 @@ class CalendarController extends BaseController {
 	 * @return Response
 	 */
 
-	public function __construct(Order $order, Dtype $dtype)
+	public function __construct(Order $order, Dtype $dtype, Customer $customer, Grp $grp)
 	{
 		$this->order = $order;
 		$this->dtype = $dtype;
+		$this->customer = $customer;
+		$this->grp = $grp;
 		//$this->beforeFilter('csrf', array('on' => 'post'));
 
 		// Set up Auth Filters
@@ -27,7 +31,9 @@ class CalendarController extends BaseController {
 	{
 		$orders = $this->order->all();
 		$dtypes = $this->dtype->all();
-        return View::make('calendars.calendar', compact('orders', 'dtypes'));
+		$customers = $this->customer->all();
+		$grps = $this->grp->all();
+        return View::make('calendars.calendar', compact('orders', 'dtypes', 'customers', 'grps'));
 	}
 
 	/**
@@ -62,7 +68,7 @@ class CalendarController extends BaseController {
 		$result = array();
 		foreach ($orders as $order)
 		{
-		    $result[] =  array('id' => $order->id, 'title' => $order->title, 'start' => $order->start, 'backgroundColor' => $order->backgroundColor, 'dtype_id' => $order->dtype_id);
+		    $result[] =  array('id' => $order->id, 'title' => $order->title, 'start' => $order->start, 'backgroundColor' => $order->backgroundColor, 'dtype_id' => $order->dtype_id, 'grp_id' => $order->grp_id);
 		    
 		    
 		}
@@ -116,13 +122,27 @@ class CalendarController extends BaseController {
 		
 		
 		
-		$order->title = Input::get('title');
-		$order->start = Input::get('start');
+		//$order->title = Input::get('title');
+		//$order->start = Input::get('start');
 		
-		$order->backgroundColor = Input::get('backgroundColor');
+		//$order->backgroundColor = Input::get('backgroundColor');
+		if(Input::get('full')){
+			$order->number = Input::get('number');
+			$order->grp_id = Input::get('grp_id');
+			$order->save();
+			return $order;
+		} elseif(Input::get('grp_id')){
+			$order->grp_id = Input::get('grp_id');
+			$order->save();
+			
+			return $order;
+		}
 
-		$order->save();
-		return Response::json(array('title' => $order->title, 'start' => $order->start, 'backgroundColor' => $order->backgroundColor));
+		if($order->save(Input::all())){
+
+			
+		}
+		//return Response::json(array('title' => $order->title, 'start' => $order->start, 'backgroundColor' => $order->backgroundColor));
 	}
 
 	/**

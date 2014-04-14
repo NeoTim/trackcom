@@ -400,7 +400,7 @@ $(document).ready(function(){
 		}
 
 // <![CDATA[
-            var socket = io.connect('http://192.184.87.145:3000/');
+            var socket = io.connect('http://192.184.87.146:3000/');
             //socket.on('connect', function(data){
             //    socket.emit('subscribe', {channel:'score.update'});
             //});

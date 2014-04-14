@@ -16,4 +16,9 @@ class Truck extends Eloquent {
 		return $this->hasMany('Order');
 	}
 
+	public function grps()
+	{
+		return $this->hasMany('Grp');
+	}
+
 }

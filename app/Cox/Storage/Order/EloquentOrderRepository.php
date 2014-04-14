@@ -64,7 +64,7 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 					return $result;
 				}
 			}
-			elseif (\Input::get('customer_id')) 
+			elseif (\Input::get('customer_id'))
 			{
 				
 				if(\Input::get('start') == " ")

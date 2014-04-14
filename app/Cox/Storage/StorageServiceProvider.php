@@ -75,6 +75,10 @@ class StorageServiceProvider extends ServiceProvider
             'Cox\Storage\Notification\NotificationRepositoryInterface',
             'Cox\Storage\Notification\EloquentNotificationRepository'
         );
+        $this->app->bind(
+            'Cox\Storage\Grp\GrpRepositoryInterface',
+            'Cox\Storage\Grp\EloquentGrpRepository'
+        );
 
 	}	
 }

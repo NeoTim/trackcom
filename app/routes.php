@@ -176,6 +176,11 @@ Route::get('collect/entries/paginate', function(){
 
 	return Entry::paginate(5)->toArray();
 });
+Route::get('collect/group/orders/{id}', function($id){
+	$orders = DB::table('orders')->where('grp_id', '=', $id)->get();
+	//print_r($orders);
+	return $orders;
+});
 
 
 Route::get('umessages/inbox', 'UmessagesController@inbox');
@@ -242,6 +247,8 @@ Route::resource('umessages', 'UmessagesController');
 Route::resource('notifications', 'NotificationsController');
 
 Route::resource('trucks', 'TrucksController');
+
+Route::resource('grps', 'GrpsController');
 
 
 Route::controller('trashed', 'TrashedController');

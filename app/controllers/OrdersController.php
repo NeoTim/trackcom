@@ -40,7 +40,7 @@ class OrdersController extends BaseController {
 		$this->ptype = $ptype;
 		$this->pmethod = $pmethod;
 		$this->product = $product;
-		$this->beforeFilter('csrf', array('on' => 'post'));
+		//$this->beforeFilter('csrf', array('on' => 'post'));
 
 		// Set up Auth Filters
 		$this->beforeFilter('auth', array('only' => array('change')));
