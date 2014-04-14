@@ -142,7 +142,7 @@
 			<div class="btn-group">
 				<button data-toggle="modal" data-target="#addOrderModal" type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Order</button>
 				<button data-toggle="modal" data-target="#addGroupModal" type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Group</button>
-				<button data-toggle="modal" data-target="#addTruckModal" type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Truck</button>
+				<!-- <button data-toggle="modal" data-target="#addTruckModal" type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Truck</button> -->
 				
 			</div>
 			<h4>Draggable Groups</h4>
@@ -1011,21 +1011,21 @@
 			<p>
 				<input type='checkbox' id='drop-remove' />
 				<label for='drop-remove'>remove after drop</label>
-				<label  for=''>&nbsp &nbsp<a class="point" id="allOrders"> All Orders</a></label>
+				<!-- <label  for=''>&nbsp &nbsp<a class="point" id="allOrders"> All Orders</a></label> -->
 			</p>
 			
 			<hr>
-			<h4>Draggable Trucks</h4>
+			<!-- <h4>Draggable Trucks</h4>
 			<div class="clearfix"></div>
 			<ul id="ex_events" class="list-group">
-				<!-- <div class='external-event'>Hello</div> -->
+				
 			</ul>
 			<div class="clearfix"></div>
 			<p>
 				<input type='checkbox' id='drop-remove' />
 				<label for='drop-remove'>remove after drop</label>
 
-			</p>
+			</p> -->
 		</div>
 	</div>
 	<div class="col-md-6">
