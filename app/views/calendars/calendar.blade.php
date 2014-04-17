@@ -106,22 +106,22 @@
 		width: 100%;
 	}
 	 #list img
-        {
-            width: 50px;
-            height: 55px;
-        }
-        #list div
-        {
-            margin-top: -35px;
-            margin-left: 80px;
-        }
-        .jqx-listmenu-item
-        {
-            
-            
-        }
-        #sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
-        #sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+				{
+						width: 50px;
+						height: 55px;
+				}
+				#list div
+				{
+						margin-top: -35px;
+						margin-left: 80px;
+				}
+				.jqx-listmenu-item
+				{
+						
+						
+				}
+				#sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
+				#sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
 
 				</style>
 
@@ -140,869 +140,13 @@
 		<div id='external-events'>
 			<br>
 			<div class="btn-group">
-				<button data-toggle="modal" data-target="#addOrderModal" type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Order</button>
+				<button id="addOrderBtn" type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Order</button>
 				<button data-toggle="modal" data-target="#addGroupModal" type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Group</button>
 				<!-- <button data-toggle="modal" data-target="#addTruckModal" type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Truck</button> -->
 				
 			</div>
 			<h4>Draggable Groups</h4>
 			<div class="clearfix"></div>
-<!-- <ul id="list" data-role="listmenu">
-        <li>
-            <img src="{{ asset('images/andrew.png') }}" alt="" /><div>
-                Andrew Fuller</div>
-            <ul data-role="listmenu">
-                <li>
-                    <div style="padding: 5px;" data-role="content">
-                        <table>
-                            <tr>
-                                <td>
-                                    <img width="50" height="50" src="{{ asset('images/andrew.png') }}" alt="" />
-                                </td>
-                                <td>
-                                    <b>Andrew Fuller</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Title
-                                </td>
-                                <td>
-                                    Sales Representative
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Notes
-                                </td>
-                                <td>
-                                    "Andrew received his BTS commercial in 1974 and a Ph.D. in international marketing
-                                    from the University of Dallas in 1981. He is fluent in French and Italian and reads
-                                    German. He joined the company as a sales representative, was promoted to sales manager
-                                    in January 1992 and to vice president of sales in March 1993. Andrew is a member
-                                    of the Sales Management Roundtable, the Seattle Chamber of Commerce, and the Pacific
-                                    Rim Importers Association.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Birth Date
-                                </td>
-                                <td>
-                                    19-Feb-52
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Hire Date
-                                </td>
-                                <td>
-                                    14-Aug-92
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Home Phone
-                                </td>
-                                <td>
-                                    (206) 555-9482
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Address
-                                </td>
-                                <td>
-                                    908 W. Capital Way.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Postal Code
-                                </td>
-                                <td>
-                                    98401
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    City
-                                </td>
-                                <td>
-                                    Tacoma
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Country
-                                </td>
-                                <td>
-                                    USA
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <img src="{{ asset('images/anne.png') }}" alt="" /><div>
-                Anne Dodsworth</div>
-            <ul data-role="listmenu">
-                <li>
-                    <div style="padding: 5px;" data-role="content">
-                        <table>
-                            <tr>
-                                <td>
-                                    <img width="50" height="50" src="{{ asset('images/anne.png') }}" alt="" />
-                                </td>
-                                <td>
-                                    <b>Anne Dodsworth</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Title
-                                </td>
-                                <td>
-                                    Inside Sales Coordinator
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Notes
-                                </td>
-                                <td>
-                                    Anne has a BA degree in English from St. Lawrence College. She is fluent in French
-                                    and German.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Birth Date
-                                </td>
-                                <td>
-                                    27-Jan-66
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Hire Date
-                                </td>
-                                <td>
-                                    15-Nov-94
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Home Phone
-                                </td>
-                                <td>
-                                    (71) 555-5598
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Address
-                                </td>
-                                <td>
-                                    7 Houndstooth Rd.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Postal Code
-                                </td>
-                                <td>
-                                    WG2 7LT
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    City
-                                </td>
-                                <td>
-                                    London
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Country
-                                </td>
-                                <td>
-                                    UK
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <img src="{{ asset('images/janet.png') }}" alt="" /><div>
-                Janet Leverling</div>
-            <ul data-role="listmenu">
-                <li>
-                    <div style="padding: 5px;" data-role="content">
-                        <table>
-                            <tr>
-                                <td>
-                                    <img width="50" height="50" src="{{ asset('images/janet.png') }}" alt="" />
-                                </td>
-                                <td>
-                                    <b>Janet Leverling</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Title
-                                </td>
-                                <td>
-                                    Sales Representative
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Notes
-                                </td>
-                                <td>
-                                    Janet has a BS degree in chemistry from Boston College (1984). She has also completed
-                                    a certificate program in food retailing management. Janet was hired as a sales associate
-                                    in 1991 and promoted to sales representative in February 1992.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Birth Date
-                                </td>
-                                <td>
-                                    27-Jan-69
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Hire Date
-                                </td>
-                                <td>
-                                    15-Nov-94
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Home Phone
-                                </td>
-                                <td>
-                                    (71) 555-4444
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Address
-                                </td>
-                                <td>
-                                    Miner Rd.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Postal Code
-                                </td>
-                                <td>
-                                    WG2 7LT
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    City
-                                </td>
-                                <td>
-                                    London
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Country
-                                </td>
-                                <td>
-                                    UK
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <img src="{{ asset('images/laura.png') }}" alt="" /><div>
-                Laura Callahan</div>
-            <ul data-role="listmenu">
-                <li>
-                    <div style="padding: 5px;" data-role="content">
-                        <table>
-                            <tr>
-                                <td>
-                                    <img width="50" height="50" src="{{ asset('images/laura.png') }}" alt="" />
-                                </td>
-                                <td>
-                                    <b>Laura Callahan</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Title
-                                </td>
-                                <td>
-                                    Sales Representative
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Notes
-                                </td>
-                                <td>
-                                    Laura received a BA in psychology from the University of Washington. She has also
-                                    completed a course in business French. She reads and writes French.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Birth Date
-                                </td>
-                                <td>
-                                    27-Jan-66
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Hire Date
-                                </td>
-                                <td>
-                                    15-Nov-94
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Home Phone
-                                </td>
-                                <td>
-                                    (71) 555-4444
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Address
-                                </td>
-                                <td>
-                                    7 Houndstooth Rd.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Postal Code
-                                </td>
-                                <td>
-                                    WG2 7LT
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    City
-                                </td>
-                                <td>
-                                    London
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Country
-                                </td>
-                                <td>
-                                    UK
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <img src="{{ asset('images/margaret.png') }}" alt="" /><div>
-                Margaret Peacock</div>
-            <ul data-role="listmenu">
-                <li>
-                    <div style="padding: 5px;" data-role="content">
-                        <table>
-                            <tr>
-                                <td>
-                                    <img width="50" height="50" src="{{ asset('images/margaret.png') }}" alt="" />
-                                </td>
-                                <td>
-                                    <b>Margaret Peacock</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Title
-                                </td>
-                                <td>
-                                    Vice President, Sales
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Notes
-                                </td>
-                                <td>
-                                    Margaret holds a BA in English literature from Concordia College (1958) and an MA
-                                    from the American Institute of Culinary Arts (1966). She was assigned to the London
-                                    office temporarily from July through November 1992.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Birth Date
-                                </td>
-                                <td>
-                                    19-Sep-37
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Hire Date
-                                </td>
-                                <td>
-                                    17-Oct-93
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Home Phone
-                                </td>
-                                <td>
-                                    (206) 555-8122
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Address
-                                </td>
-                                <td>
-                                    4110 Old Redmond Rd.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Postal Code
-                                </td>
-                                <td>
-                                    98052
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    City
-                                </td>
-                                <td>
-                                    Redmond
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Country
-                                </td>
-                                <td>
-                                    USA
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <img src="{{ asset('images/michael.png') }}" alt="" /><div>
-                Michael Suyama</div>
-            <ul data-role="listmenu">
-                <li>
-                    <div style="padding: 5px;" data-role="content">
-                        <table>
-                            <tr>
-                                <td>
-                                    <img width="50" height="50" src="{{ asset('images/michael.png') }}" alt="" />
-                                </td>
-                                <td>
-                                    <b>Michael Suyama</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Title
-                                </td>
-                                <td>
-                                    Sales Representative
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Notes
-                                </td>
-                                <td>
-                                    Michael is a graduate of Sussex University (MA, economics, 1983) and the University
-                                    of California at Los Angeles (MBA, marketing, 1986). He has also taken the courses
-                                    'Multi-Cultural Selling' and 'Time Management for the Sales Professional.' He is
-                                    fluent in Japanese and can read and write French, Portuguese, and Spanish.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Birth Date
-                                </td>
-                                <td>
-                                    02-Jul-63
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Hire Date
-                                </td>
-                                <td>
-                                    05-June-96
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Home Phone
-                                </td>
-                                <td>
-                                    (71) 555-4848
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Address
-                                </td>
-                                <td>
-                                    Coventry House
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Postal Code
-                                </td>
-                                <td>
-                                    EC2 7JR
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    City
-                                </td>
-                                <td>
-                                    London
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Country
-                                </td>
-                                <td>
-                                    UK
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <img src="{{ asset('images/nancy.png') }}" alt="" /><div>
-                Nancy Divolio</div>
-            <ul data-role="listmenu">
-                <li>
-                    <div style="padding: 5px;" data-role="content">
-                        <table>
-                            <tr>
-                                <td>
-                                    <img width="50" height="50" src="{{ asset('images/nancy.png') }}" alt="" />
-                                </td>
-                                <td>
-                                    <b>Nancy Davolio</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Title
-                                </td>
-                                <td>
-                                    Sales Representative
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Notes
-                                </td>
-                                <td>
-                                    Education includes a BA in psychology from Colorado State University in 1970. She
-                                    also completed 'The Art of the Cold Call.' Nancy is a member of Toastmasters International.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Birth Date
-                                </td>
-                                <td>
-                                    08-Dec-48
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Hire Date
-                                </td>
-                                <td>
-                                    01-May-92
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Home Phone
-                                </td>
-                                <td>
-                                    (206) 555-9857
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Address
-                                </td>
-                                <td>
-                                    507 - 20th Ave. E. Apt. 2A
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Postal Code
-                                </td>
-                                <td>
-                                    98122
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    City
-                                </td>
-                                <td>
-                                    Seattle
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Country
-                                </td>
-                                <td>
-                                    USA
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <img src="{{ asset('images/robert.png') }}" alt="" /><div>
-                Robert King</div>
-            <ul data-role="listmenu">
-                <li>
-                    <div style="padding: 5px;" data-role="content">
-                        <table>
-                            <tr>
-                                <td>
-                                    <img width="50" height="50" src="{{ asset('images/robert.png') }}" alt="" />
-                                </td>
-                                <td>
-                                    <b>Robert King</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Title
-                                </td>
-                                <td>
-                                    Sales Representative
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Notes
-                                </td>
-                                <td>
-                                    Robert King served in the Peace Corps and traveled extensively before completing
-                                    his degree in English at the University of Michigan in 1992, the year he joined
-                                    the company. After completing a course entitled 'Selling in Europe,' he was transferred
-                                    to the London office in March 1993.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Birth Date
-                                </td>
-                                <td>
-                                    29-May-60
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Hire Date
-                                </td>
-                                <td>
-                                    02-Jan-94
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Home Phone
-                                </td>
-                                <td>
-                                    (71) 555-5598
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Address
-                                </td>
-                                <td>
-                                    Winchester Way
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Postal Code
-                                </td>
-                                <td>
-                                    RG1 9SP
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    City
-                                </td>
-                                <td>
-                                    London
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Country
-                                </td>
-                                <td>
-                                    UK
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <img src="{{ asset('images/steven.png') }}" alt="" /><div>
-                Steven Buchanan</div>
-            <ul data-role="listmenu">
-                <li>
-                    <div style="padding: 5px;" data-role="content">
-                        <table>
-                            <tr>
-                                <td>
-                                    <img width="50" height="50" src="{{ asset('images/steven.png') }}" alt="" />
-                                </td>
-                                <td>
-                                    <b>Steven Buchanan</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Title
-                                </td>
-                                <td>
-                                    Sales Manager
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Notes
-                                </td>
-                                <td>
-                                    Steven Buchanan graduated from St. Andrews University, Scotland, with a BSC degree
-                                    in 1976. Upon joining the company as a sales representative in 1992, he spent 6
-                                    months in an orientation program at the Seattle office and then returned to his
-                                    permanent post in London. He was promoted to sales manager in March 1993. Mr. Buchanan
-                                    has completed the courses 'Successful Telemarketing' and 'International Sales Management.'
-                                    He is fluent in French.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Birth Date
-                                </td>
-                                <td>
-                                    04-Mar-55
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Hire Date
-                                </td>
-                                <td>
-                                    02-May-94
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Home Phone
-                                </td>
-                                <td>
-                                    (71) 555-5598
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Address
-                                </td>
-                                <td>
-                                    908 W. Capital Way
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Postal Code
-                                </td>
-                                <td>
-                                    98052
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    City
-                                </td>
-                                <td>
-                                    Redmond
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Country
-                                </td>
-                                <td>
-                                    USA
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ul>
-        </li>
-</ul>	 -->		
-<!-- <ul id="list" data-role="listmenu">
-
-</ul> -->
 			
 			<ul id="ex_events" class="list-group">
 									
@@ -1011,7 +155,7 @@
 			<p>
 				<input type='checkbox' id='drop-remove' />
 				<label for='drop-remove'>remove after drop</label>
-				<!-- <label  for=''>&nbsp &nbsp<a class="point" id="allOrders"> All Orders</a></label> -->
+				
 			</p>
 			
 			<hr>
@@ -1037,9 +181,7 @@
 			<h4 id="ex_orders_title">Orders</h4>
 			<p id="ordersError">There are no orders available</p>
 			<select id="findOrders" data-live-search="true" class="selectpicker" data-size="auto" data-style="primary">
-				@foreach($orders as $order)
-					<option value="{{$order->id}}, {{$order->title}}">{{ $order->title }}</option>
-				@endforeach
+				
 			</select>
 			<div id="selectionlog">
 			</div>
@@ -1093,6 +235,34 @@
 		</div>
 @endforeach
 		
+<div class="modal fade" id="order_modal" tabindex="-1" role="dialog" aria-labelledby="editOrderLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="editOrderlLabel">Update Order</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group" id="editNumberField">
+					<label>Order #</label>
+					
+				</div>
+				<div class="form-group">
+					<label>Group</label> <br>
+					<select class="selectpicker editGroupSelectpicker" id="editOrderGroup" data-live-search="true" data-width="100%">
+						
+					</select>
+				</div>
+			</div>
+			<div class="modal-footer" id="editOrderSubmitBtn">
+				
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- ========================== ADD ORDER ========================== -->
 <div class="modal fade" id="addOrderModal" tabindex="-1" role="dialog" aria-labelledby="addOrderModal" aria-hidden="true">
 	<div class="modal-dialog modal-sm">
@@ -1114,12 +284,10 @@
 						@endforeach
 					</select>
 				</div>
-				<div class="form-group">
+				<div class="form-group" id="selectGroupForm">
 					<label>Group</label> <br>
-					<select class="selectpicker" id="orderGroup" data-live-search="true" data-width="100%">
-						@foreach($grps as $grp)
-							<option value="{{$grp->id}}">{{$grp->title}}</option>
-						@endforeach
+					<select class="for-control" id="orderGroup" data-live-search="true" data-width="100%">
+						
 					</select>
 				</div>
 			</div>
@@ -1155,14 +323,14 @@
 					<div class="form-group colorpicker">
 						<label>Color</label> <br>
 						<select name="color" class="s1 selectpicker"  data-size="auto" id="grpColor" data-style="btn-default" data-width="100%">
-		        				<option class="bg-blue" value="#15aaff">Blue</option>
-		        				<option class="bg-red" value="#e02222">Red</option>
-		        				<option class="bg-green" value="#35aa47">Green</option>
-		        				<option class="bg-yellow" value="#ffb848">Yellow</option>
-		        				<option class="bg-purple" value="#852b99">Purple</option>
-		        				<option class="bg-dark" value="#555555">Dark</option>
-	        				</select>
-	        			</div>
+										<option class="bg-blue" value="#15aaff">Blue</option>
+										<option class="bg-red" value="#e02222">Red</option>
+										<option class="bg-green" value="#35aa47">Green</option>
+										<option class="bg-yellow" value="#ffb848">Yellow</option>
+										<option class="bg-purple" value="#852b99">Purple</option>
+										<option class="bg-dark" value="#555555">Dark</option>
+									</select>
+								</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" id="addGroup">Save</button>
@@ -1207,12 +375,8 @@
 	</div>
 </div>
 
-
 		@stop
 		@section('page_plugins')
-		
-		
-		
 		<!-- <script src="{{ asset('assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js') }}" type="text/javascript"></script> -->
 		<script src='{{ asset("fullcalendar/lib/moment.min.js")}}'></script>
 		<!-- <script src='{{ asset("fullcalendar/lib/jquery-ui.custom.min.js") }}'></script> -->
@@ -1226,15 +390,8 @@
 		<script type="text/javascript" src="{{ asset('jqw/jqxscrollbar.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('jqw/jqxlistbox.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('jqw/jqxdropdownlist.js') }}"></script>
-
-
-		@stop
-		
+		@stop	
 		@section('page_scripts')
-		
-		
-		
-
 <script>
 
 
@@ -1247,6 +404,8 @@
 		var exGroups = $("#ex_events");
 		var exOrdersTitle = $("#ex_orders_title");
 		var editOrderModals = $("#orderModals");
+		var selectGroupForm = $("#selectGroupForm");
+		var addOrderBtn = $("#addOrderBtn");
 
 		var modals = {
 			addGroup: {
@@ -1277,9 +436,9 @@
 		}
 		
 
-		 $( "#sortable1, #sortable2" ).sortable({
-		      connectWith: ".connectedSortable"
-		    }).disableSelection();
+	 	$( "#sortable1, #sortable2" ).sortable({
+			connectWith: ".connectedSortable"
+		}).disableSelection();
 		var groups = [];
 		var editTitle =		$("#editGroupModalTitle");
 		var editGrpTitle = 	$("#editGrpTitle");
@@ -1288,6 +447,7 @@
 			Order.all();
 		})
 	
+
 		var updateGrpOrders = function(orderId, groupId, remove){
 			console.log(groupId);
 			$.ajax({
@@ -1303,20 +463,19 @@
 				}
 			});
 		}
-
 		var setSortableOrders = function (){
 			$( "#ex_orders, .sortable" ).sortable({
-      			connectWith: ".connectedSortable",
-      			forcePlaceholderSize: true,
-      			receive: function(e, ui){
-      				var orderId = ui.item.context.id.split("_");
-      				var groupId = $("#ex_orders").attr("data-groupId");
-      				console.log(orderId[1]);
-      				console.log(groupId);
-      				updateGrpOrders(orderId[1], groupId, false);
+						connectWith: ".connectedSortable",
+						forcePlaceholderSize: true,
+						receive: function(e, ui){
+							var orderId = ui.item.context.id.split("_");
+							var groupId = $("#ex_orders").attr("data-groupId");
+							console.log(orderId[1]);
+							console.log(groupId);
+							updateGrpOrders(orderId[1], groupId, false);
 
-      			}
-    			}).disableSelection();
+						}
+					}).disableSelection();
 		}
 		findOrder.on('change', function(){
 			var x =  findOrder.val().split(",")[1];
@@ -1329,7 +488,7 @@
 			}
 			findBox.children().remove();
 			var labelelement = $("<div class='list-group sortable connectedSortable'></div>");
-                  labelelement.html('<li id="sortableOrder_'+cut.id+'" class="list-group-item">'+ x +'</li>');
+									labelelement.html('<li id="sortableOrder_'+cut.id+'" class="list-group-item">'+ x +'</li>');
 			findBox.html(labelelement);
 			setSortableOrders();
 			
@@ -1352,14 +511,14 @@
 							'<div class="form-group colorpicker">',
 								'<label>Color</label><br>',
 								'<select name="color" class="s1 selectpicker"  data-size="auto" id="editGrpColor_'+id+'" data-style="btn-default" data-width="100%">',
-				        				'<option class="bg-blue" value="#15aaff">Blue</option>',
-				        				'<option class="bg-red" value="#e02222">Red</option>',
-				        				'<option class="bg-green" value="#35aa47">Green</option>',
-				        				'<option class="bg-yellow" value="#ffb848">Yellow</option>',
-				        				'<option class="bg-purple" value="#852b99">Purple</option>',
-				        				'<option class="bg-dark" value="#555555">Dark</option>',
-			        				'</select>',
-			        			'</div>',
+												'<option class="bg-blue" value="#15aaff">Blue</option>',
+												'<option class="bg-red" value="#e02222">Red</option>',
+												'<option class="bg-green" value="#35aa47">Green</option>',
+												'<option class="bg-yellow" value="#ffb848">Yellow</option>',
+												'<option class="bg-purple" value="#852b99">Purple</option>',
+												'<option class="bg-dark" value="#555555">Dark</option>',
+											'</select>',
+										'</div>',
 						'</div>',
 						'<div class="modal-footer">',
 							'<button type="button" class="btn btn-primary updateGroupBtn" id="updateGrpBtn_'+id+'">Save</button>',
@@ -1409,7 +568,6 @@
 			$(temp).prependTo(editOrderModals);
 			 $('.selectpicker').selectpicker();
 		}
-
 		var each = function(array, cb){
 			for (var i = 0; i < array.length; i++) {
 				cb(array[i], i, array);
@@ -1479,7 +637,6 @@
 				});
 			});
 		}
-	
 		var renderGroups = function(id){
 			$('#external-events .ex_event').each(function() {
 			
@@ -1493,7 +650,7 @@
 					backgroundColor: $(this).attr('data-bg'),
 					borderColor: $(this).attr('data-bg')
 				};
-				console.log(this);
+				
 				
 				// store the Event Object in the DOM element so we can get to it later
 				$(this).data('eventObject', eventObject);
@@ -1518,7 +675,7 @@
 			var temp = [
 				"<div id='ex_grp_" + item.id + "' data-title="+item.title+" data-bg="+item.backgroundColor+" class='ex_event list-group-item' style='cursor: pointer; background-color:" + item.backgroundColor + "; color: "+color+"'>",
 					item.title,
-			 		" <i class='fa fa-cog pull-right' id='editGroup_" + item.id + "' data-toggle='modal' data-target='#editGroupModal_"+item.id+"'></i>",
+					" <i class='fa fa-cog pull-right' id='editGroup_" + item.id + "' data-toggle='modal' data-target='#editGroupModal_"+item.id+"'></i>",
 				"</div>"].join("");
 			$(temp).prependTo(exGroups);
 				
@@ -1536,15 +693,67 @@
 			setSortableOrders();
 			//$('#ex_events').jqxListMenu({autoSeparators: true, enableScrolling: false, showHeader: true, width: '100%', placeHolder: 'Find contact...' });
 		}
+		var setGroupsSelectPicker = function(data){
+			var options = [];
+			each(data, function (item, index, array){
+				options.push( '<option value="'+item.id+'">' + item.title + '</option>');
+			});
+			$('#orderGroup').children().remove();
+			$('#orderGroup').prepend(options);
+ 			$('#orderGroup').selectpicker('refresh');
+		}
+		var setGroupsSelectPicker2 = function(data){
+			var options = [];
+			each(data, function (item, index, array){
+				options.push( '<option value="'+item.id+'">' + item.title + '</option>');
+			});
+
+			$('.editGroupSelectpicker').children().remove();
+			$('.editGroupSelectpicker').prepend(options);
+ 			$('.editGroupSelectpicker').selectpicker('refresh');
+		}
+		var setOrdersSelectPicker = function(data){
+			var options = [];
+			each(data, function (item, index, array){
+				options.push( '<option value="'+item.id+', '+item.title+'">' + item.title + '</option>');
+			});
+
+			$('#findOrders').children().remove();
+			$('#findOrders').prepend(options);
+ 			$('#findOrders').selectpicker('refresh');
+		}
+		var setOrderModal = function(item){
+			Group.all(false, "editOrder");
+			var input = '<input disabled="disabled" class="form-control" id="editOrderNumber_'+item.id+'" placeholder="Order Number" value="'+item.number+'">';
+			var submit = '<button type="button" class="submitter btn btn-primary" id="submit_order_'+item.id+'">Save</button>';
+			$("#editOrderSubmitBtn .submitter").remove();
+			$("#editOrderSubmitBtn").prepend(submit);
+			$(".editGroupSelectpicker").attr("id", "editOrderGroup_" + item.id);
+			$("#editNumberField input").remove();
+			$("#editNumberField").append(input);
+
+			$(".submitter").click(function(){
+				
+				Order.update(item.id, $(input).val(), $(".editGroupSelectpicker").val(), item.grp_id );
+			});
+		}
 		var setOrder = function (item){
 			//setOrderModals(item.id, item.title);
 
-			var temp = ["<div style='cursor: move;' id='sortableOrder_"+item.id+"' class='list-group-item'>" + item.title,
-			" <i style='color:red; cursor: pointer;' class='fa fa-times pull-right' id='removeOrder_" + item.id + "'></i>",
-			"<i style='cursor: pointer;' class='fa fa-edit pull-right' id='clickOrder_'+"+item.id+" data-toggle='modal' data-target='#order_modal_"+item.id+"'></i></div>"
+			var temp = [
+			"<div style='cursor: move;' id='sortableOrder_"+item.id+"' class='list-group-item'>" + item.title +"<br>",
+				"<div style='height:15px; padding-top:5px;'>",
+					" <i style=' cursor: pointer;' class='fa fa-times pull-right' id='removeOrder_" + item.id + "'></i>",
+					" <i style='cursor: pointer; margin-left: 10px; margin-right: 10px; ' class='fa fa-edit pull-right' id='clickOrder_"+item.id+"'></i>",
+				"</div>",
+			"</div>",
 			].join("");
 			$(temp).prependTo("#ex_orders");
 			//" <i class='fa fa-cog pull-right' id='editOrder_" + item.id + "' data-toggle='modal' data-target='#editOrderModal'></i> </div>"].join("");
+
+			$("#clickOrder_" + item.id).click(function(){
+				setOrderModal(item);
+			});
 
 			$("#removeOrder_" + item.id).click(function(){
 				Order.removeFromGrp(item.id);
@@ -1553,10 +762,17 @@
 			$("#editOrder_" + item.id).click(function(){
 				Order.vars.editTitle.html(item.title);
 			});
-			$("#submit_order_" + item.id).click(function(){
-				Order.update(item.id, $("#editOrderNumber_" + item.id).val(), $("#editOrderGroup_"+item.id).val(), item.grp_id );
-			});
+			
 		}
+		var newFindOrder = function(data){
+			console.log(data);
+			var temp = ['<option value="'+data.id+', '+data.title+'">'+data.title+'</option>'].join('');
+			$(temp).prependTo("#findOrders");
+			$(".selectpicker").selectpicker();
+		}
+		
+
+
 		var Group = {
 			vars: {
 				addGrp: 		$("#addGroup"),
@@ -1568,19 +784,28 @@
 				editGrpColor: 	$("#editGrpColor")
 
 			},
-			all: function(){
+			all: function(box, modal){
 				$.ajax({
 					type: "GET",
 					url: "{{URL::to('grps')}}",
 					success: function(data){
-						exGroups.children().remove();
-						each(data, function(item, index, array){
-							setGroup(item);
-						});
-						renderGroups(false);
+						if(box){
+							exGroups.children().remove();
+							each(data, function(item, index, array){
+								console.log("box", item);
+								setGroup(item);
+							});
+							renderGroups(false);
+						} else if(modal == "newOrder"){
+							setGroupsSelectPicker(data);
+							$("#addOrderModal").modal('show');
+						} else if(modal == "editOrder"){ 
+							setGroupsSelectPicker2(data);
+							console.log("hello")
+							$("#order_modal").modal('show');
+						}
 					}
 				});
-				
 			},
 			post: function(){
 				$.ajax({
@@ -1595,7 +820,8 @@
 					},
 					success: function(data){
 						//console.log(data);
-						Group.all();
+						Group.all(true, false);
+
 						$("#calendar").fullCalendar( 'refetchEvents' );
 						modals.addGroup.get.modal("hide");
 						modals.addGroup.clear();
@@ -1631,12 +857,12 @@
 					});
 				}
 				deleteGrp();
-				Group.all();
+				Group.all(true, false);
 				$("#calendar").fullCalendar( 'refetchEvents' );
 			}
 		}
 		var Order = {
-			all: function(groupId){
+			all: function(){
 				$.ajax({
 					type: "GET",
 					url: "{{URL::to('calendars/show')}}",
@@ -1644,6 +870,7 @@
 						exOrders.children().remove();
 						exOrdersTitle.text("All Orders")
 						$("#ordersError").hide();
+						setOrdersSelectPicker(data);
 						each(data, function (item, index, array){
 							//setOrder(item);
 						});
@@ -1657,13 +884,11 @@
 						type: "GET",
 						url: "{{URL::to('collect/group/orders')}}/" + groupId,
 						success: function(data){
-							console.log(groupId);
 							exOrders.children().remove();
 							exOrdersTitle.text(groupTitle);
 							$("#ex_orders").attr("data-groupId", groupId);
 							editOrderModals.children().remove();
 							each(data, function (item, index, array){								
-								console.log(item);
 								setOrder(item);
 								$("#ordersError").hide();
 							});
@@ -1677,29 +902,33 @@
 			post: function(){
 				$.ajax({
 					type: "POST",
-					url: "{{URL::to('orders')}}",
+					url: "{{URL::to('calendars')}}",
 					data: {
 						number: modals.addOrder.number.val(),
 						customer_id: modals.addOrder.customer.val(),
 						grp_id: modals.addOrder.group.val()
 					},
 					success: function(data){
-						//console.log(data);
+						Order.all();
+						console.log(data);
+						newFindOrder(data);
+						modals.addOrder.get.modal("hide");
+						modals.addOrder.clear();
 					}
 				});
 			},
 			update: function(orderId, number, group, groupId){
-				//console.log(group);
+				console.log(group);
 				$.ajax({
 					type: "PUT",
 					url: "{{URL::to('calendars')}}/" + orderId,
 					data: { number: number, grp_id: group, full: 'full' },
 					success: function(data){
-						//console.log(data)
+						console.log(data)
 						if(data.grp_id !== groupId){
 							$("#sortableOrder_" + orderId).remove();
 						}
-						$("#order_modal_" + orderId).modal("hide");
+						$("#order_modal").modal("hide");
 					}
 				});
 			},
@@ -1716,7 +945,7 @@
 				});
 			}
 		}
-		Group.all();
+		Group.all(true, false);
 		Order.all();
 
 		Group.vars.addGrp.click(function(){
@@ -1724,6 +953,11 @@
 		});
 		modals.addOrder.submit.click(function(){
 			Order.post();
+		});
+		addOrderBtn.click(function(){
+			Group.all(false, "newOrder");
+			console.log("shown")
+			
 		});
 
 

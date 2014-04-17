@@ -53,7 +53,20 @@ class CalendarController extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		$input = array_except(Input::all(), array('company', "newname"));
+		$result = $this->order->store($input);
+		if($result['success'])
+		{
+			Session::flash('success', 'You Order was Successfully created!!');
+			//return Redirect::route('orders.index');
+			return $result['order'];
+		}
+		else
+		{
+			Session::flash('error', 'There was an errror creating your order!!');
+			//return Redirect::route('orders.create')->withInput();	
+			return 'fail';
+		}
 	}
 
 	/**
