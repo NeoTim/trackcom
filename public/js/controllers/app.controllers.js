@@ -48,6 +48,19 @@ angular.module('app.controllers', ['dashboard.controllers', 'production.controll
 			$scope.products = data;
 		});
 
+	$scope.Norder = {}
+
+	$scope.saveNorder = function(O){
+		var method = O.method.split("_")[1];
+		var method_id = O.method.split("_")[0];
+		var order = {id: O.number, number: O.number, customer_name: O.customer_name, delivery_date: O.delivery_date, location: O.location, method: method, method_id: method_id, group_id: O.group_id};
+		OrdersService.save(order);
+		_.each(O.entries, function (E, index){
+			var entry = {sku: E.sku, order_id: O.number, ready_date: E.ready_date, batch_id: E.batch_id, quantity: E.quantity}
+			ProductionService.save(entry);
+		});
+
+	}
 		// $scope.getEntries = function(orderId){
 		// 	console.log(orderId)
 		// 	$scope.entries = _.where($scope.products, {order_id: orderId});
