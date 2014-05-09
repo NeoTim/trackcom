@@ -1,7 +1,0 @@
-{{=<% %>=}}
-		<<%element%>>    	
-			{{ Form::label('<%name%>', '<%label%>', ['class' => 'control-label col-md-3']) }}
-			<div class="col-md-9">
-				{{ Form::<%type%>('<%name%>') }}
-			</div>
-		</<%element%>>
