@@ -1,9 +1,5 @@
 <?php namespace Illuminate\Support\Facades;
 
-/**
- * @see \Illuminate\Queue\QueueManager
- * @see \Illuminate\Queue\Queue
- */
 class Queue extends Facade {
 
 	/**

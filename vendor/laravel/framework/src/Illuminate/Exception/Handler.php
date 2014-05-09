@@ -123,14 +123,14 @@ class Handler {
 	 * @param  string  $file
 	 * @param  int     $line
 	 * @param  array   $context
-	 *
-	 * @throws \ErrorException
 	 */
 	public function handleError($level, $message, $file, $line, $context)
 	{
 		if (error_reporting() & $level)
 		{
-			throw new ErrorException($message, $level, 0, $file, $line);
+			$e = new ErrorException($message, $level, 0, $file, $line);
+
+			throw $e;
 		}
 	}
 
@@ -150,6 +150,8 @@ class Handler {
 		if ( ! is_null($response))
 		{
 			$response = $this->prepareResponse($response);
+
+			$response->send();
 		}
 
 		// If no response was sent by this custom exception handler, we will call the
@@ -157,23 +159,10 @@ class Handler {
 		// it show the exception to the user / developer based on the situation.
 		else
 		{
-			$response = $this->displayException($exception);
+			$this->displayException($exception);
 		}
 
-		return $this->sendResponse($response);
-	}
-
-	/**
-	 * Send the repsonse back to the client.
-	 *
-	 * @param  \Symfony\Component\HttpFoundation\Response  $response
-	 * @return mixed
-	 */
-	protected function sendResponse($response)
-	{
-		return $this->responsePreparer->readyForResponses() && ! $this->runningInConsole()
-								? $response
-								: $response->send();
+		$this->bail();
 	}
 
 	/**
@@ -194,7 +183,7 @@ class Handler {
 
 			if ( ! $this->isFatal($type)) return;
 
-			$this->handleException(new FatalError($message, $type, 0, $file, $line))->send();
+			$this->handleException(new FatalError($message, $type, 0, $file, $line));
 		}
 	}
 
@@ -266,7 +255,7 @@ class Handler {
 			// If this handler returns a "non-null" response, we will return it so it will
 			// get sent back to the browsers. Once the handler returns a valid response
 			// we will cease iterating through them and calling these other handlers.
-			if (isset($response) && ! is_null($response))
+			if (isset($response) and ! is_null($response))
 			{
 				return $response;
 			}
@@ -283,7 +272,7 @@ class Handler {
 	{
 		$displayer = $this->debug ? $this->debugDisplayer : $this->plainDisplayer;
 
-		return $displayer->display($exception);
+		$displayer->display($exception);
 	}
 
 	/**
@@ -297,7 +286,7 @@ class Handler {
 	{
 		$reflection = new ReflectionFunction($handler);
 
-		return $reflection->getNumberOfParameters() == 0 || $this->hints($reflection, $exception);
+		return $reflection->getNumberOfParameters() == 0 or $this->hints($reflection, $exception);
 	}
 
 	/**
@@ -313,7 +302,7 @@ class Handler {
 
 		$expected = $parameters[0];
 
-		return ! $expected->getClass() || $expected->getClass()->isInstance($exception);
+		return ! $expected->getClass() or $expected->getClass()->isInstance($exception);
 	}
 
 	/**
@@ -368,13 +357,13 @@ class Handler {
 	}
 
 	/**
-	 * Determine if we are running in the console.
+	 * Exit the application.
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	public function runningInConsole()
+	protected function bail()
 	{
-		return php_sapi_name() == 'cli';
+		exit(1);
 	}
 
 	/**

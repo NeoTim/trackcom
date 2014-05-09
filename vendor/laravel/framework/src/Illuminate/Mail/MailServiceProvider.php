@@ -24,7 +24,7 @@ class MailServiceProvider extends ServiceProvider {
 	{
 		$this->registerSwiftMailer();
 
-		$this->app->bindShared('mailer', function($app)
+		$this->app['mailer'] = $this->app->share(function($app)
 		{
 			// Once we have create the mailer instance, we will set a container instance
 			// on the mailer. This allows us to resolve mailer classes via containers
@@ -40,14 +40,14 @@ class MailServiceProvider extends ServiceProvider {
 			// on each one, which makes the developer's life a lot more convenient.
 			$from = $app['config']['mail.from'];
 
-			if (is_array($from) && isset($from['address']))
+			if (is_array($from) and isset($from['address']))
 			{
 				$mailer->alwaysFrom($from['address'], $from['name']);
 			}
 
 			// Here we will determine if the mailer should be in "pretend" mode for this
 			// environment, which will simply write out e-mail to the logs instead of
-			// sending it over the web, which is useful for local dev environments.
+			// sending it over the web, which is useful for local dev enviornments.
 			$pretend = $app['config']->get('mail.pretend', false);
 
 			$mailer->pretend($pretend);
@@ -81,8 +81,6 @@ class MailServiceProvider extends ServiceProvider {
 	 *
 	 * @param  array  $config
 	 * @return void
-	 *
-	 * @throws \InvalidArgumentException
 	 */
 	protected function registerSwiftTransport($config)
 	{

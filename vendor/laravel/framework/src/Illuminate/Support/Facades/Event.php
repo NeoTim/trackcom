@@ -1,8 +1,5 @@
 <?php namespace Illuminate\Support\Facades;
 
-/**
- * @see \Illuminate\Events\Dispatcher
- */
 class Event extends Facade {
 
 	/**

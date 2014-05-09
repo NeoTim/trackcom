@@ -1,7 +1,9 @@
 <?php namespace Illuminate\Database\Eloquent\Relations;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -74,34 +76,6 @@ class BelongsToMany extends Relation {
 	}
 
 	/**
-	 * Set a where clause for a pivot table column.
-	 *
-	 * @param  string  $column
-	 * @param  string  $operator
-	 * @param  mixed   $value
-	 * @param  string  $boolean
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-	 */
-	public function wherePivot($column, $operator = null, $value = null, $boolean = 'and')
-	{
-		return $this->where($this->table.'.'.$column, $operator, $value, $boolean);
-	}
-
-	/**
-	 * Set an or where clause for a pivot table column.
-	 *
-	 * @param  string  $column
-	 * @param  string  $operator
-	 * @param  mixed   $value
-	 * @param  string  $boolean
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-	 */
-	public function orWherePivot($column, $operator = null, $value = null)
-	{
-		return $this->wherePivot($column, $operator, $value, 'or');
-	}
-
-	/**
 	 * Execute the query and get the first result.
 	 *
 	 * @param  array   $columns
@@ -119,8 +93,6 @@ class BelongsToMany extends Relation {
 	 *
 	 * @param  array  $columns
 	 * @return \Illuminate\Database\Eloquent\Model|static
-	 *
-	 * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
 	 */
 	public function firstOrFail($columns = array('*'))
 	{
@@ -538,7 +510,7 @@ class BelongsToMany extends Relation {
 		// Next, we will take the differences of the currents and given IDs and detach
 		// all of the entities that exist in the "current" array but are not in the
 		// the array of the IDs given to the method which will complete the sync.
-		if ($detaching && count($detach) > 0)
+		if ($detaching and count($detach) > 0)
 		{
 			$this->detach($detach);
 		}
@@ -608,7 +580,7 @@ class BelongsToMany extends Relation {
 	 * @param  bool   $touch
 	 * @return void
 	 */
-	public function updateExistingPivot($id, array $attributes, $touch)
+	protected function updateExistingPivot($id, array $attributes, $touch)
 	{
 		if (in_array($this->updatedAt(), $this->pivotColumns))
 		{
@@ -838,7 +810,7 @@ class BelongsToMany extends Relation {
 	 * @param  mixed  $id
 	 * @return \Illuminate\Database\Query\Builder
 	 */
-	public function newPivotStatementForId($id)
+	protected function newPivotStatementForId($id)
 	{
 		$pivot = $this->newPivotStatement();
 
@@ -908,16 +880,6 @@ class BelongsToMany extends Relation {
 	}
 
 	/**
-	 * Get the key for comparing against the pareny key in "has" query.
-	 *
-	 * @return string
-	 */
-	public function getHasCompareKey()
-	{
-		return $this->getForeignKey();
-	}
-
-	/**
 	 * Get the fully qualified foreign key for the relation.
 	 *
 	 * @return string
@@ -935,16 +897,6 @@ class BelongsToMany extends Relation {
 	public function getOtherKey()
 	{
 		return $this->table.'.'.$this->otherKey;
-	}
-
-	/**
-	 * Get the fully qualified parent key naem.
-	 *
-	 * @return string
-	 */
-	protected function getQualifiedParentKeyName()
-	{
-		return $this->parent->getQualifiedKeyName();
 	}
 
 	/**

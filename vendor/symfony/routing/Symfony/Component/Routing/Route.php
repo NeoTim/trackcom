@@ -61,8 +61,6 @@ class Route implements \Serializable
      */
     private $compiled;
 
-    private $condition;
-
     /**
      * Constructor.
      *
@@ -77,11 +75,10 @@ class Route implements \Serializable
      * @param string       $host         The host pattern to match
      * @param string|array $schemes      A required URI scheme or an array of restricted schemes
      * @param string|array $methods      A required HTTP method or an array of restricted methods
-     * @param string       $condition    A condition that should evaluate to true for the route to match
      *
      * @api
      */
-    public function __construct($path, array $defaults = array(), array $requirements = array(), array $options = array(), $host = '', $schemes = array(), $methods = array(), $condition = null)
+    public function __construct($path, array $defaults = array(), array $requirements = array(), array $options = array(), $host = '', $schemes = array(), $methods = array())
     {
         $this->setPath($path);
         $this->setDefaults($defaults);
@@ -96,7 +93,6 @@ class Route implements \Serializable
         if ($methods) {
             $this->setMethods($methods);
         }
-        $this->setCondition($condition);
     }
 
     public function serialize()
@@ -109,7 +105,6 @@ class Route implements \Serializable
             'options'      => $this->options,
             'schemes'      => $this->schemes,
             'methods'      => $this->methods,
-            'condition'    => $this->condition,
         ));
     }
 
@@ -123,7 +118,6 @@ class Route implements \Serializable
         $this->options = $data['options'];
         $this->schemes = $data['schemes'];
         $this->methods = $data['methods'];
-        $this->condition = $data['condition'];
     }
 
     /**
@@ -248,25 +242,6 @@ class Route implements \Serializable
     }
 
     /**
-     * Checks if a scheme requirement has been set.
-     *
-     * @param string $scheme
-     *
-     * @return Boolean true if the scheme requirement exists, otherwise false
-     */
-    public function hasScheme($scheme)
-    {
-        $scheme = strtolower($scheme);
-        foreach ($this->schemes as $requiredScheme) {
-            if ($scheme === $requiredScheme) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Returns the uppercased HTTP methods this route is restricted to.
      * So an empty array means that any method is allowed.
      *
@@ -387,7 +362,7 @@ class Route implements \Serializable
      *
      * @param string $name An option name
      *
-     * @return Boolean true if the option is set, false otherwise
+     * @return bool    true if the option is set, false otherwise
      */
     public function hasOption($name)
     {
@@ -456,7 +431,7 @@ class Route implements \Serializable
      *
      * @param string $name A variable name
      *
-     * @return Boolean true if the default value is set, false otherwise
+     * @return bool    true if the default value is set, false otherwise
      */
     public function hasDefault($name)
     {
@@ -543,7 +518,7 @@ class Route implements \Serializable
      *
      * @param string $key A variable name
      *
-     * @return Boolean true if a requirement is specified, false otherwise
+     * @return bool    true if a requirement is specified, false otherwise
      */
     public function hasRequirement($key)
     {
@@ -563,33 +538,6 @@ class Route implements \Serializable
     public function setRequirement($key, $regex)
     {
         $this->requirements[$key] = $this->sanitizeRequirement($key, $regex);
-        $this->compiled = null;
-
-        return $this;
-    }
-
-    /**
-     * Returns the condition.
-     *
-     * @return string The condition
-     */
-    public function getCondition()
-    {
-        return $this->condition;
-    }
-
-    /**
-     * Sets the condition.
-     *
-     * This method implements a fluent interface.
-     *
-     * @param string $condition The condition
-     *
-     * @return Route The current Route instance
-     */
-    public function setCondition($condition)
-    {
-        $this->condition = (string) $condition;
         $this->compiled = null;
 
         return $this;

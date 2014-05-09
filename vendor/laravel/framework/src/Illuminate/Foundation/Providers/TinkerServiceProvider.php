@@ -19,7 +19,7 @@ class TinkerServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app->bindShared('command.tinker', function()
+		$this->app['command.tinker'] = $this->app->share(function()
 		{
 			return new TinkerCommand;
 		});

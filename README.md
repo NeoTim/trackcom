@@ -1,109 +1,65 @@
-## TrackCom Beta - 1.0, A Laravel 4 Administration app For managing Communication and order processing.
+end-to-end-with-angularjs
+==================
 
-I do not recommend cloning the project just yet. If you would like to be emailed when the app is ready, functional and readable, then send me an email at the following, without the //'s j//o//e//l//.//d//e//s//i//g//n//@icloud.com
+This repository covers material in 2 screencasts, 
+* [End to End with Angular JS](http://www.youtube.com/watch?v=hqAyiqUs93c) 
+* [Security with Angular JS](http://www.youtube.com/watch?v=18ifoT-Id54)
 
-# TrackCom is a responsive and mutipurpose administration app with fully integrated and custamizable CMS backend.
+This is an extension of my screencast [Intro to Angular JS](http://www.youtube.com/watch?v=8ILQOFAgaXE) that focuses more on intermediate/advanced topics and walks through creating a working web application on top of the Laravel 4 Web Application Framework. 
 
-## Features
+Things you can expect to learn from **End to End with Angular JS**:
 
-# FrameWork
- - [Laravel 4](https://github.com/laravel/laravel/tree/develop),
- - [Sentry 2](https://github.com/cartalyst/sentry),
- - [Bootstrap 3.0](http://getbootstrap.com),
- - [Metronic admin](http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes),
- - [jQuery 1.10.2](http://jquery.com),
-# plugins
- - Open Sans Google Font
- - Multilevel Menu
- - Custom UI Tabs and Accordions
- - Metro Style Buttons & Form Elements
- - Glyphicons Pro(Value 59$)
- - Font Awesome Icons(Font Awesome v3.2.0)
- - Charts & Graphs(jQuery Flot)
- - Circle Dials(jQuery Knob)
- - Metro Stylish Sliders(jQuery UI)
- - Metro Style Radio Button and Checkbox(jQuery Uniform)
- - Sticky Notifications(jQuery Gritter)
- - Pulsate
- - Custom Toggle Buttons(Bootstrap Toggle Buttons)
- - jQuery UI Modals
- - Windows 8 style Tiles
- - Toastr Notifications
- - Integrated Tree Views(Bootstrap Tree)
- - Integrated Nestable Lists(jQuery Nestable)
- - Ion Range Sliders
- - NoUI Range Sliders
- - Knob Circle Dials
- - UI progress bar(jQuery BlockUI)
- - Tag Input(jQuery Tags Input)
+* $http
+* $rootScope
+* taking the [AuthenticationService](https://github.com/davemo/intro-to-angularjs/blob/master/app/js/app.js#L19) we built earlier end-to-end
+* creating a FlashService for displaying alerts to users
+* access control for client-side routes with $rootScope and $routeProvider
+* $httpProvider.responseInterceptors and logging out users automatically if serverside sessions expire
+* $routeProvider.resolve property and making view rendering data dependent
+* laravel 4 migrations, controllers, models, and authentication
 
-# User
- - User Profile
- - Extended Profile Overview
- - Extended Account Manage(Personal Info, Change Avatar, Change Password, Privacy Settings)
- - Login, Registration
+Things you can expect to learn from **Security with Angular JS**:
 
- - Full Featured Inbox
- - Mail List
- - Mail Compose with WYSIWYG Editor, File Upload etc
- 
+* 3 common-sense ways to secure your web application
+* angular.constant
+* ng-init
+* ng-sanitize
+* Laravel CSRF support, route filters, and built in protection
 
- - Search Forms & Results
-   
- - Company Search
- - User Search
- - Invoice View&Print
- - Pricing Tables
- - Error Pages(5 options)
+## Requirements:
 
-__Groups__
-* Users
-* Admins
+* [Laravel 4](http://four.laravel.com/)
+* PHP 5.4 or higher
+* MCrypt
+* MySQL or SQLite
+* [AngularJS 1.1.4](https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js)
 
-__Users__
-* user@user.com  *Password: sentryuser*
-* admin@admin.com *Password: sentryadmin*
+## Prerequisite Installation Instructions:
 
-#DataTables
- - Basic Tables
- - Responsive Tables
- - Managed Tables
- - Editable Tables
- - Advanced Tables
- - Normal & Draggable Portlets
- - Integrated Google Maps(jQuery GMaps)
- - Interactive Vector Maps of World, USA, Europe, Russia & Germany(jQuery JQVMap)
- - Easy Cookies(jQuery Cookie)
- - Responsive Layout For Internet Explorer 8(Respond.js)
- - Image Slider(jQuery Fancybox)
- - Custom Scrollbar For Vertical Scrollable Contents(jQuery Slim Scroll)
- - And more features coming soon. Stay tuned!
+Installing PHP 5.4 and MCrypt is the most tedious part of getting up and running with this example, but Laravel 4 is so nice that I think it's worth it. Here's the basic instructions for getting up on Mac OS X:
 
+1. Install [Homebrew](http://mxcl.github.io/homebrew/)
+2. Make sure you correct any problems that `brew doctor` detects
+3. Install [Laravel 4](http://laravel.com/docs/quick)
+4. Tap the PHP keg from @josegonzalez: `brew tap josegonzalez/php`
+5. Install PHP 5.4 `brew install php55`
+6. Follow the linking instructions for php55 that you see in `brew info php55`
+7. Install MCrypt `brew install php55-mcrypt` (this will automatically link the binary into the php.ini for you)
+8. Install [Composer](http://getcomposer.org/) `brew install composer` (think of it like homebrew, or npm, or apt-get, but for PHP modules)
 
-### Instructions
+## App Installation Instructions:
 
-Instructions have not been prepared
+1. clone this repo: `git clone https://github.com/davemo/end-to-end-with-angularjs.git`
+2. install composer dependencies `composer install`
+3. create a database called `laravelapp`
+4. create your unique security key `php artisan key:generate`
+5. run database migrations `php artisan migrate`
+6. seed the database `php artisan db:seed`
+7. run the app `php artisan serve`
+8. browse to `http://localhost:8000` and log in with email `admin@example.org` and password `admin`
 
+Once you have the app up and running you can visit `http://localhost:8000` and you will see the Login Form.
 
+If you liked this code and screencast you should follow me on twitter: [@dmosher](http://www.twitter.com/dmosher)
 
-
-
-### Links
-* [Sentry 2.0 Documentation](https://cartalyst.com/manual/sentry)
-* [Laravel 4 Documentation](http://laravel.com/docs)
-* [Laravel: From Apprentice To Artisan](https://leanpub.com/laravel) by Taylor Otwell
-* [Implementing Laravel](https://leanpub.com/implementinglaravel) by Chris Fidao
-* [Laracasts](http://laracasts.com)
-
-### Tests
-
-
-
-4. If you're interested in more dynamic code coverage, check out the [instructions](COVERAGE.md).
-
-### Notes
-
-* Documentation is are currently very limited.  
-
-=======
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+Happy Coding! :)

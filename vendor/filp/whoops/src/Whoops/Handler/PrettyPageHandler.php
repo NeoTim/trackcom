@@ -53,7 +53,7 @@ class PrettyPageHandler extends Handler
      */
     public function __construct()
     {
-        if (ini_get('xdebug.file_link_format') || extension_loaded('xdebug')) {
+        if (extension_loaded('xdebug')) {
             // Register editor using xdebug's file_link_format option.
             $this->editors['xdebug'] = function($file, $line) {
                 return str_replace(array('%f', '%l'), array($file, $line), ini_get('xdebug.file_link_format'));
@@ -164,8 +164,6 @@ class PrettyPageHandler extends Handler
      * The supplied callback argument will be called when the error is rendered,
      * it should produce a simple associative array. Any nested arrays will
      * be flattened with print_r.
-     *
-     * @throws InvalidArgumentException If $callback is not callable
      * @param string   $label
      * @param callable $callback Callable returning an associative array
      */
@@ -182,7 +180,7 @@ class PrettyPageHandler extends Handler
                 // Only return the result if it can be iterated over by foreach().
                 return is_array($result) || $result instanceof \Traversable ? $result : array();
             } catch (\Exception $e) {
-                // Don't allow failure to break the rendering of the original exception.
+                // Don't allow failiure to break the rendering of the original exception.
                 return array();
             }
         };
@@ -237,7 +235,6 @@ class PrettyPageHandler extends Handler
      * @example
      *   $run->setEditor('sublime');
      *
-     * @throws InvalidArgumentException If invalid argument identifier provided
      * @param string|callable $editor
      */
     public function setEditor($editor)
@@ -258,10 +255,9 @@ class PrettyPageHandler extends Handler
      * a string that may be used as the href property for that
      * file reference.
      *
-     * @throws InvalidArgumentException If editor resolver does not return a string
      * @param  string $filePath
      * @param  int    $line
-     * @return string|bool
+     * @return string|false
      */
     public function getEditorHref($filePath, $line)
     {
@@ -317,7 +313,6 @@ class PrettyPageHandler extends Handler
     }
 
     /**
-     * @throws InvalidArgumentException If argument is not a valid directory
      * @param string $resourcesPath
      */
     public function setResourcesPath($resourcesPath)

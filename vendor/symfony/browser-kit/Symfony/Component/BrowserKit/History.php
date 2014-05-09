@@ -22,6 +22,14 @@ class History
     protected $position = -1;
 
     /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->clear();
+    }
+
+    /**
      * Clears the history.
      */
     public function clear()
@@ -45,7 +53,7 @@ class History
     /**
      * Returns true if the history is empty.
      *
-     * @return Boolean true if the history is empty, false otherwise
+     * @return bool    true if the history is empty, false otherwise
      */
     public function isEmpty()
     {

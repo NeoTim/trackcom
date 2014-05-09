@@ -3,31 +3,14 @@
 class Entry extends Eloquent {
 	protected $guarded = array();
 
-	protected $softDelete = true;
-
-	public static $rules = array(
-		'order_id' => 'required',
-	);
-
+	public static $rules = array();
 
 	public function order()
 	{
 		return $this->belongsTo('Order');
 	}
-
-	public function pmethod()
+	public function batch()
 	{
-		return $this->belongsTo('Pmethod');
+		return $this->belongsTo('Batch');
 	}
-	public function category()
-	{
-		return $this->belongsTo('Category');
-		
-	}
-	public function product()
-	{
-		return $this->belongsTo('Product');
-		
-	}
-
 }

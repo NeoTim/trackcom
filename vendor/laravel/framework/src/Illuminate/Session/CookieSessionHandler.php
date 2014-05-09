@@ -1,7 +1,6 @@
 <?php namespace Illuminate\Session;
 
 use Illuminate\Cookie\CookieJar;
-use Symfony\Component\HttpFoundation\Request;
 
 class CookieSessionHandler implements \SessionHandlerInterface {
 
@@ -11,13 +10,6 @@ class CookieSessionHandler implements \SessionHandlerInterface {
 	 * @var \Illuminate\Cookie\CookieJar
 	 */
 	protected $cookie;
-
-	/**
-	 * The request instance.
-	 *
-	 * @var \Symfony\Component\HttpFoundation\Request
-	 */
-	protected $request;
 
 	/**
 	 * Create a new cookie driven handler instance.
@@ -53,7 +45,7 @@ class CookieSessionHandler implements \SessionHandlerInterface {
 	 */
 	public function read($sessionId)
 	{
-		return $this->request->cookies->get($sessionId) ?: '';
+		return $this->cookie->get($sessionId) ?: '';
 	}
 
 	/**
@@ -61,7 +53,7 @@ class CookieSessionHandler implements \SessionHandlerInterface {
 	 */
 	public function write($sessionId, $data)
 	{
-		$this->cookie->queue($sessionId, $data, $this->minutes);
+		$this->setCookie($this->cookie->make($sessionId, $data, $this->minutes));
 	}
 
 	/**
@@ -69,7 +61,20 @@ class CookieSessionHandler implements \SessionHandlerInterface {
 	 */
 	public function destroy($sessionId)
 	{
-		$this->cookie->queue($this->cookie->forget($sessionId));
+		$this->setCookie($this->cookie->forget($sessionId));
+	}
+
+	/**
+	 * Set the given cookie in the headers.
+	 *
+	 * @param  \Symfony\Component\HttpFoundation\Cookie  $cookie
+	 * @return void
+	 */
+	protected function setCookie($cookie)
+	{
+		if (headers_sent()) return;
+
+		setcookie($cookie->getName(), $cookie->getValue(), $cookie->getExpiresTime(), $cookie->getPath(), $cookie->getDomain(), $cookie->isSecure(), $cookie->isHttpOnly());
 	}
 
 	/**
@@ -78,17 +83,6 @@ class CookieSessionHandler implements \SessionHandlerInterface {
 	public function gc($lifetime)
 	{
 		return true;
-	}
-
-	/**
-	 * Set the request instance.
-	 *
-	 * @param  \Symfony\Component\HttpFoundation\Request  $request
-	 * @return void
-	 */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
 	}
 
 }

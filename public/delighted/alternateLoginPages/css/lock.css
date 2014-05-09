@@ -1,0 +1,116 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,200,300,100,600);
+body {
+  background: url(../images/login.jpg) no-repeat center fixed;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.lock-box {
+  background: url(../images/box1.png);
+  min-height: 400px;
+  width: 350px;
+  margin: 0px auto;
+  margin-top: 200px;
+  box-shadow: 0px 0px 5px #aeaeae;
+}
+.lock-box .fa-crosshairs {
+  color: #0ba09b;
+}
+.lock-box h1 {
+  color: #2e393b;
+  font-size: 25px;
+  padding-top: 10px;
+  font-family: 'Raleway', Helvetica, Arial;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 20px;
+}
+.lock-box hr {
+  border-width: 1px;
+  border-color: #2e393b;
+  opacity: 0.1;
+}
+.lock-box .user-avatar {
+  width: 100px;
+  margin: 0px auto;
+  border: 3px solid #2e393b;
+  border-radius: 50%;
+  opacity: 0.9;
+}
+.lock-box .user-avatar img {
+  border-radius: 50%;
+  width: 100%;
+  background: #cececc;
+}
+.lock-box h5 {
+  text-align: center;
+  font-family: 'Raleway';
+  font-weight: 600;
+  color: #2e393b;
+  font-size: 13px;
+}
+.lock-box h5 strong {
+  color: #0ba09b;
+  font-size: 16px;
+}
+.lock-box .lock-submit-box {
+  margin-top: 20px;
+}
+.lock-box .lock-submit-box .input-group-addon {
+  background: #2e393b;
+  border: 0px;
+  color: #b4b4b4;
+  border-radius: 0px;
+  opacity: 0.8;
+}
+.lock-box .lock-submit-box input {
+  background: #b4b4b4;
+  border-radius: 0px;
+  border: none;
+  color: #2e393b !important;
+}
+.lock-box .lock-submit-box .form-control:-moz-placeholder {
+  color: #2e393b;
+}
+.lock-box .lock-submit-box .form-control::-moz-placeholder {
+  color: #2e393b;
+}
+.lock-box .lock-submit-box .form-control:-ms-input-placeholder {
+  color: #2e393b;
+}
+.lock-box .lock-submit-box .form-control::-webkit-input-placeholder {
+  color: #2e393b;
+}
+.lock-box .lock-submit-box .form-control:focus {
+  box-shadow: none;
+}
+.lock-box .lock-submit-box .btn {
+  background: #0ba09b;
+  color: #FFFFFF;
+  border-radius: 0px;
+  font-family: 'Raleway';
+  font-weight: 600;
+}
+.lock-box .lock-submit-box h6 a {
+  text-align: center;
+  font-family: 'Raleway';
+  font-weight: 600;
+  color: #FFFFFF;
+  font-size: 13px;
+  opacity: 0.7;
+}
+.lock-box .lock-submit-box h5 {
+  text-align: center;
+  font-family: 'Raleway';
+  font-weight: 600;
+  color: #FFFFFF;
+  font-size: 10px;
+  opacity: 0.7;
+}
+@media (max-width: 400px) {
+  .lock-box {
+    width: 260px;
+  }
+}

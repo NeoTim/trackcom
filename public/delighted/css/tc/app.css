@@ -1,0 +1,135 @@
+    .block {
+            position: relative;
+      }
+      .block.block-trans {
+            transition: all .2s ease .0s;
+            -webkit-transition: all .2s ease .0s;
+            -moz-transition: all .2s ease .0s;
+            -ms-transition: all .2s ease .0s;
+            -o-transition: all .2s ease .0s;
+      }
+      .block.block-right, .block.block-left, .block.block-top, .block.block-bottom {
+            background-color: #ffffff;
+            /*padding:8px;*/
+            box-shadow: 0 2px 4px rgba(0,0,0,.3);
+            -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.3);
+             transition: all .3s ease-in .0s;
+            -webkit-transition: all .3s ease-in .0s;
+            -moz-transition: all .3s ease-in .0s;
+            -ms-transition: all .3s ease-in .0s;
+            -o-transition: all .3s ease-in .0s;
+
+      }
+      .block.block-right {border-right:5px solid #15aaff;}
+      .block.block-left {border-left:5px solid #15aaff;}
+      .block.block-top {border-top:5px solid #15aaff;}
+      .block.block-bottom {border-bottom:5px solid #15aaff;}
+      
+      .block.block-right:hover, .block.block-left:hover, .block.block-top:hover, .block.block-bottom:hover, {
+          /*padding:12px 30px;*/
+          box-shadow: 0px 10px 30px rgba(0,0,0,.3);
+          -webkit-box-shadow: 0px 10px 30px rgba(0,0,0,.3);
+          
+      }
+      .block.block-left:hover {
+        box-shadow: 0px 10px 30px rgba(0,0,0,.3);
+          -webkit-box-shadow: 0px 10px 30px rgba(0,0,0,.3);
+          
+        border-left-color:#f0ad4e;
+      }
+      .block.block-right:hover {
+        box-shadow: 0px 10px 30px rgba(0,0,0,.3);
+          -webkit-box-shadow: 0px 10px 30px rgba(0,0,0,.3);
+          
+        border-right-color:#f0ad4e;
+      }
+      .block.block-top:hover {
+        /*box-shadow: 0px 10px 30px rgba(0,0,0,.3);*/
+          /*-webkit-box-shadow: 0px 10px 30px rgba(0,0,0,.3);*/
+          
+        border-top-color:#f0ad4e;
+      }
+      .block.block-bottom:hover {
+        box-shadow: 0px 10px 30px rgba(0,0,0,.3);
+          -webkit-box-shadow: 0px 10px 30px rgba(0,0,0,.3);
+          
+        border-bottom-color:#f0ad4e;
+      }
+      .driver-title, .driver-title i {
+        padding: 5px
+        margin: 0;
+        font-size: 16px;
+        font-weight: bold;
+        color: #777;
+      }
+      .block .block-title {
+            padding:8px;
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #777; 
+            
+      }
+      .block .block-body {
+          border-top:2px solid #ddd;
+          padding:8px;
+      }
+      .block .block-footer {
+        border-top:2px solid #ddd;
+      }
+      .block.block-list {
+          list-style: none;
+        
+      }
+      .block.block-list>.block-list-item {
+        color:#f0ad4e;
+        padding:3px;
+        border-top:1px solid #f1f1f1;
+        cursor: pointer;
+      }
+
+      .text-primary {color:#15aaff;}
+      .text-warning {color:#f0ad4e;}
+      .text-danger {color:#ed4e2a;}
+      .text-success {color:#3cc051;}
+      .text-info {color:#57b5e3;}
+      .text-white {color:#fff;}
+      .text-dark {color:#333333;}
+
+      .dragging div.bg-primary, .dragging div div.bg-primary,
+      .bg-primary {background-color: #15aaff; background: #15aaff;}
+      .dragging div.bg-warning, .dragging div div.bg-warning,
+      .bg-warning {background-color: #f0ad4e; background: #f0ad4e;}
+      .dragging div.bg-danger, .dragging div div.bg-danger,
+      .bg-danger {background-color: #ed4e2a; background: #ed4e2a;}
+      .dragging div.bg-success, .dragging div div.bg-success,
+      .bg-success {background-color: #3cc051; background: #3cc051;}
+      .dragging div.bg-info, .dragging div div.bg-info,
+      .bg-info {background-color: #57b5e3; background: #57b5e3;}
+      .dragging div.bg-default, .dragging div div.bg-default,
+      .bg-default {background-color: #f1f1f1; background: #f1f1f1;}
+      .text-b {
+        font-weight: bold;
+      }
+
+      table.entries-table tr td {
+          vertical-align: bottom; 
+          height:300px;
+      }
+      .entries-table .td-body {
+        /*padding:5px;*/
+        /*vertical-align: middle;*/
+          font-size: 20px;
+           box-shadow: 0 2px 4px rgba(0,0,0,.3);
+          -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.3);
+          transition: all .3s ease-in .0s;
+          -webkit-transition: all .3s ease-in .0s;
+          -moz-transition: all .3s ease-in .0s;
+          -ms-transition: all .3s ease-in .0s;
+          -o-transition: all .3s ease-in .0s;
+          cursor:pointer;
+      }
+      .entries-table .td-body:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,.7);
+            -webkit-box-shadow: 0 10px 30px rgba(0,0,0,.7);
+      }

@@ -1,0 +1,853 @@
+	<div data-ng-repeat="method in methods" class="modal fade" id="{{method.label}}_Modal" tabindex="-1" role="dialog" aria-labelledby="{{method.label}}Label" aria-hidden="true" data-ng-controller="methodCtrl">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="{{method.label}}Label">{{method.title}}</h4>
+				</div>
+				<div class="modal-body">
+					<tabset>
+						<tab id="settings" data-ng-model="settingstab" heading="{{method.title}} Settings">
+
+							<div class="form-group">
+							<br>
+								<label>Driver : {{method.driver}}</label>
+								<div class="ui-select">						
+									<select data-ng-model="method.driver" ng-change="changeDriver(method.driver, method)" style="width:100%;">
+										<option data-ng-repeat="driver in drivers" value="{{driver.id}}_{{driver.name}}"> {{driver.name}} </option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Truck #</label>
+								<div class="ui-select">						
+									<select data-ng-model="method.truck" ng-change="changeTruck(method.truck, method)" style="width:100%;">
+										<option>13</option>
+										<option>14</option>
+										<option>21</option>
+										<option>22</option>
+										<option>30</option>
+										<option>33</option>
+										<option>88</option>
+										<option>007</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group" data-ng-init="initSwitch(method.status)">
+								<label>Status? <strong ng-if="method.status === '1'">Delivering</strong><strong ng-if="method.status === '0'">Not Delivering</strong></label><br>
+								<label class="switch switch-success">
+								<input ng-model="status" type="checkbox" class="ng-pristine ng-valid" ng-change="changeStatus(status, method)"><i></i></label>
+
+								
+							</div>							
+
+						</tab>
+						<tab id="addOrder" data-ng-model="addMethodOrder" heading="Add Order">
+
+							<div class="form-group">
+								<label>Find Your Order</label>
+								<input type="text" ng-model="addMethodOrder" typeahead="order.number for order in orders | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Orders" style="">
+							</div>	
+							<div class="form-group">
+								<button type="button" class="btn btn-primary" ng-click="addOrder(addMethodOrder, method)">Add Order</button>
+							</div>
+
+						</tab>
+						<tab id="newOrder" data-ng-model="methodOrder" heading="New Order">
+							
+							<div class="form-group">
+								<input type="text" id="newOrderNumber" ng-model="methodOrder.number" class="form-control" placeholder="Order Number">
+							</div>								
+							<div class="form-group">
+								<input type="text" ng-model="methodOrder.customer" typeahead="customer.company for customer in customers | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Company" style="">
+							</div>
+							<div class="form-group">
+								<button type="button" class="btn btn-primary" ng-click="addNewOrder(methodOrder, method)">Save and Add</button>
+							</div>
+
+						</tab>
+					</tabset>
+				</div>
+				<div class="modal-footer">
+					
+					<!-- <button type="button" id="newOrder" class="btn btn-success pull-left">New Order</button> -->
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<!-- <button id="" ng-click="saveMethod()" type="button" class="btn btn-primary">Save</button> -->
+				</div>
+			</div>
+		</div>
+	</div>	
+
+	<div class="modal fade" id="addOrderModal" tabindex="-1" role="dialog" aria-labelledby="addOrderLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="addOrderLabel">Add Order</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<input type="text" ng-model="addorder.order" typeahead="order.number for order in orders | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Orders" style="">
+					</div>	
+					<div class="form-group">	
+						<span class="ui-select">
+							<select ng-model="addorder.method"  data-size="auto" id="newOrderMethod" data-live-search="true" data-style="btn-success" data-width="100%" placeholder="Method">
+								<option selected="selected" value="none">Method</option>
+								<option value="onorder">On Order</option>
+								<option value="shipping">Shipping</option>
+								<option value="willcall">Will Call</option>
+								<option value="north">North</option>
+								<option value="east">East</option>
+								<option value="south">South</option>
+								<option value="west">West</option>
+								<option value="tulsa">Tulsa</option>
+								<option value="dallas">Dallas</option>
+								<option value="stillwater">Stillwater</option>
+								<option value="shawnee">Shawnee</option>
+							</select>
+						</span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="newOrder" class="btn btn-success pull-left">New Order</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button id="saveOrderBtn" ng-click="placeOrder(addorder)" type="button" class="btn btn-primary">AddOrder</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" data-ng-model="newOrderModal" id="newOrderModal" tabindex="-1" role="dialog" aria-labelledby="newOrderLabel" aria-hidden="true">
+		<div class="modal-dialog " style="width:80%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="newOrderLabel">Add Order</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<input type="text" id="newOrderNumber" ng-model="newOrder.number" class="form-control" placeholder="Order Number">
+							</div>	
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<input type="text" ng-model="newOrder.customer_name" typeahead="customer.company for customer in customers | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Company" style="">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">	
+								<span class="ui-select">
+									<select ng-model="newOrder.method"  data-size="auto" id="newOrderMethod" data-live-search="true" data-style="btn-success" data-width="100%" placeholder="Method">
+										<option value="onorder">On Order</option>
+										<option value="shipping">Shipping</option>
+										<option value="willcall">Will Call</option>
+										<option value="north">North</option>
+										<option value="east">East</option>
+										<option value="south">South</option>
+										<option value="west">West</option>
+										<option value="tulsa">Tulsa</option>
+										<option value="dallas">Dallas</option>
+										<option value="stillwater">Stillwater</option>
+										<option value="shawnee">Shawnee</option>
+									</select>
+								</span>
+							</div>
+						</div>
+					</div>
+				
+					<!-- <div class="form-group">
+						<div class="row clearfix">
+							<div class="col-md-12 column">
+								<table class="table table-bordered table-hover" id="tab_logic" data-ng-model="newOrder.entries">
+									<thead>
+										<tr >
+											<th class="text-center" style="width:80px;">
+												#
+											</th>
+											<th class="text-center" style="width:80px">
+												Quantity
+											</th>
+											<th class="text-center" style="width:100px;">
+												Size
+											</th>
+											<th class="text-center">
+												Description
+											</th>
+											<th class="text-center" style="width:160px;">
+												SKU
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr id='addr0' ng-repeat="entry in newOrder.entries">
+											<td>
+												1
+											</td>
+											<td>
+												<input type="text" name='name0' ng-model="entry.quantity"  placeholder='Quantity' class="form-control"/>
+											</td>
+											<td>
+												<input type="text" name='mail0' ng-model="entry.size" placeholder='Size' class="form-control"/>
+											</td>
+											<td>
+												<input type="text" name='mail0' ng-model="entry.description" placeholder='Description' class="form-control"/>
+											</td>
+											<td>
+												<input type="text" name='mobile0' ng-model="entry.sku" placeholder='SKU' class="form-control"/>
+											</td>
+										</tr>
+					                    <tr id='addr1'></tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<a id="add_row" class="btn btn-default pull-left" ng-click="newOrder.entries.push({})">Add Row</a><a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
+					</div> -->
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button id="saveOrderBtn" type="button" data-ng-click="saveOrder(newOrder)" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-3" ng-repeat="driver in drivers" id="driver_{{driver.id}}" >
+			<section class="panel" style="border-top:none;">
+				<div class="panel-heading" data-ng-class="{'bg-danger': driver.status === '0', 'bg-success': driver.status === '1'}" ng-click="driverOrders=!driverOrders" >
+					<strong>{{driver.name}}</strong>
+					<span class="pull-right">
+						<i class="fa fa-truck"></i>
+					</span>
+                        </div>
+                        <div class="panel-bottom bg-reverse fx-fade-up" ng-show="driverOrders">
+	                        <ul class="list-group">
+                        	<li class="list-group-item">
+                        		<p ng-click="editDriver = true" ng-hide="editDriver"><strong>{{driver.name}}</strong></p>
+                        		<div class="input-group" ng-show="editDriver">
+                        			<input type="text" ng-model="driver.name" class="form-control" placeholder="Driver Name">
+                        			<span class="input-group-btn">
+                        				<button ng-click="updateDriver({name: driver.name}, driver.id); editDriver = false" type="button" class="btn btn-primary">Save</button>
+                        			</span>
+                        		</div>
+                        	</li>	
+						<li class="list-group-item" ng-repeat="order in driver.orders">{{order.customer_name}}<span class="label label-danger pull-right">{{order.number}}</span> </li>
+					</ul>	                        
+                        </div>
+			</section>
+		</div>
+	</div>
+	<!-- <div class="row">
+		<div class="col-md-12">
+			<button id="orderBtn" data-toggle="modal" data-target="#addOrderModal" type="button" class="btn btn-default">Orders</button>
+		</div>
+	</div>
+	<br> -->
+	<div id="mainsplit">
+		<!-- START MAIN SPLIT -->		
+		<div>
+			<div id="split_1">				
+				<!-- START SPLIT_1 -->
+				<div>
+					<div id="split_1_1">
+						<div class="driver_1">
+							<table>
+								<tr>
+									<td class="head">
+										
+									</td>
+								</tr>
+								<tr>
+									<td class="body">
+										
+									</td>
+								</tr>
+								<tr>
+									<td class="foot">
+										
+									</td>
+								</tr>
+							</table>							
+						</div>
+						<!-- SPLIT_1_1 -->
+						<div class="driver_2">
+
+						</div>
+
+					</div>
+				</div>
+				<!-- SPLIT_1 -->
+				<div>
+					<div id="split_1_2">
+						<div class="driver_3">
+							
+						</div>
+						<!-- SPLIT_1_2 -->
+						<div class="driver_4">
+							
+						</div>
+					</div>					
+				</div>
+				<!-- END SPLIT_1 -->
+			</div>
+		</div>
+		<!-- MAIN SPLIT -->
+		<div>
+			<div id="split_2">				
+				<!-- START SPLIT_2 -->
+				<div>
+					<div id="split_2_1">
+						<div>
+							<div id="split_2_1_1">
+								<div>
+									<div id="split_2_1_1_1">
+										<div>
+											<div id="method-2_1_1_1_t">
+											<h1><strong> {{methods.onorder.title}} </strong>
+												<button type="button" data-toggle="modal" data-target="#onorder_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+											</h1> 
+											<p> {{method.onorder.driver}}  <i class="fa fa-truck pull-right">{{methods.onorder.truck}}</i></p>
+												<!-- <div class="input-group">
+													<input class="form-control on-order" type="text" id="input-2_1_1_1_t" value="On Order"> 
+													<span class="input-group-btn">
+
+														<button id="top-2_1_1_1" type="button" class="top btn btn-default btn-sm "><i class="fa fa-times"></i></button>
+														<button id="top-add-2_1_1_1_t" type="button" class=" btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>													
+													</span>
+												</div> -->
+											</div>
+											<div data-ng-model="orders"  id="drop-onorder" class="connectedSortable sort-drop on-order" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'onorder'" class="list-group-item" data-ng-class="{'bg-success': methods.onorder.status === '1', 'bg-danger': methods.onorder.status === '0', }"> <strong>{{order.number}}</strong> </li>
+											</div>											
+										</div>
+									<!-- SPLIT 2 - 1 - 1 - 2 -->
+										<div>
+											<div id="" data-ng-controller="pickupCtrl">
+												<div class="input-group">
+													<h1><strong>Pickup Alkyd</strong></h1>
+												</div>
+												<div class="sort-drop pickup-alkyd" id="drop-2_1_1_1_b">
+														
+															
+													<div class="" style="padding:0;">
+														<table id='pickupList' class="table table-bordered" style="background-color:#ffffff;">
+															<thead>
+																<tr>
+																	<th style="width: 10%" ng-click="newPickup(title)"><i class="fa fa-plus"></i>
+																</th>
+																<th style="width: 80%; padding-bottom:0;">
+																	<input type='text' data-ng-model="title" placeholder='Title' class="form-control" style="font-size:14px;">
+																</th>
+																	<th style="width: 10%"></th>
+																</tr>
+															</thead>
+															<tbody class="pickupTbody">
+																<tr data-ng-repeat="(key, pick) in pickups">
+																	<td data-ng-click="completePickup(key, pick.complete)"><i class="fa fa-circle-o" data-ng-class="{'fa-check': pick.complete === true, 'fa-circle-o':pick.complete === false}"></i></td>
+																	<td> 
+																		<strike data-ng-if="pick.complete">{{pick.title}}</strike>
+																		<strong data-ng-if="!pick.complete">{{pick.title}}</strong>
+																	</td>
+																	<td data-ng-click="removePickup(key)"> <i class="fa fa-times"></i> </td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+															
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- SPLIT 2_1_1 -->
+								<div>
+									<div id="split_2_1_1_2">
+										<div>
+											<div id="split_2_1_1_2_1">
+												<div>
+													<div id="method-2_1_1_2_1_t">
+													<h1><strong>North</strong>
+													<button type="button" data-toggle="modal" data-target="#north_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+													</h1> 
+													<p> {{methods.north.driver}}  <i class="fa fa-truck pull-right">{{methods.north.truck}}</i></p>
+														<!-- <div class="input-group">
+															<input class="form-control north" type="text" id="input-2_1_1_2_1_t" value="North">
+															<span class="input-group-btn">
+																<button id="top-2_1_1_2_1" type="button" class="top btn btn-default btn-sm"><i class="fa fa-times"></i></button>
+																<button id="top-add-2_1_1_2_1_t" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
+															</span>
+														</div> -->
+													</div>
+													<div data-ng-model="orders"  id="drop-north" class="connectedSortable sort-drop north" ui-sortable="sortableConfig">	
+													<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'north'" class="list-group-item" data-ng-class="{'bg-success': methods.north.status === '1', 'bg-danger': methods.north.status === '0', }"> <strong>{{order.number}}</strong> </button>
+													</div>
+												</div>
+												<div>
+													<div id="method-2_1_1_2_1_b">
+													<h1><strong>South</strong>
+													<button type="button" data-toggle="modal" data-target="#south_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+													</h1> 
+													<p> {{methods.south.driver}}  <i class="fa fa-truck pull-right">{{methods.south.truck}}</i></p>
+														<!-- <div class="input-group">
+															<input class="form-control South" type="text" id="input-2_1_1_2_1_b" value="South">
+															<span class="input-group-btn">
+																<button id="bot-2_1_1_2_1" type="button" class="bot btn btn-default btn-sm"><i class="fa fa-times"></i></button>
+																<button id="bot-add-2_1_1_2_1_b" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
+															</span>
+														</div> -->
+													</div>
+													<div data-ng-model="orders"  id="drop-south" class="connectedSortable sort-drop south" ui-sortable="sortableConfig">							
+													<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'south'" class="list-group-item" data-ng-class="{'bg-success': methods.south.status === '1', 'bg-danger': methods.south.status === '0', }"> <strong>{{order.number}}</strong> </li>
+													</div>
+												</div>
+											</div>
+										</div>
+									<!-- SPLIT 2 - 1 - 1 - 2 -->
+										<div data-ng-controller="dropoffCtrl">
+											
+											<div class="input-group">
+												<h1><strong>Drop Off Alkyd</strong></h1>
+												
+											</div>
+											<div class="sort-drop drop-off-alkyd" id="drop-2_1_1_2_b">
+												
+												<div class="" style="padding:0;">
+													<table id='dropoffList' class="table table-bordered" style="background-color:#ffffff;">
+														<thead>
+															<tr>
+																<th style="width: 10%" ng-click="newDropoff(title)"><i class="fa fa-plus"></i>
+															</th>
+															<th style="width: 80%; padding-bottom:0;">
+																<input type='text' data-ng-model="title" placeholder='Title' class="form-control" style="font-size:14px;">
+															</th>
+																<th style="width: 10%"></th>
+															</tr>
+														</thead>
+														<tbody class="notesTbody">
+															<tr data-ng-repeat="(key, drop) in dropoffs">
+																<td data-ng-click="completeDropoff(key, drop.complete)"><i class="fa fa-circle-o" data-ng-class="{'fa-check': drop.complete === true, 'fa-circle-o':drop.complete === false}"></i></td>
+																<td> 
+																	<strike data-ng-if="drop.complete">{{drop.title}}</strike>
+																	<strong data-ng-if="!drop.complete">{{drop.title}}</strong>
+																</td>
+																<td data-ng-click="removeDropoff(key)"> <i class="fa fa-times"></i> </td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- SPLIT_2_1 -->
+						<div >
+							<div id="split_2_1_2">
+								<div>
+									<div id="method-2_1_2_t">
+									<h1><strong>West</strong>
+										<button type="button" data-toggle="modal" data-target="#west_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+									</h1> 
+									<p> {{methods.west.driver}}  <i class="fa fa-truck pull-right">{{methods.west.truck}}</i></p>
+										<!-- <div class="input-group">
+											<input class="form-control west" type="text" id="input-2_1_2_t" value="WEST">
+											<span class="input-group-btn">
+												<button id="top-2_1_2" type="button" class="top btn btn-default btn-sm"><i class="fa fa-times"></i></button>
+												<button id="top-add-2_1_2_t" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
+											</span>
+										</div> -->
+									</div>
+									<div data-ng-model="orders"  id="drop-west" class="connectedSortable sort-drop west"  ui-sortable="sortableConfig">
+									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'west'" class="list-group-item" data-ng-class="{'bg-success': methods.west.status === '1', 'bg-danger': methods.west.status === '0', }"> <strong>{{order.number}}</strong> </li>				
+									</div>
+								</div>
+								<!-- SPLIT 2 - 1 - 2 -->
+								<div>
+									<div id="method-2_1_2_b">
+									<h1><strong>Tulsa</strong>
+										<button type="button" data-toggle="modal" data-target="#tulsa_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+									</h1> 
+									<p> {{methods.tulsa.driver}}  <i class="fa fa-truck pull-right">{{methods.tulsa.truck}}</i></p>
+										<!-- <div class="input-group">
+											<input class="form-control tulsa" type="text" id="input-2_1_2_b" value="Tulsa">
+											<span class="input-group-btn">
+												<button id="bot-2_1_2" type="button" class="bot btn btn-default btn-sm"><i class="fa fa-times"></i></button>
+												<button id="bot-add-2_1_2_b" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
+											</span>
+										</div> -->
+									</div>
+									<div data-ng-model="orders"  id="drop-tulsa" class="connectedSortable sort-drop tulsa" ui-sortable="sortableConfig">
+										<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'tulsa'" class="list-group-item" data-ng-class="{'bg-success': methods.tulsa.status === '1', 'bg-danger': methods.tulsa.status === '0', }"> <strong>{{order.number}}</strong> </li>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- SPLIT_2 -->
+				<div>
+					<div id="split_2_2">
+						<div>
+							<div id="split_2_2_1">
+								<div >
+									<div id="split_2_2_1_1">
+										<div>							
+											<div id="method-2_2_1_1_t">
+											<h1><strong>East</strong>
+												<button type="button" data-toggle="modal" data-target="#east_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+											</h1> 
+											<p> {{methods.east.driver}}  <i class="fa fa-truck pull-right">{{methods.east.truck}}</i></p>
+											</div>
+											<div data-ng-model="orders"  id="drop-east" class="connectedSortable sort-drop east" ui-sortable="sortableConfig">
+												
+											<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'east'"  class="list-group-item" data-ng-class="{'bg-success': methods.east.status === '1', 'bg-danger': methods.east.status === '0', }"> <strong>{{order.number}}</strong> </li>
+											</div>
+										</div>
+										<!-- SPLIT 2 - 2 - 1 - 1 -->
+										<div>
+											<div id="method-2_2_1_1_b">
+												<h1><strong>Dallas</strong>
+													<button type="button" data-toggle="modal" data-target="#dallas_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+												</h1> 
+												<p> {{methods.dallas.driver}}  <i class="fa fa-truck pull-right">{{methods.dallas.truck}}</i></p>
+											</div>
+											<div data-ng-model="orders"  id="drop-dallas" class="connectedSortable sort-drop dallas" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'dallas'" class="list-group-item" data-ng-class="{'bg-success': methods.dallas.status === '1', 'bg-danger': methods.dallas.status === '0', }"> <strong>{{order.number}}</strong> </li>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- SPLIT 2_2_1 -->
+								<div>
+									<div id="split_2_2_1_2">
+										<div>
+											<div id="method-2_2_1_2_t">
+											<!-- 	<div class="input-group">
+													<input class="form-control shipping" type="text" id="input-2_2_1_2_t" value="Shipping">
+													<span class="input-group-btn">
+														<button id="top-2_2_1_2" type="button" class="top btn btn-default btn-sm"><i class="fa fa-times"></i></button>
+														<button id="top-add-2_2_1_2_t" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
+													</span>
+												</div> -->
+												<h1><strong>shipping</strong>
+													<button type="button" data-toggle="modal" data-target="#shipping_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+												</h1> 
+												<p> {{methods.shipping.driver}}  <i class="fa fa-truck pull-right">{{methods.shipping.truck}}</i></p>
+											</div>
+											<div data-ng-model="orders"  id="drop-shipping" class="connectedSortable sort-drop shipping" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shipping'" class="list-group-item" data-ng-class="{'bg-success': methods.shipping.status === '1', 'bg-danger': methods.shipping.status === '0', }"> <strong>{{order.number}}</strong> </li>
+												
+											</div>
+										</div>
+										<!-- SPLIT 2 - 2 - 1 - 2 -->
+										<div>
+											<div id="method-2_2_1_2_b">
+											<h1><strong>Stillwater</strong>
+												<button type="button" data-toggle="modal" data-target="#stillwater_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+											</h1> 
+											<p> {{methods.stillwater.driver}}  <i class="fa fa-truck pull-right">{{methods.stillwater.truck}}</i></p>
+												<!-- <div class="input-group">
+													<input class="form-control stillwater" type="text" id="input-2_2_1_2_b" value="Stillwater">
+													<span class="input-group-btn">
+														<button id="bot-2_2_1_2" type="button" class="bot btn btn-default btn-sm"><i class="fa fa-times"></i></button>
+														<button id="bot-add-2_2_1_2_b" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
+													</span>
+												</div> -->
+											</div>
+											<div data-ng-model="orders"  id="drop-stillwater" class="connectedSortable sort-drop stillwater" ui-sortable="sortableConfig">
+											<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'stillwater'" class="list-group-item" data-ng-class="{'bg-success': methods.stillwater.status === '1', 'bg-danger': methods.stillwater.status === '0', }"> <strong>{{order.number}}</strong> </li>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- SPLIT_2_2 -->
+						<div >
+							<div id="split_2_2_2">
+								<div>
+									<div id="method-2_2_2_t">
+									<h1><strong>Will Call</strong>
+										<button type="button" data-toggle="modal" data-target="#willcall_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+									</h1> 
+									<p> {{methods.willcall.driver}}  <i class="fa fa-truck pull-right">{{methods.willcall.truck}}</i></p>
+										<!-- <div class="input-group">
+											<input class="form-control will-call" type="text" id="input-2_2_2_t" value="WILL CALL">
+											<span class="input-group-btn">
+												<button id="top-2_2_2" type="button" class="top btn btn-default btn-sm"><i class="fa fa-times"></i></button>
+												<button id="top-add-2_2_2_t" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
+											</span>
+										</div> -->
+									</div>
+									<div data-ng-model="orders"  id="drop-wilcall" class="connectedSortable sort-drop will-call" ui-sortable="sortableConfig">
+									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'willcall'" class="list-group-item" data-ng-class="{'bg-success': methods.willcall.status === '1', 'bg-danger': methods.willcall.status === '0', }"> <strong>{{order.number}}</strong> </li>
+									</div>
+								</div>
+								<!-- SPLIT 2 - 2 - 2 -->
+								<div>
+									<div id="method-2_2_2_b">
+									<h1><strong>Shawnee</strong>
+										<button type="button" data-toggle="modal" data-target="#shawnee_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+									</h1> 
+									<p> {{methods.shawnee.driver}}  <i class="fa fa-truck pull-right">{{methods.shawnee.truck}}</i></p>
+<!-- 										<div class="input-group">
+											<input class="form-control shawnee" type="text" id="input-2_2_2_b" value="Shawnee">
+											<span class="input-group-btn">
+												<button id="bot-2_2_2" type="button" class="bot btn btn-default btn-sm"><i class="fa fa-times"></i></button>
+												<button id="bot-add-2_2_2_b" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
+											</span>
+										</div> -->
+									</div>
+									<div data-ng-model="orders"  id="drop-shawnee" class="connectedSortable sort-drop shawnee" ui-sortable="sortableConfig">											
+									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shawnee'" class="list-group-item" data-ng-class="{'bg-success': methods.shawnee.status === '1', 'bg-danger': methods.shawnee.status === '0', }"> <strong>{{order.number}}</strong> </li>
+									</div>
+								</div>
+							</div>					
+						</div>
+					</div>
+				</div>
+				<!-- END SPLIT_2 -->
+			</div>
+		</div>
+		<!-- END MAIN SPLIT -->		
+	</div>
+	
+	
+
+		
+		<!-- <script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxwindow.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxcalendar.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxtooltip.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxtabs.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/globalization/globalize.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxdocking.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxdockpanel.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxlistbox.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxbuttons.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxpanel.js"></script>
+		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxsplitter.js"></script>
+
+ -->
+
+<!-- <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script> -->
+
+<script type="text/javascript">
+        // $(document).ready(function () {
+        	/*$.Order.getAll("{{URL::to('deliveries')}}");*/
+		/*$.Driver.getDrivers("{{URL::to('drivers')}}");*/
+		//$.Order.init("{{URL::to('deliveries')}}");
+
+
+		/*$("#bot-add-2_2_1_1_b, #bot-add-2_2_1_1_t").gpopover({
+			preventHide:true
+		});*/
+				
+		//$Driver.init("drivers");
+		//$Method.init("methods");
+		//$Truck.init("trucks");
+				
+			var panels = {};
+		/*$.jStorage.set("panel_2_1_1_t",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_1_1_b",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_1_1_1_t",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_1_1_1_b",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_1_1_2_t",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_1_1_2_b",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_1_1_2_1_t",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_1_1_2_1_b",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_1_2_t",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_1_2_b",  {size: "50%", collapsible: false});
+
+			$.jStorage.set("panel_2_2_1_t",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_2_1_b",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_2_1_1_t",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_2_1_1_b",  {size: "50%", collapsible: false}); 
+			$.jStorage.set("panel_2_2_1_2_t",  {size: "50%", collapsible: false}); 
+			$.jStorage.set("panel_2_2_1_2_b",  {size: "50%", collapsible: false}); 
+			$.jStorage.set("panel_2_2_2_t",  {size: "50%", collapsible: false});
+			$.jStorage.set("panel_2_2_2_b",  {size: "50%", collapsible: false})*/
+		
+			
+			//$.jStorage.deleteKey('panels');
+		/*	Storage.prototype.setObject = function(key, value) {
+			    //this.setItem(key, JSON.stringify(value));
+			    $.jStorage.set(key, panels[key] );
+			};
+
+			Storage.prototype.getObject = function(key) {
+			    return JSON.parse(this.getItem(key));
+
+			};
+			for(var key in panels){
+				Storage.prototype.setObject(key, panels[key]);
+			}
+*/
+
+
+	            $('#mainsplit').jqxSplitter({ theme: 'highblue', width: '100%', height: 800, orientation: 'horizontal', panels: [{ size: 0, resizable: false, collapsible: false }, { size: 800,  resizable: false, collapsible: false }] });
+	            $('#split_1').jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'vertical', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] });
+	            $('#split_2').jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'vertical', panels: [{ size: '50%'},{ size: '50%', collapsible: false}] });
+	            $('#split_1_1').jqxSplitter({ theme: 'highblue' , width: '100%', height: '100%',  orientation: 'vertical', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] });
+	            $('#split_1_2').jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'vertical', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] });
+
+	            $('#split_2_1').jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'vertical', panels: [{ size: '66.6666%', collapsible: false}, { size: '66.6666%', collapsible: false}] });
+	            $('#split_2_2').jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'vertical', panels: [{ size: '66.6666%', collapsible: false}, { size: '66.6666%', collapsible: false}] });	            	
+
+	            $('#split_2_1_1')
+	            	.jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'vertical', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] })
+	            	/*.on("resize", function(event){
+		            	var pan = event.args.panels;
+		            	console.log(pan);
+		            	$.jStorage.set("panel_2_1_1_t", pan[0]);
+		            	$.jStorage.set("panel_2_1_1_b", pan[1]);
+		            });*/
+	            $('#split_2_1_1_1')
+	            	.jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'horizontal', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] })
+	            	.on("resize", function(event){
+		            	var pan = event.args.panels;
+		            	console.log(pan);
+		            	//$.jStorage.set("panel_2_1_1_1t", pan[0]);
+		            	//$.jStorage.set("panel_2_1_1_1_b", pan[1]);
+		            });
+	            $('#split_2_1_1_2')
+	            	.jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'horizontal', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] })
+	            	.on("resize", function(event){
+		            	var pan = event.args.panels;
+		            	console.log(pan);
+		            	// $.jStorage.set("panel_2_1_1_2_t", pan[0]);
+		            	// $.jStorage.set("panel_2_1_1_2_b", pan[1]);
+		            });
+	            $('#split_2_1_1_2_1')
+	            	.jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'horizontal', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] })
+	            	.on("resize", function(event){
+		            	var pan = event.args.panels;
+		            	console.log(pan);
+		            	// $.jStorage.set("panel_2_1_1_2_1_t", pan[0]);
+		            	// $.jStorage.set("panel_2_1_1_2_1_b", pan[1]);
+		            });
+	            $('#split_2_1_2')
+	            	.jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'horizontal', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] })
+	            	.on("resize", function(event){
+		            	var pan = event.args.panels;
+		            	console.log(pan);
+		            	// $.jStorage.set("panel_2_1_2_t", pan[0]);
+		            	// $.jStorage.set("panel_2_1_2_b", pan[1]);
+		            });
+
+	            $('#split_2_2_1')
+	            	.jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'vertical', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] })
+	            	/*.on("resize", function(event){
+		            	var pan = event.args.panels;
+		            	console.log(pan);
+		            	$.jStorage.set("panel_2_2_1_t", pan[0]);
+		            	$.jStorage.set("panel_2_2_1_b", pan[1]);
+		            });*/
+	            $('#split_2_2_1_1')
+	            	.jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'horizontal', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] })
+	            	.on("resize", function(event){
+		            	var pan = event.args.panels;
+		            	console.log(pan);
+		            	//$.jStorage.set("panel_2_2_1_1_t", pan[0]);
+		            	//$.jStorage.set("panel_2_2_1_1_b", pan[1]);
+		            });
+
+	            $('#split_2_2_1_2')
+	            	.jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'horizontal', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] })
+	            	.on("resize", function(event){
+		            	var pan = event.args.panels;
+		            	console.log(pan);
+		            	//$.jStorage.set("panel_2_2_1_2_t", pan[0]);
+		            	//$.jStorage.set("panel_2_2_1_2_b", pan[1]);
+		            });
+	            $('#split_2_2_2')
+	            	.jqxSplitter({ theme: 'highblue', width: '100%', height: '100%',  orientation: 'horizontal', panels: [{ size: '50%', collapsible: false}, { size: '50%', collapsible: false}] })
+		            .on("resize", function(event){
+		            	var pan = event.args.panels;
+		            	console.log(pan);
+		            	//$.jStorage.set("panel_2_2_2_t", pan[0]);
+		            	//$.jStorage.set("panel_2_2_2_b", pan[1]);
+		            });
+
+
+	            $("button.bot").click(function(){
+	            	var panl = [{size: "50%"}];
+	            	panl[0].collapsible = true;
+	            	panl[0].collapsible = false;
+	            	var id  = $(this).attr("id").split("-")[1];
+	            	//$('#split_' + id).jqxSplitter({panels: panl});
+	            	//$('#split_' + id).jqxSplitter("collapse");
+	            });
+	            $("button.top").click(function(){
+	            	var panl = [{size: "50%"}];
+	            	panl[0].collapsible = false;
+	            	panl[0].collapsible = true;
+	            	var id  = $(this).attr("id").split("-")[1];
+	            	//$('#split_' + id).jqxSplitter({panels: panl});
+	            	//$('#split_' + id).jqxSplitter("collapse");
+	            });
+	            var dropId = "";
+	            var dropName = "";
+	            $("button.add").on("click", function(){
+	            	dropId = $(this).attr("id").split("-")[2];
+	            	dropName = $("input-" + dropId).val();
+	            	console.log("split_" + dropId);
+	            	//$("#addOrderModal").attr("data-method", id);//
+	            	//$("#ordersSelect").on("change", function(){
+	            	//});
+	            	$("#saveOrderBtn").click(function(){
+	            		
+	            		//$("#drop-" + dropId).append($("#ordersSelect").val());
+	            		//$("#addOrderModal").modal("hide");
+	            		Order.dropFromSelect($("#ordersSelect").val(), dropId);
+	            		$("#addOrderModal").modal("hide");
+	            		dropId = "";
+	            		dropName = "";
+	            	});
+
+	            	$("#addOrderModal").modal("show");
+	            });
+	           $(".sort-drop").on("dblclick", function(){
+	            	dropId = $(this).attr("id").split("-")[1];
+	            	//dropName = $("input-" + dropId).val();	            	
+
+	            	$("#"+dropId + "_Modal").modal("show");
+	            });
+			$("#newOrder").on("click", function(){
+				$("#addOrderModal").modal("hide");
+				$("#newOrderModal").modal("show");
+				//$(".newOrderMethod").bsFormButtonset('attach', {buttonClasses: "btn-warning", isOptional: true});
+			});
+			// var i=1;
+			// $("#add_row").click(function(){
+   //    			$('#addr'+i).html("<td>"+ (i+1) +"</td><td><input name='name"+i+"' type='text' placeholder='Quantity' class='form-control input-md'  /> </td><td><input  name='mail"+i+"' type='text' placeholder='Size'  class='form-control input-md'></td><td><input  name='mobile"+i+"' type='text' placeholder='Description'  class='form-control input-md'></td><td><input  name='mobile"+i+"' type='text' placeholder='SKU'  class='form-control input-md'></td>");
+
+   //    			$('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+   //    			i++; 
+  	// 		});
+		 //     $("#delete_row").click(function(){
+		 //    	 if(i>1){
+			// 	 $("#addr"+(i-1)).html('');
+			// 	 i--;
+			// 	 }
+			//  });
+	           
+	            /*var x = localStorage.splitCenter;
+	            var y = localStorage
+	            console.log()
+	            console.log();*/
+
+	            //alert(split.SS.panels);
+	            // $Order.init('orders');
+	          
+        // });
+    </script>
+
+

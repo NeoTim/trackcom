@@ -15,6 +15,7 @@ namespace Symfony\Component\Routing\Annotation;
  * Annotation class for @Route().
  *
  * @Annotation
+ * @Target({"CLASS", "METHOD"})
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
@@ -22,13 +23,12 @@ class Route
 {
     private $path;
     private $name;
-    private $requirements = array();
-    private $options = array();
-    private $defaults = array();
+    private $requirements;
+    private $options;
+    private $defaults;
     private $host;
-    private $methods = array();
-    private $schemes = array();
-    private $condition;
+    private $methods;
+    private $schemes;
 
     /**
      * Constructor.
@@ -39,6 +39,12 @@ class Route
      */
     public function __construct(array $data)
     {
+        $this->requirements = array();
+        $this->options = array();
+        $this->defaults = array();
+        $this->methods = array();
+        $this->schemes = array();
+
         if (isset($data['value'])) {
             $data['path'] = $data['value'];
             unset($data['value']);
@@ -147,15 +153,5 @@ class Route
     public function getMethods()
     {
         return $this->methods;
-    }
-
-    public function setCondition($condition)
-    {
-        $this->condition = $condition;
-    }
-
-    public function getCondition()
-    {
-        return $this->condition;
     }
 }

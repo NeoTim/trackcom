@@ -43,9 +43,6 @@ class PrettyPageHandlerTest extends TestCase
         ob_start();
         $run->handleException($this->getException());
         ob_get_clean();
-
-        // Reached the end without errors
-        $this->assertTrue(true);
     }
 
     /**
@@ -242,12 +239,16 @@ class PrettyPageHandlerTest extends TestCase
 
     public function testEditorXdebug()
     {
-        $originalValue = ini_get('xdebug.file_link_format');
+        if (!extension_loaded('xdebug')) {
+            $this->markTestSkipped('xdebug is not available');
+        }
 
-        ini_set('xdebug.file_link_format', '%f:%l');
+        $originalValue = ini_get('xdebug.file_link_format');
 
         $handler = $this->getHandler();
         $handler->setEditor('xdebug');
+
+        ini_set('xdebug.file_link_format', '%f:%l');
 
         $this->assertEquals(
             '/foo/bar.php:10',

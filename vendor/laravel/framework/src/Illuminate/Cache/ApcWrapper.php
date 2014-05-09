@@ -56,7 +56,7 @@ class ApcWrapper {
 	}
 
 	/**
-	 * Decrement the value of an item in the cache.
+	 * Decremenet the value of an item in the cache.
 	 *
 	 * @param  string  $key
 	 * @param  mixed   $value

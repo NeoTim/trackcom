@@ -110,8 +110,6 @@ class FileStore implements StoreInterface {
 	 * @param  string  $key
 	 * @param  mixed   $value
 	 * @return void
-	 *
-	 * @throws \LogicException
 	 */
 	public function increment($key, $value = 1)
 	{
@@ -119,17 +117,15 @@ class FileStore implements StoreInterface {
 	}
 
 	/**
-	 * Decrement the value of an item in the cache.
+	 * Increment the value of an item in the cache.
 	 *
 	 * @param  string  $key
 	 * @param  mixed   $value
 	 * @return void
-	 *
-	 * @throws \LogicException
 	 */
 	public function decrement($key, $value = 1)
 	{
-		throw new \LogicException("Decrement operations not supported by this driver.");
+		throw new \LogicException("Increment operations not supported by this driver.");
 	}
 
 	/**

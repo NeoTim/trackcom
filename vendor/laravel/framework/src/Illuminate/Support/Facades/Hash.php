@@ -1,8 +1,5 @@
 <?php namespace Illuminate\Support\Facades;
 
-/**
- * @see \Illuminate\Hashing\BcryptHasher
- */
 class Hash extends Facade {
 
 	/**

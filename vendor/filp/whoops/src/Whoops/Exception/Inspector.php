@@ -17,7 +17,7 @@ class Inspector
     private $exception;
 
     /**
-     * @var FrameCollection
+     * @var Whoops\Exception\FrameCollection
      */
     private $frames;
 
@@ -56,7 +56,7 @@ class Inspector
     /**
      * Returns an iterator for the inspected exception's
      * frames.
-     * @return FrameCollection
+     * @return Whoops\Exception\FrameCollection
      */
     public function getFrames()
     {

@@ -1,6 +1,8 @@
 <?php namespace Illuminate\Database\Eloquent\Relations;
 
 use Closure;
+use DateTime;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Expression;
@@ -136,9 +138,9 @@ abstract class Relation {
 	{
 		$query->select(new Expression('count(*)'));
 
-		$key = $this->wrap($this->getQualifiedParentKeyName());
+		$key = $this->wrap($this->parent->getQualifiedKeyName());
 
-		return $query->where($this->getHasCompareKey(), '=', new Expression($key));
+		return $query->where($this->getForeignKey(), '=', new Expression($key));
 	}
 
 	/**
@@ -164,15 +166,14 @@ abstract class Relation {
 	/**
 	 * Get all of the primary keys for an array of models.
 	 *
-	 * @param  array   $models
-	 * @param  string  $key
+	 * @param  array  $models
 	 * @return array
 	 */
-	protected function getKeys(array $models, $key = null)
+	protected function getKeys(array $models)
 	{
-		return array_values(array_map(function($value) use ($key)
+		return array_values(array_map(function($value)
 		{
-			return $key ? $value->getAttribute($key) : $value->getKey();
+			return $value->getKey();
 
 		}, $models));
 	}
@@ -205,16 +206,6 @@ abstract class Relation {
 	public function getParent()
 	{
 		return $this->parent;
-	}
-
-	/**
-	 * Get the fully qualified parent key naem.
-	 *
-	 * @return string
-	 */
-	protected function getQualifiedParentKeyName()
-	{
-		return $this->parent->getQualifiedKeyName();
 	}
 
 	/**

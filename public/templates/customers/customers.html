@@ -1,0 +1,46 @@
+<div class="panel">
+	<div class="input-group">
+		<span class="input-group-btn">
+			<button type="button" class="btn btn-primary"> <i class="fa fa-search"></i></button>
+		</span>
+		<input type="text" data-ng-model="filter.$" class="form-control" placeholder="Search . . . ">
+	</div>
+</div>
+<div class="panel panel-default">
+	  <div class="panel-heading">
+			<h3 class="panel-title">Customers</h3>
+	  </div>
+	  <div class="panel-body">
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th style="width:100px">Options</th>
+					<th style="width:">ID</th>
+					<th style="width:">Company</th>
+					<th style="width:">Division</th>
+					<th style="width:">Phone</th>
+					<th style="width:">Email</th>
+					<th style="width:;">address</th>
+				</tr>
+			</thead>
+			<tbody>					
+				<tr data-ng-repeat="cust in customers | filter: filter.$">									
+					<td style="width:100px;">
+						<!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#customer_modal" ng-click="setMcust(customer)"><i class="fa fa-eye"></i></button> -->
+						<a href="#/customers/{{cust.id}}" type="button" class="btn btn-info"><i class="fa fa-eye"></i></a>
+					</td>
+					<td style="width:"> {{cust.id}} </td>
+					<td style="width:"> {{cust.company}} </td>
+					<td style="width:"> {{cust.division}} </td>
+					<td style="width:"> {{cust.phone}} </td>
+					<td style="width:"> {{cust.email}} </td>
+					<td style="width:;"> 
+						<p ng-if="cust.city">{{cust.city}},</p><p ng-if="cust.state">{{cust.state}}</p><p ng-if="cust.zip">{{cust.zip}}</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+	  </div>
+</div>

@@ -40,10 +40,17 @@ class ControllerResolver implements ControllerResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Returns the Controller instance associated with a Request.
      *
      * This method looks for a '_controller' request attribute that represents
      * the controller name (a string like ClassName::MethodName).
+     *
+     * @param Request $request A Request instance
+     *
+     * @return mixed|bool    A PHP callable representing the Controller,
+     *                       or false if this resolver is not able to determine the controller
+     *
+     * @throws \InvalidArgumentException|\LogicException If the controller can't be found
      *
      * @api
      */
@@ -57,13 +64,21 @@ class ControllerResolver implements ControllerResolverInterface
             return false;
         }
 
-        if (is_array($controller) || (is_object($controller) && method_exists($controller, '__invoke'))) {
+        if (is_array($controller)) {
             return $controller;
+        }
+
+        if (is_object($controller)) {
+            if (method_exists($controller, '__invoke')) {
+                return $controller;
+            }
+
+            throw new \InvalidArgumentException(sprintf('Controller "%s" for URI "%s" is not callable.', get_class($controller), $request->getPathInfo()));
         }
 
         if (false === strpos($controller, ':')) {
             if (method_exists($controller, '__invoke')) {
-                return new $controller;
+                return new $controller();
             } elseif (function_exists($controller)) {
                 return $controller;
             }
@@ -72,14 +87,21 @@ class ControllerResolver implements ControllerResolverInterface
         $callable = $this->createController($controller);
 
         if (!is_callable($callable)) {
-            throw new \InvalidArgumentException(sprintf('The controller for URI "%s" is not callable.', $request->getPathInfo()));
+            throw new \InvalidArgumentException(sprintf('Controller "%s" for URI "%s" is not callable.', $controller, $request->getPathInfo()));
         }
 
         return $callable;
     }
 
     /**
-     * {@inheritdoc}
+     * Returns the arguments to pass to the controller.
+     *
+     * @param Request $request    A Request instance
+     * @param mixed   $controller A PHP callable
+     *
+     * @return array
+     *
+     * @throws \RuntimeException When value for argument given is not provided
      *
      * @api
      */

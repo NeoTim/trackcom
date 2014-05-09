@@ -1,7 +1,7 @@
-cd /Applications/MAMP/htdocs/apps/trackcom-update/trackcom/nodejs/Redis/src
-./redis-server &
+cd /Applications/MAMP/htdocs/apps/GOOD/working/nodejs/redis/src
+redis-server &
 
-cd /Applications/MAMP/htdocs/apps/trackcom-update/trackcom/nodejs
+cd /Applications/MAMP/htdocs/apps/GOOD/working/nodejs
 node server.js &
 
 

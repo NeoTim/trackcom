@@ -27,17 +27,7 @@ class SQLiteConnection extends Connection {
 	}
 
 	/**
-	 * Get the default post processor instance.
-	 *
-	 * @return \Illuminate\Database\Query\Processors\Processor
-	 */
-	protected function getDefaultPostProcessor()
-	{
-		return new Query\Processors\SQLiteProcessor;
-	}
-
-	/**
-	 * Get the Doctrine DBAL driver.
+	 * Get the Doctrine DBAL Driver.
 	 *
 	 * @return \Doctrine\DBAL\Driver\PDOSqlite\Driver
 	 */

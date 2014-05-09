@@ -1,0 +1,100 @@
+<tr>
+<td>
+	<!-- <button type="button" class="btn btn-default"><i class="fa fa-edit"></i></button> -->
+	<button data-ng-click="showEntry=!showEntry" type="button" class="btn btn-default"><i class="fa fa-chevron-right" ng-class="{'fa-chevron-right': showEntry==false, 'fa-chevron-down': showEntry == true }"></i></button>
+	<button data-ng-click="addEntry(order.id)" ng-show="showEntry" type="button" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+</td>
+<td>{{order.id}}</td>
+<td><strong ng-hide="showEdit">{{order.customer_name}}</strong>
+	<input type="text" ng-model="order.customer_name" typeahead="customer.company for customer in customers | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Search" style="" data-ng-show="showEdit" ng-if="showEdit === true">
+	
+</td>
+<td><strong ng-hide="showEdit">{{order.delivery_date}}</strong>
+	<input ng-show="showEdit" type="text" class="form-control" data-ng-model="oder.delivery_date" placeholder="Delivery Date x/xx/xxxx" ng-if="showEdit === true">
+	
+</td>
+<td><strong ng-hide="showEdit">{{order.location}}</strong>
+	<span class="ui-select" ng-show="showEdit" ng-if="showEdit === true">
+	<select ng-model="order.location" ng-show="showEdit">
+		<option>Location</option>
+		<option>Reno</option>
+		<option>Sheridan</option>
+		<option>North Store</option>
+		<option>South Store</option>
+	</select>
+	</span>
+	
+</td>
+<td><strong ng-hide="showEdit">{{order.method}}</strong>
+<span class="ui-select" ng-show="showEdit" ng-if="showEdit === true">	
+<select ng-model="order.method" >
+	<option>Shipping</option>
+	<option>Will Call</option>
+	<option>North</option>
+	<option>South</option>
+	<option>East</option>
+	<option>West</option>
+	<option>Dallas</option>
+	<option>Tulsa</option>
+	<option>Stillwater</option>
+	<option>Shawnee</option>
+</select>
+</span>
+
+</td>
+<td><strong ng-hide="showEdit">{{order.group}}</strong>
+<span class="ui-select" ng-show="showEdit" ng-if="showEdit === true">
+<select ng-model="order.group_id" >
+	<option data-ng-repeat="(key, group) in groups" value="{{group.id}}"> {{group.title}} </option>
+</select>
+</span>
+
+</td>
+
+<td>
+	<button  type="button"
+				
+				data-ng-click="setVorder(order)" data-toggle="modal" data-target="#order_Modal"
+				class="btn btn-default"><i class="fa fa-edit"></i></button>
+	<button  type="button"
+				ng-show="showEdit"
+				data-ng-click="showEdit = false; updateOrder(order, order.id)"
+				class="btn btn-primary">Done</button>
+	<button ng-hide="showEdit" ng-click="removeOrder(order.id, ind)" type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+</td>
+</tr>
+<tr ng-show="showEntry">
+	<td colspan="8">
+
+		<li ng-repeat="entry in entries" ng-if="entry.order_id == order.id"  ng-model="entry.priority" class="list-group-item sortableItem">
+			<table style="border:none; width:100%; min-width:100%;">
+				<tr>
+					<td class="mover" style="min-width:50px; text-align:left;"><i class="fa fa-bars"></i></td>		        				
+						<td style="min-width:100px; width:100px; height:40px;" class=""> {{entry.order_id}} </td>
+						<td style="min-width:100px; height:40px;" class=""> {{entry.sku}} </td>
+						<td style="min-width:120px; height:40px;" class=""> {{entry.batch}} </td>
+						<td style="min-width:120px; height:40px;" class=""> {{entry.quantity}} </td>
+						<td style="min-width:120px; height:40px;" class=""> {{entry.ready_date}} </td>
+						<td style="width:100%; height:40px;" class="">
+							<div>
+								<progressbar animate="false" value="entry.status" type="{{entry.color}}"><b>{{entry.status}}%  {{entry.label}}</b></progressbar>
+							</div>
+						</td>
+						<td style="min-width:120px; height:40px; text-align:center;" class="">
+							<button type="button" class="btn btn-default"><I class="fa fa-times"></I></button>
+						</td>
+					</tr>
+			</table>
+
+		</li>
+	</td>
+</tr>
+
+<!-- <button  type="button"
+				data-ng-show="showEdit"
+				data-ng-click="!showEdit"
+				class="btn btn-primary">Done</button>
+	<button  type="button"
+				data-ng-show="showEdit"
+				data-ng-click="!showEdit"
+				class="btn btn-danger"><i class="fa fa-times"></i></button> -->

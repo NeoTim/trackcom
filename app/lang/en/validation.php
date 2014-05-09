@@ -52,6 +52,7 @@ return array(
 	"numeric"          => "The :attribute must be a number.",
 	"regex"            => "The :attribute format is invalid.",
 	"required"         => "The :attribute field is required.",
+	"required_if"      => "The :attribute field is required when :other is :value.",
 	"required_with"    => "The :attribute field is required when :values is present.",
 	"required_without" => "The :attribute field is required when :values is not present.",
 	"same"             => "The :attribute and :other must match.",
@@ -74,13 +75,7 @@ return array(
 	|
 	*/
 
-	'custom' => array(
-		"customer_created" =>  "The customer was successfully saved!!",
-		"Customer_createError" => "There was an error creating the customer!!",
-		"order_created" =>  "The order was successfully saved!!",
-		"order_createError" => "There was an error creating the order!!",
-
-	),
+	'custom' => array(),
 
 	/*
 	|--------------------------------------------------------------------------

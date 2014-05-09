@@ -2,8 +2,6 @@
 
 use Exception;
 use Whoops\Run;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class WhoopsDisplayer implements ExceptionDisplayerInterface {
 
@@ -41,9 +39,12 @@ class WhoopsDisplayer implements ExceptionDisplayerInterface {
 	 */
 	public function display(Exception $exception)
 	{
-		$status = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : 500;
+		if ( ! $this->runningInConsole and ! headers_sent())
+		{
+			header('HTTP/1.1 500 Internal Server Error');
+		}
 
-		return new Response($this->whoops->handleException($exception), $status);
+		$this->whoops->handleException($exception);
 	}
 
 }

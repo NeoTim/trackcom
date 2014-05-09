@@ -1,8 +1,10 @@
 <?php namespace Illuminate\Session;
 
 use Illuminate\Support\Manager;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
-use Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler;
+use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler;
 
 class SessionManager extends Manager {
 
@@ -24,7 +26,7 @@ class SessionManager extends Manager {
 	 */
 	protected function createArrayDriver()
 	{
-		return new Store($this->app['config']['session.cookie'], new NullSessionHandler);
+		return new Store(new MockArraySessionStorage);
 	}
 
 	/**
@@ -40,17 +42,7 @@ class SessionManager extends Manager {
 	}
 
 	/**
-	 * Create an instance of the file session driver.
-	 *
-	 * @return \Illuminate\Session\Store
-	 */
-	protected function createFileDriver()
-	{
-		return $this->createNativeDriver();
-	}
-
-	/**
-	 * Create an instance of the file session driver.
+	 * Create an instance of the native session driver.
 	 *
 	 * @return \Illuminate\Session\Store
 	 */
@@ -58,7 +50,7 @@ class SessionManager extends Manager {
 	{
 		$path = $this->app['config']['session.files'];
 
-		return $this->buildSession(new FileSessionHandler($this->app['files'], $path));
+		return $this->buildSession(new NativeFileSessionHandler($path));
 	}
 
 	/**
@@ -176,17 +168,23 @@ class SessionManager extends Manager {
 	 */
 	protected function buildSession($handler)
 	{
-		return new Store($this->app['config']['session.cookie'], $handler);
+		return new Store(new NativeSessionStorage($this->getOptions(), $handler));
 	}
 
 	/**
-	 * Get the session configuration.
+	 * Get the session options.
 	 *
 	 * @return array
 	 */
-	public function getSessionConfig()
+	protected function getOptions()
 	{
-		return $this->app['config']['session'];
+		$config = $this->app['config']['session'];
+
+		return array(
+			'cookie_domain' => $config['domain'], 'cookie_lifetime' => $config['lifetime'] * 60,
+			'cookie_path' => $config['path'], 'cookie_httponly' => '1', 'name' => $config['cookie'],
+			'gc_divisor' => $config['lottery'][1], 'gc_probability' => $config['lottery'][0],
+		);
 	}
 
 	/**
@@ -194,20 +192,9 @@ class SessionManager extends Manager {
 	 *
 	 * @return string
 	 */
-	public function getDefaultDriver()
+	protected function getDefaultDriver()
 	{
 		return $this->app['config']['session.driver'];
-	}
-
-	/**
-	 * Set the default session driver name.
-	 *
-	 * @param  string  $name
-	 * @return void
-	 */
-	public function setDefaultDriver($name)
-	{
-		$this->app['config']['session.driver'] = $name;
 	}
 
 }

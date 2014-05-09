@@ -17,6 +17,13 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class ExceptionHandlerTest extends \PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        if (!class_exists('Symfony\Component\HttpFoundation\Request')) {
+            $this->markTestSkipped('The "HttpFoundation" component is not available');
+        }
+    }
+
     public function testDebug()
     {
         $handler = new ExceptionHandler(false);
@@ -57,6 +64,6 @@ class ExceptionHandlerTest extends \PHPUnit_Framework_TestCase
     public function testNestedExceptions()
     {
         $handler = new ExceptionHandler(true);
-        $response = $handler->createResponse(new \RuntimeException('Foo', null, new \RuntimeException('Bar')));
+        $response = $handler->createResponse(new \RuntimeException('Foo', 0, new \RuntimeException('Bar')));
     }
 }

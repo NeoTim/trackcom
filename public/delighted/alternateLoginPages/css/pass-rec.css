@@ -1,0 +1,84 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,200,300,100,600);
+body {
+  background: url(../images/login.jpg) no-repeat center fixed;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.pass-box {
+  background: url(../images/box1.png);
+  min-height: 300px;
+  width: 350px;
+  margin: 0px auto;
+  margin-top: 200px;
+  box-shadow: 0px 0px 5px #aeaeae;
+}
+.pass-box .fa-crosshairs {
+  color: #0ba09b;
+}
+.pass-box h1 {
+  color: #2e393b;
+  font-size: 25px;
+  padding-top: 10px;
+  font-family: 'Raleway', Helvetica, Arial;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 20px;
+}
+.pass-box hr {
+  border-width: 1px;
+  border-color: #2e393b;
+  opacity: 0.1;
+}
+.pass-box h5 {
+  text-align: center;
+  font-family: 'Raleway';
+  font-weight: 600;
+  color: #0ba09b;
+  font-size: 13px;
+}
+.pass-box .pass-rec-box {
+  margin-top: 20px;
+}
+.pass-box .pass-rec-box .input-group-addon {
+  background: #2e393b;
+  border: 0px;
+  color: #b4b4b4;
+  border-radius: 0px;
+  opacity: 0.8;
+}
+.pass-box .pass-rec-box input {
+  background: #b4b4b4;
+  border-radius: 0px;
+  border: none;
+  color: #2e393b !important;
+}
+.pass-box .pass-rec-box .form-control:-moz-placeholder {
+  color: #2e393b;
+}
+.pass-box .pass-rec-box .form-control::-moz-placeholder {
+  color: #2e393b;
+}
+.pass-box .pass-rec-box .form-control:-ms-input-placeholder {
+  color: #2e393b;
+}
+.pass-box .pass-rec-box .form-control::-webkit-input-placeholder {
+  color: #2e393b;
+}
+.pass-box .pass-rec-box .form-control:focus {
+  box-shadow: none;
+}
+.pass-box .pass-rec-box .btn {
+  background: #0ba09b;
+  color: #FFFFFF;
+  border-radius: 0px;
+  font-family: 'Raleway';
+  font-weight: 600;
+}
+@media (max-width: 400px) {
+  .pass-box {
+    width: 260px;
+  }
+}

@@ -3,7 +3,7 @@
 use Illuminate\View\View;
 use Illuminate\Auth\UserInterface;
 
-abstract class TestCase extends \PHPUnit_Framework_TestCase {
+class TestCase extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * The Illuminate application instance.
@@ -26,10 +26,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		if ( ! $this->app)
-		{
-			$this->refreshApplication();
-		}
+		$this->refreshApplication();
 	}
 
 	/**
@@ -42,20 +39,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 		$this->app = $this->createApplication();
 
 		$this->client = $this->createClient();
-
-		$this->app->setRequestForConsoleEnvironment();
-
-		$this->app->boot();
 	}
-
-	/**
-	 * Creates the application.
-	 *
-	 * Needs to be implemented by subclasses.
-	 *
-	 * @return Symfony\Component\HttpKernel\HttpKernelInterface
-	 */
-	abstract public function createApplication();
 
 	/**
 	 * Call the given URI and return the Response.
@@ -132,7 +116,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	 */
 	public function route($method, $name, $routeParameters = array(), $parameters = array(), $files = array(), $server = array(), $content = null, $changeHistory = true)
 	{
-		$uri = $this->app['url']->route($name, $routeParameters);
+		$uri = $this->app['url']->route($name, $routeParameters, true);
 
 		return $this->call($method, $uri, $parameters, $files, $server, $content, $changeHistory);
 	}
@@ -268,7 +252,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 		if (is_null($value))
 		{
-			$this->assertTrue($this->app['session.store']->has($key), "Session missing key: $key");
+			$this->assertTrue($this->app['session.store']->has($key));
 		}
 		else
 		{
@@ -299,7 +283,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Assert that the session has errors bound.
-	 *
+	 * 
 	 * @param  string|array  $bindings
 	 * @param  mixed  $format
 	 * @return void
@@ -316,7 +300,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 		{
 			if (is_int($key))
 			{
-				$this->assertTrue($errors->has($value), "Session missing error: $value");
+				$this->assertTrue($errors->has($value));
 			}
 			else
 			{
@@ -355,7 +339,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	 */
 	public function seed($class = 'DatabaseSeeder')
 	{
-		$this->app['artisan']->call('db:seed', array('--class' => $class));
+		$this->app[$class]->run();
 	}
 
 	/**

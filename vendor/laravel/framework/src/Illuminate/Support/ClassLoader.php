@@ -59,7 +59,9 @@ class ClassLoader {
 	{
 		if ( ! static::$registered)
 		{
-			static::$registered = spl_autoload_register(array('\Illuminate\Support\ClassLoader', 'load'));
+			spl_autoload_register(array('\Illuminate\Support\ClassLoader', 'load'));
+
+			static::$registered = true;
 		}
 	}
 

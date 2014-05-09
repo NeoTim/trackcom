@@ -19,7 +19,7 @@ class SqlServerConnector extends Connector implements ConnectorInterface {
 	/**
 	 * Establish a database connection.
 	 *
-	 * @param  array  $config
+	 * @param  array  $options
 	 * @return PDO
 	 */
 	public function connect(array $config)

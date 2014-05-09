@@ -1,0 +1,249 @@
+
+<div class="modal fade" id="newBatchModal" tabindex="-1" role="dialog" aria-labelledby="newBatchLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:80%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="newBatchLabel">New Batch</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Batch Number</label>
+						<input type="text" class="form-control" data-ng-model="newBatch.number" placeholder="Batch Number">
+					</div>
+					<div class="form-group">
+						<label>Gallons</label>
+						<input type="text" class="form-control" data-ng-model="newBatch.gallons" placeholder="Batch Gallons">
+					</div>
+					<div class="form-group">
+						<label>Product SKU</label>						
+						<input type="text" ng-model="newBatch.sku" typeahead="product for product in products | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Batch SKU" style="z-index:5000;">
+					</div>
+					<div class="form-group">
+						<label>Date Ready</label>
+						<input type="text" class="form-control" data-ng-model="newBatch.ready_date" placeholder="Batch Date">
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+										
+					<button type="button" class="btn btn-primary" data-ng-click="createBatch(newBatch)" data-dismiss="modal">Done</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>					
+				</div>
+			</div>
+		</div>
+	</div>	
+	<div class="modal fade" id="batch_modal" tabindex="-1" role="dialog" aria-labelledby="BatchLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:80%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="BatchLabel"> {{Vbatch.number}} </h4>
+				</div>
+				<div class="modal-body">
+					<tabset>
+						<tab heading="Settings">
+							<div class="form-group">
+								<label>Batch Number</label>
+								<input type="text" class="form-control" disabled="true" data-ng-model="Vbatch.number" placeholder="Batch Number">
+							</div>
+							<div class="form-group">
+								<label>Gallons</label>
+								<input type="text" class="form-control" data-ng-model="Vbatch.gallons" placeholder="Batch Gallons">
+							</div>
+							<div class="form-group">
+								<label>Product SKU</label>						
+								<input type="text" ng-model="Vbatch.sku" typeahead="product for product in products | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Batch SKU" style="z-index:5000;">
+							</div>
+							<div class="form-group">
+								<label>Date Ready</label>
+								<input type="text" class="form-control" data-ng-model="Vbatch.ready_date" placeholder="Batch Date">
+							</div>	
+							<div class="form-group">	
+								<label>Notes</label>
+								<textarea class="form-control" ng-modal="Vbatch.notes" placeholder="notes"></textarea>
+							</div>
+						</tab>
+						<tab heading="Entries">
+							<ul class="list-group" ng-model="Vbatch.entries">
+				    				<div class="list-group-item">
+				    					<table style="border:none; width:100%; min-width:100%;">
+					    					<tr>					    						
+						        				<td style="min-width:100px; width:100px; height:40px;" class=""> Order #</td>
+						        				<td style="min-width:100px; height:40px;" class=""> SKU </td>
+						        				<td style="min-width:120px; height:40px;" class=""> Batch </td>
+						        				<td style="min-width:120px; height:40px;" class=""> Qty </td>
+						        				<td style="min-width:120px; height:40px;" class=""> Date </td>
+						        				<td style="width:100%; height:40px;" class="">
+						        					Status
+						        				</td>
+						        			</tr>
+					    				</table>
+				    				</div>
+					    			<li ng-repeat="entry in Vbatch.entries" ng-model="entry.priority" class="list-group-item sortableItem">
+					    				<table style="border:none; width:100%; min-width:100%;">
+					    					<tr>
+					    						
+						        				<td style="min-width:100px; width:100px; height:40px;" class=""> {{entry.order_id}} </td>
+						        				<td style="min-width:100px; height:40px;" class=""> {{entry.sku}} </td>
+						        				<td style="min-width:120px; height:40px;" class="" ><strong> {{entry.batch}} </strong></td>
+						        				<td style="min-width:120px; height:40px;" class=""> {{entry.quantity}} </td>
+						        				<td style="min-width:120px; height:40px;" class=""> {{entry.ready_date}} </td>
+						        				<td style="width:100%; height:40px;" class="">
+						        					<div>
+						        						<progressbar animate="false" value="entry.status" type="{{entry.color}}"><b>{{entry.status}}%  {{entry.label}}</b></progressbar>
+						        					</div>
+						        				</td>						        				
+						        			</tr>
+					    				</table>
+
+					    			</li>
+
+				    			</ul>	
+						</tab>
+					</tabset>
+				</div>
+				<div class="modal-footer">
+										
+					<button type="button" class="btn btn-primary" data-ng-click="saveVbatch(Vbatch)" data-dismiss="modal">Done</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>					
+				</div>
+			</div>
+		</div>
+	</div>	
+
+    			<!-- <ul class="list-group" data-ng-mouseenter="showNewEntry = true" style="z-index:3000;">
+	 			<div class="list-group-item fx-fade-down" ng-show="newEntry">
+	 				<div class="row">
+		 				<div class="col-md-6 col-sm-6">
+		 					<input type="text" class="form-control" ng-model="newBatch.number" placeholder="Batch Number">
+		 				</div>
+		 				<div class="col-md-6 col-sm-6">
+			 				<div class="input-group">
+			 					
+			 					<input type="text" ng-model="newBatch.sku" typeahead="product for product in products | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Search" style="z-index:5000;">
+			 					<span class="input-group-btn" placeholder="Product SKU">
+			 						<button type="button" class="btn btn-success" ng-click="createBatch(newBatch); newEntry = false">Create</button>
+			 						<button type="button" class="btn btn-danger" ng-click="newEntry = false">Cancel</button>
+			 					</span>
+			 				</div>
+			 			</div>
+			 		</div>
+	 				
+	 			</div>
+	 			<div class="list-group-item fx-fade-down" data-ng-model="newEntry" ng-hide="newEntry" data-ng-click="newEntry = true">        				
+	 					<h2 class="text-center">New Batch</h2>
+	 			</div>
+ 			</ul> -->
+<div class="col-md-12">
+ 			<tabset>
+ 				<tab heading="Batches" data-ng-controller="batchesCtrl">
+ 					<ul class="list-group" ng-model="entries" ui-sortable="BproductionConfig">
+ 						<div class="list-group-item">
+		    					<input type="text" ng-model="filter.$" class="form-control" placeholder="Search..">
+		    				</div>
+		    				<div class="list-group-item">
+		    					<table style="border:none; width:100%; min-width:100%;">
+			    					<tr>
+			    						<td class="" style="min-width:50px; text-align:left;">
+			    							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newBatchModal"><i class="fa fa-plus"></i></button>
+			    						</td>
+				        				<td style="min-width:120px; width:100px; height:40px;" class=""> Batch #</td>
+				        				<td style="min-width:120px; height:40px;" class=""> SKU </td>				        				
+				        				<td style="min-width:120px; height:40px;" class=""> Qty </td>
+				        				<td style="min-width:120px; height:40px;" class=""> Date </td>
+				        				<td style="width:100%; height:40px;" class="">
+				        					Status
+				        				</td>
+				        				<td style="min-width:120px; height:40px; text-align:center;" class="">
+				        					Options
+				        				</td>	        				
+				        			</tr>
+			    				</table>
+		    				</div>
+			    			<li ng-repeat="batch in batches | filter:filter.$" ng-model="batch.priority" class="list-group-item sortableItem">
+			    				<table style="border:none; width:100%; min-width:100%;">
+			    					<tr>
+			    						<td class="mover" style="min-width:50px; text-align:left;"><i class="fa fa-bars"></i></td>				        				
+				        				<td style="min-width:120px; height:40px;" class=""> {{batch.number}} </td>
+				        				<td style="min-width:120px; height:40px;" class=""> {{batch.sku}} </td>
+				        				<td style="min-width:120px; height:40px;" class=""> {{batch.quantity}} </td>
+				        				<td style="min-width:120px; height:40px;" class=""> {{batch.ready_date}} </td>
+				        				<td style="width:100%; height:40px;" class="">
+				        					<div>
+				        						<progressbar animate="false" value="batch.status" type="{{batch.color}}"><b>{{batch.status}}%  {{batch.label}}</b></progressbar>
+				        					</div>
+				        				</td>
+				        				<td style="min-width:120px; height:40px; text-align:center;" class="">
+				        					<button type="button" class="btn btn-default" data-ng-click="BstatusDown(batch.status, batch.id, batch.entries)" ><i class="fa fa-chevron-left"></i></button>
+				        					<button type="button" class="btn btn-default" data-ng-click="BstatusUp(batch.status, batch.id, batch.entries)"><i class="fa fa-chevron-right"></i></button>
+				        					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#batch_modal" data-ng-click="setVbatch(batch)"><i class="fa fa-edit"></i></button>
+				        				</td>
+				        			</tr>
+			    				</table>
+
+			    			</li>
+
+		    			</ul>	
+ 				</tab>
+ 				<tab heading="All">
+		    			<ul class="list-group" ng-model="entries" ui-sortable="productionConfig">
+		    				<div class="list-group-item">
+		    					<input type="text" ng-model="filter.$" class="form-control" placeholder="Search..">
+		    				</div>
+		    				<div class="list-group-item">
+		    					<table style="border:none; width:100%; min-width:100%;">
+			    					<tr>
+			    						<td class="" style="min-width:50px; text-align:left;"><i class="fa fa-chevron-down"></i></td>
+				        				<td style="min-width:100px; width:100px; height:40px;" class=""> Order #</td>
+				        				<td style="min-width:100px; height:40px;" class=""> SKU </td>
+				        				<td style="min-width:120px; height:40px;" class=""> Batch </td>
+				        				<td style="min-width:120px; height:40px;" class=""> Qty </td>
+				        				<td style="min-width:120px; height:40px;" class=""> Date </td>
+				        				<td style="width:100%; height:40px;" class="">
+				        					Status
+				        				</td>
+				        				<td style="min-width:120px; height:40px; text-align:center;" class="">
+				        					Options
+				        				</td>	        				
+				        			</tr>
+			    				</table>
+		    				</div>
+			    			<li ng-repeat="entry in entries | filter:filter.$" ng-model="entry.priority" class="list-group-item sortableItem">
+			    				<table style="border:none; width:100%; min-width:100%;">
+			    					<tr>
+			    						<td class="mover" style="min-width:50px; text-align:left;">
+			    						<i ng-hide="showEdit" class="fa fa-bars"></i>
+			    						<button type="button" class="btn btn-success" ng-show="showEdit" data-ng-click="updateEntryBatch(entry.batch_id, entry.id); showEdit = false">Save</button>
+			    						</td>		        				
+				        				<td style="min-width:100px; width:100px; height:40px;" class=""> {{entry.order_id}} </td>
+				        				<td style="min-width:100px; height:40px;" class=""> {{entry.sku}} </td>
+				        				<td style="min-width:120px; height:40px;" ng-init="showEdit = false" class=""  ng-click="showEdit = true" >
+				        				 	<strong ng-hide="showEdit"> {{entry.batch_id}} </strong>
+				        				 <input type="text" ng-model="entry.batch_id" typeahead="batch.id for batch in batches | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Batch SKU" style="z-index:5000;" ng-show="showEdit">
+				        				 </td>
+				        				<td style="min-width:120px; height:40px;" class=""> {{entry.quantity}} </td>
+				        				<td style="min-width:120px; height:40px;" class=""> {{entry.ready_date}} </td>
+				        				<td style="width:100%; height:40px;" class="">
+				        					<div>
+				        						<progressbar animate="false" value="entry.status" type="{{entry.color}}"><b>{{entry.status}}%  {{entry.label}}</b></progressbar>
+				        					</div>
+				        				</td>
+				        				<td style="min-width:120px; height:40px; text-align:center;" class="">
+				        					<button ng-if="entry.batch_id === '0' || entry.batch_id === ''" type="button" class="btn btn-default" data-ng-click="statusDown(entry.status, entry.id)" ><i class="fa fa-chevron-left"></i></button>
+				        					<button ng-if="entry.batch_id === '0' || entry.batch_id === '' " type="button" class="btn btn-default" data-ng-click="statusUp(entry.status, entry.id)"><i class="fa fa-chevron-right"></i></button>
+				        				</td>
+				        			</tr>
+			    				</table>
+
+			    			</li>
+
+		    			</ul>	
+		    		</tab>
+		    	</tabset>
+</div>
+
+<!-- 	        </div>
+    	</div>                	
+</div>
+-->

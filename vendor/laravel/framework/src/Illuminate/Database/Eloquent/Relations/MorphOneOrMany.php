@@ -26,16 +26,15 @@ abstract class MorphOneOrMany extends HasOneOrMany {
 	 * @param  \Illuminate\Database\Eloquent\Model  $parent
 	 * @param  string  $type
 	 * @param  string  $id
-	 * @param  string  $localKey
 	 * @return void
 	 */
-	public function __construct(Builder $query, Model $parent, $type, $id, $localKey)
+	public function __construct(Builder $query, Model $parent, $type, $id)
 	{
 		$this->morphType = $type;
 
 		$this->morphClass = get_class($parent);
 
-		parent::__construct($query, $parent, $id, $localKey);
+		parent::__construct($query, $parent, $id);
 	}
 
 	/**
@@ -77,7 +76,7 @@ abstract class MorphOneOrMany extends HasOneOrMany {
 		parent::addEagerConstraints($models);
 
 		$this->query->where($this->morphType, $this->morphClass);
-	}
+	}	
 
 	/**
 	 * Attach a model instance to the parent model.
@@ -121,7 +120,7 @@ abstract class MorphOneOrMany extends HasOneOrMany {
 	 */
 	protected function getForeignAttributesForCreate()
 	{
-		$foreign = array($this->getPlainForeignKey() => $this->getParentKey());
+		$foreign = array($this->getPlainForeignKey() => $this->parent->getKey());
 
 		$foreign[last(explode('.', $this->morphType))] = $this->morphClass;
 

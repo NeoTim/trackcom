@@ -13,9 +13,11 @@ class SqsConnector implements ConnectorInterface {
 	 */
 	public function connect(array $config)
 	{
-		$sqsConfig = array_only($config, array('key', 'secret', 'region', 'default_cache_config'));
+		$sqs = SqsClient::factory(array(
 
-		$sqs = SqsClient::factory($sqsConfig);
+			'key' => $config['key'], 'secret' => $config['secret'], 'region' => $config['region'],
+
+		));
 
 		return new SqsQueue($sqs, $config['queue']);
 	}

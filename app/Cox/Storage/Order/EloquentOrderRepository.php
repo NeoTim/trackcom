@@ -1,8 +1,8 @@
 <?php
 
 namespace Cox\Storage\Order;
-use Cox\Storage\Activity\ActivityRepositoryInterface as Activity;
-use Cox\Storage\Customer\CustomerRepositoryInterface as Customer;
+//use Cox\Storage\Activity\ActivityRepositoryInterface as Activity;
+//use Cox\Storage\Customer\CustomerRepositoryInterface as Customer;
 
 use Order;
 
@@ -10,16 +10,20 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 {
 	protected $order;
 	protected $softDelete = true;
-	public function __construct(Order $order, Activity $activity, Customer $customer)
+	public function __construct(
+		Order $order
+	 	//Activity $activity,
+	 	//Customer $customer
+	 	)
 	{
 		$this->order = $order;
-		$this->activity = $activity;
-		$this->customer = $customer;
+		//$this->activity = $activity;
+		//$this->customer = $customer;
 	}
 
 	public function all()
 	{
-		return $this->order->with('dtype', 'dmethod')->get();
+		return $this->order->with('entries')->get();
 	}
 
 	public function find($id)
@@ -37,51 +41,49 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 
 		if ($validation->passes())
 		{
-			if(\Input::get('company') OR \Input::get('newname'))
-			{
-				$customer = new \Customer;
-				$customer->company = \Input::get('company');
-				$customer->first = \Input::get('newname');
-				$this->activity->store($customer->company, 'New Customer', $customer->company . ' Was created and stored', 'customer', 'store');
+			// if(\Input::get('company') OR \Input::get('newname'))
+			// {
+			// 	$customer = new \Customer;
+			// 	$customer->company = \Input::get('company');
+			// 	$customer->first = \Input::get('newname');
+			// 	//$this->activity->store($customer->company, 'New Customer', $customer->company . ' Was created and stored', 'customer', 'store');
 
-				if($customer->save())
-				{
+			// 	if($customer->save())
+			// 	{
 					
-					if(\Input::get('start') == " ")
-					{
-						$input['start'] = " ";
-					}
-					$input['customer_id'] = $customer->id;
-					$input['title'] = $customer->company . ' - ' . $input['number'];
+			// 		if(\Input::get('start') == " ")
+			// 		{
+			// 			$input['start'] = " ";
+			// 		}
+			// 		$input['customer_id'] = $customer->id;
+			// 		$input['title'] = $customer->company . ' - ' . $input['number'];
 					
 					
-					$result['order'] = $this->order->create($input);
-					$result['success'] = true;
-					$result['message'] = "Order was successfully created";
+			// 		$result['order'] = $this->order->create($input);
+			// 		$result['success'] = true;
+			// 		$result['message'] = "Order was successfully created";
 
-					$this->activity->store('Order - ' . $input['number'], 'New Order', 'Order - ' . $input['number'] . ' Was created and stored', 'order', 'store');
+			// 		//$this->activity->store('Order - ' . $input['number'], 'New Order', 'Order - ' . $input['number'] . ' Was created and stored', 'order', 'store');
 
-					return $result;
-				}
-			}
-			elseif (\Input::get('customer_id'))
-			{
+			// 		return $result;
+			// 	}
+			// }
+			// elseif (\Input::get('customer_id'))
+			// {
 				
-				if(\Input::get('start') == " ")
-				{
-					$input['start'] = " ";
-				}
-				$customer = $this->customer->find(\Input::get('customer_id'));
+			
+				//$customer = $this->customer->find(\Input::get('customer_id'));
 
-				$input['title'] = $customer->company . ' - ' . $input['number'];
-				$result['order'] = $this->order->create($input);
+				//$input['title'] = $customer->company . ' - ' . $input['number'];
+				$this->order->create($input);
+				$result['order'] = $this->order->find($input['id']);
 				$result['success'] = true;
 				$result['message'] = "Order was successfully created";
 
 				
-				$this->activity->store('Order - ' . $input['number'], 'New Order', 'Order - ' . $input['number'] . ' Was created and stored', 'order', 'store');
+				//$this->activity->store('Order - ' . $input['number'], 'New Order', 'Order - ' . $input['number'] . ' Was created and stored', 'order', 'store');
 				return $result;
-			}
+			//}
 			
 		}
 		else
@@ -100,12 +102,10 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 		if ($validation->passes())
 		{
 			$order = $this->order->find($id);
-			if(\Input::get('start') == "")
-			{
-				$input['start'] = " ";
-			}
+			
 			$order->update($input);
-			$this->activity->store('Order - ' . $order['number'], 'Update Order', $order['title'] . ' Was updated and stored', 'order', 'update');
+			//$this->activity->store('Order - ' . $order['number'], 'Update Order', $order['title'] . ' Was updated and stored', 'order', 'update');
+			$result['order'] = $order;
 			$result['success'] = true;
 			$result['message'] = $order['title'] . ' was Successfully updated';
 			return $result;
@@ -130,7 +130,7 @@ class EloquentOrderRepository implements OrderRepositoryInterface
 		{
 			$result['success'] = true;
 			$result['message'] = 'Order was successfully deleted';
-			$this->activity->store('Order - ' . $order['number'], 'Order Deleted', $order['title'] . ' was Deleted!!', 'order', 'delete');
+			//$this->activity->store('Order - ' . $order['number'], 'Order Deleted', $order['title'] . ' was Deleted!!', 'order', 'delete');
 			return $result;
 		}
 		else

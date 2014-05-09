@@ -62,8 +62,6 @@ abstract class Manager {
 	 *
 	 * @param  string  $driver
 	 * @return mixed
-	 *
-	 * @throws \InvalidArgumentException
 	 */
 	protected function createDriver($driver)
 	{

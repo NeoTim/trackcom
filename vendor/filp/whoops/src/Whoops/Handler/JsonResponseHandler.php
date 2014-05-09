@@ -6,7 +6,6 @@
 
 namespace Whoops\Handler;
 use Whoops\Handler\Handler;
-use Whoops\Exception\Frame;
 
 /**
  * Catches an exception and converts it to a JSON
@@ -53,8 +52,7 @@ class JsonResponseHandler extends Handler
 
     /**
      * Check, if possible, that this execution was triggered by an AJAX request.
-     *
-     * @return bool
+     * @param bool
      */
     private function isAjaxRequest()
     {
@@ -90,7 +88,6 @@ class JsonResponseHandler extends Handler
             $frameData = array();
 
             foreach($frames as $frame) {
-                /** @var Frame $frame */
                 $frameData[] = array(
                     'file'     => $frame->getFile(),
                     'line'     => $frame->getLine(),

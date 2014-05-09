@@ -21,7 +21,7 @@ class AuthManager extends Manager {
 
 		$guard->setDispatcher($this->app['events']);
 
-		return $guard->setRequest($this->app->refresh('request', $guard, 'setRequest'));
+		return $guard->setRequest($this->app['request']);
 	}
 
 	/**
@@ -97,20 +97,9 @@ class AuthManager extends Manager {
 	 *
 	 * @return string
 	 */
-	public function getDefaultDriver()
+	protected function getDefaultDriver()
 	{
 		return $this->app['config']['auth.driver'];
-	}
-
-	/**
-	 * Set the default authentication driver name.
-	 *
-	 * @param  string  $name
-	 * @return void
-	 */
-	public function setDefaultDriver($name)
-	{
-		$this->app['config']['auth.driver'] = $name;
 	}
 
 }

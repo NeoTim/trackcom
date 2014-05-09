@@ -1,0 +1,58 @@
+table>tbody>td.entryOrder {
+	min-width:50px;
+	width:50px;
+}
+table>tbody>td.entrySku {
+	min-width:200px;
+}
+table>tbody>td.entryDate {
+	min-width:100px;
+}
+table>tbody>td.entryBatch {
+	min-width:50px;
+	width:50px;
+}
+table>tbody>td.entryContainers {
+	min-width:30px;
+	width:30px;
+}
+table>tbody>td.entryContainers p {
+	margin:0px 0px 0px 0px;
+}
+table>tbody>td.entryQtys {
+	min-width:15px;
+	width:15px;	
+}
+table>tbody>td.entryQtys p {
+	margin:0px 0px 0px 0px;
+}
+table>tbody>td.entrySettings {	
+	min-width:200px;
+	width:200px;
+}
+.progress {
+	margin:0;
+	height: 20px;
+}
+.btn.btn-white {
+	background-color: #fff;
+}
+.btn.btn-white:hover {
+	background-color: #eee;
+}
+.btn.btn-clear {
+	background: none;
+	background-color: none;
+	color:#333;
+}
+
+.btn.btn-clear:hover {
+	background-color: #eee;
+}
+tr {
+	/*display:none;*/
+}
+
+.form-control.no-border {outline:none;border:none;}
+.form-control.no-border:hover {outline:none;border:none;}
+.form-control.no-border:focus {outline:none;border:none;}

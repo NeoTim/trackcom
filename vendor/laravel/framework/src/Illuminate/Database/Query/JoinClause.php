@@ -3,13 +3,6 @@
 class JoinClause {
 
 	/**
-	 * The query builder instance.
-	 *
-	 * @var \Illuminate\Database\Query\Builder
-	 */
-	public $query;
-
-	/**
 	 * The type of join being performed.
 	 *
 	 * @var string
@@ -33,15 +26,13 @@ class JoinClause {
 	/**
 	 * Create a new join clause instance.
 	 *
-	 * @param  \Illuminate\Database\Query\Builder  $query
 	 * @param  string  $type
 	 * @param  string  $table
 	 * @return void
 	 */
-	public function __construct(Builder $query, $type, $table)
+	public function __construct($type, $table)
 	{
 		$this->type = $type;
-		$this->query = $query;
 		$this->table = $table;
 	}
 
@@ -52,14 +43,11 @@ class JoinClause {
 	 * @param  string  $operator
 	 * @param  string  $second
 	 * @param  string  $boolean
-	 * @param  bool  $where
 	 * @return \Illuminate\Database\Query\JoinClause
 	 */
-	public function on($first, $operator, $second, $boolean = 'and', $where = false)
+	public function on($first, $operator, $second, $boolean = 'and')
 	{
-		$this->clauses[] = compact('first', 'operator', 'second', 'boolean', 'where');
-
-		if ($where) $this->query->addBinding($second);
+		$this->clauses[] = compact('first', 'operator', 'second', 'boolean');
 
 		return $this;
 	}
@@ -75,34 +63,6 @@ class JoinClause {
 	public function orOn($first, $operator, $second)
 	{
 		return $this->on($first, $operator, $second, 'or');
-	}
-
-	/**
-	 * Add an "on where" clause to the join.
-	 *
-	 * @param  string  $first
-	 * @param  string  $operator
-	 * @param  string  $second
-	 * @param  string  $boolean
-	 * @return \Illuminate\Database\Query\JoinClause
-	 */
-	public function where($first, $operator, $second, $boolean = 'and')
-	{
-		return $this->on($first, $operator, $second, $boolean, true);
-	}
-
-	/**
-	 * Add an "or on where" clause to the join.
-	 *
-	 * @param  string  $first
-	 * @param  string  $operator
-	 * @param  string  $second
-	 * @param  string  $boolean
-	 * @return \Illuminate\Database\Query\JoinClause
-	 */
-	public function orWhere($first, $operator, $second)
-	{
-		return $this->on($first, $operator, $second, 'or', true);
 	}
 
 }

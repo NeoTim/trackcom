@@ -1,5 +1,6 @@
 <?php namespace Illuminate\Database;
 
+use Illuminate\Support\Manager;
 use Illuminate\Database\Connectors\ConnectionFactory;
 
 class DatabaseManager implements ConnectionResolverInterface {
@@ -168,8 +169,6 @@ class DatabaseManager implements ConnectionResolverInterface {
 	 *
 	 * @param  string  $name
 	 * @return array
-	 *
-	 * @throws \InvalidArgumentException
 	 */
 	protected function getConfig($name)
 	{

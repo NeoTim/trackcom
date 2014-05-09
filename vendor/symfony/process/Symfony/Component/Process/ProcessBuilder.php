@@ -28,13 +28,25 @@ class ProcessBuilder
     private $timeout = 60;
     private $options = array();
     private $inheritEnv = true;
-    private $prefix = array();
+    private $prefix;
 
+    /**
+     * Constructor
+     *
+     * @param string[] $arguments An array of arguments
+     */
     public function __construct(array $arguments = array())
     {
         $this->arguments = $arguments;
     }
 
+    /**
+     * Creates a process builder instance.
+     *
+     * @param string[] $arguments An array of arguments
+     *
+     * @return ProcessBuilder
+     */
     public static function create(array $arguments = array())
     {
         return new static($arguments);
@@ -59,19 +71,24 @@ class ProcessBuilder
      *
      * The prefix is preserved when resetting arguments.
      *
-     * @param string|array $prefix A command prefix or an array of command prefixes
+     * @param string $prefix A command prefix
      *
      * @return ProcessBuilder
      */
     public function setPrefix($prefix)
     {
-        $this->prefix = is_array($prefix) ? $prefix : array($prefix);
+        $this->prefix = $prefix;
 
         return $this;
     }
 
     /**
-     * @param array $arguments
+     * Sets the arguments of the process.
+     *
+     * Arguments must not be escaped.
+     * Previous arguments are removed.
+     *
+     * @param string[] $arguments
      *
      * @return ProcessBuilder
      */
@@ -82,6 +99,13 @@ class ProcessBuilder
         return $this;
     }
 
+    /**
+     * Sets the working directory.
+     *
+     * @param null|string $cwd The working directory
+     *
+     * @return ProcessBuilder
+     */
     public function setWorkingDirectory($cwd)
     {
         $this->cwd = $cwd;
@@ -89,6 +113,13 @@ class ProcessBuilder
         return $this;
     }
 
+    /**
+     * Sets whether environment variables will be inherited or not.
+     *
+     * @param bool $inheritEnv
+     *
+     * @return ProcessBuilder
+     */
     public function inheritEnvironmentVariables($inheritEnv = true)
     {
         $this->inheritEnv = $inheritEnv;
@@ -96,6 +127,17 @@ class ProcessBuilder
         return $this;
     }
 
+    /**
+     * Sets an environment variable
+     *
+     * Setting a variable overrides its previous value. Use `null` to unset a
+     * defined environment variable.
+     *
+     * @param string      $name  The variable name
+     * @param null|string $value The variable value
+     *
+     * @return ProcessBuilder
+     */
     public function setEnv($name, $value)
     {
         $this->env[$name] = $value;
@@ -103,13 +145,13 @@ class ProcessBuilder
         return $this;
     }
 
-    public function addEnvironmentVariables(array $variables)
-    {
-        $this->env = array_replace($this->env, $variables);
-
-        return $this;
-    }
-
+    /**
+     * Sets the input of the process.
+     *
+     * @param string $stdin The input as a string
+     *
+     * @return ProcessBuilder
+     */
     public function setInput($stdin)
     {
         $this->stdin = $stdin;
@@ -147,6 +189,14 @@ class ProcessBuilder
         return $this;
     }
 
+    /**
+     * Adds a proc_open option.
+     *
+     * @param string $name  The option name
+     * @param string $value The option value
+     *
+     * @return ProcessBuilder
+     */
     public function setOption($name, $value)
     {
         $this->options[$name] = $value;
@@ -154,20 +204,26 @@ class ProcessBuilder
         return $this;
     }
 
+    /**
+     * Creates a Process instance and returns it.
+     *
+     * @return Process
+     *
+     * @throws LogicException In case no arguments have been provided
+     */
     public function getProcess()
     {
-        if (0 === count($this->prefix) && 0 === count($this->arguments)) {
+        if (!$this->prefix && !count($this->arguments)) {
             throw new LogicException('You must add() command arguments before calling getProcess().');
         }
 
         $options = $this->options;
 
-        $arguments = array_merge($this->prefix, $this->arguments);
+        $arguments = $this->prefix ? array_merge(array($this->prefix), $this->arguments) : $this->arguments;
         $script = implode(' ', array_map(array(__NAMESPACE__.'\\ProcessUtils', 'escapeArgument'), $arguments));
 
         if ($this->inheritEnv) {
-            // include $_ENV for BC purposes
-            $env = array_replace($_ENV, $_SERVER, $this->env);
+            $env = $this->env ? $this->env + $_ENV : null;
         } else {
             $env = $this->env;
         }

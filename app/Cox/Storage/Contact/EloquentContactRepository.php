@@ -25,6 +25,11 @@ class EloquentContactRepository implements ContactRepositoryInterface
 		return $this->contact->find($id);
 	}
 
+	public function findByCustomer($customerId)
+	{
+		return $this->contact->where('customer_id', "=", $customerId)->get();
+	}
+
 	// STORE($INPUT)
 	public function store($input)
 	{
@@ -33,7 +38,8 @@ class EloquentContactRepository implements ContactRepositoryInterface
 
 		if ($validation->passes())
 		{
-			$this->contact->create($input);
+			$contact = $this->contact->create($input);
+			$result['contact'] = $contact;
 			$result['success'] = true;
 			$result['message'] = 'The contact was Succeessfully created';
 			return $result;

@@ -37,19 +37,6 @@ class SqlServerGrammar extends Grammar {
 	}
 
 	/**
-	 * Compile the query to determine the list of columns.
-	 *
-	 * @param  string  $table
-	 * @return string
-	 */
-	public function compileColumnExists($table)
-	{
-		return "select col.name from sys.columns as col 
-                join sys.objects as obj on col.object_id = obj.object_id 
-                where obj.type = 'U' and obj.name = '$table'";
-	}
-
-	/**
 	 * Compile a create table command.
 	 *
 	 * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
@@ -367,11 +354,11 @@ class SqlServerGrammar extends Grammar {
 	 */
 	protected function typeBoolean(Fluent $column)
 	{
-		return 'bit';
+		return 'tinyint';
 	}
 
 	/**
-	 * Create the column definition for an enum type.
+	 * Create the column definition for a enum type.
 	 *
 	 * @param  \Illuminate\Support\Fluent  $column
 	 * @return string

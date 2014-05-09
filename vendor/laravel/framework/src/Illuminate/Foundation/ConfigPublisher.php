@@ -82,8 +82,6 @@ class ConfigPublisher {
 	 * @param  string  $name
 	 * @param  string  $packagePath
 	 * @return string
-	 *
-	 * @throws \InvalidArgumentException
 	 */
 	protected function getSource($package, $name, $packagePath)
 	{

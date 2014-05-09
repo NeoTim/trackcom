@@ -1,8 +1,10 @@
 <?php namespace Illuminate\Routing;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Routing\Controllers\FilterParser;
 use Illuminate\Routing\Console\MakeControllerCommand;
 use Illuminate\Routing\Generators\ControllerGenerator;
+use Doctrine\Common\Annotations\SimpleAnnotationReader;
 
 class ControllerServiceProvider extends ServiceProvider {
 
@@ -20,9 +22,24 @@ class ControllerServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+		$this->registerParser();
+
 		$this->registerGenerator();
 
 		$this->commands('command.controller.make');
+	}
+
+	/**
+	 * Register the filter parser instance.
+	 *
+	 * @return void
+	 */
+	protected function registerParser()
+	{
+		$this->app['filter.parser'] = $this->app->share(function($app)
+		{
+			return new FilterParser;
+		});
 	}
 
 	/**
@@ -32,7 +49,7 @@ class ControllerServiceProvider extends ServiceProvider {
 	 */
 	protected function registerGenerator()
 	{
-		$this->app->bindShared('command.controller.make', function($app)
+		$this->app['command.controller.make'] = $this->app->share(function($app)
 		{
 			// The controller generator is responsible for building resourceful controllers
 			// quickly and easily for the developers via the Artisan CLI. We'll go ahead
@@ -53,7 +70,7 @@ class ControllerServiceProvider extends ServiceProvider {
 	public function provides()
 	{
 		return array(
-			'command.controller.make'
+			'filter.parser', 'command.controller.make'
 		);
 	}
 

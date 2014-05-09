@@ -1,8 +1,5 @@
 <?php namespace Illuminate\Support\Facades;
 
-/**
- * @see \Illuminate\Foundation\Artisan
- */
 class Artisan extends Facade {
 
 	/**

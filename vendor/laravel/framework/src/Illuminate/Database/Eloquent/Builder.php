@@ -1,6 +1,7 @@
 <?php namespace Illuminate\Database\Eloquent;
 
 use Closure;
+use DateTime;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -88,8 +89,6 @@ class Builder {
 	 * @param  mixed  $id
 	 * @param  array  $columns
 	 * @return \Illuminate\Database\Eloquent\Model|static
-	 *
-	 * @throws ModelNotFoundException
 	 */
 	public function findOrFail($id, $columns = array('*'))
 	{
@@ -114,8 +113,6 @@ class Builder {
 	 *
 	 * @param  array  $columns
 	 * @return \Illuminate\Database\Eloquent\Model|static
-	 *
-	 * @throws ModelNotFoundException
 	 */
 	public function firstOrFail($columns = array('*'))
 	{
@@ -427,7 +424,7 @@ class Builder {
 	 */
 	protected function isSoftDeleteConstraint(array $where, $column)
 	{
-		return $where['column'] == $column && $where['type'] == 'Null';
+		return $where['column'] == $column and $where['type'] == 'Null';
 	}
 
 	/**
@@ -577,7 +574,7 @@ class Builder {
 	{
 		$dots = str_contains($name, '.');
 
-		return $dots && starts_with($name, $relation) && $name != $relation;
+		return $dots and starts_with($name, $relation) and $name != $relation;
 	}
 
 	/**
@@ -587,32 +584,17 @@ class Builder {
 	 * @param  string  $operator
 	 * @param  int     $count
 	 * @param  string  $boolean
-	 * @param  \Closure  $callback
 	 * @return \Illuminate\Database\Eloquent\Builder|static
 	 */
-	public function has($relation, $operator = '>=', $count = 1, $boolean = 'and', $callback = null)
+	public function has($relation, $operator = '>=', $count = 1, $boolean = 'and')
 	{
-		$relation = $this->getHasRelationQuery($relation);
+		$instance = $this->model->$relation();
 
-		$query = $relation->getRelationCountQuery($relation->getRelated()->newQuery());
+		$query = $instance->getRelationCountQuery($instance->getRelated()->newQuery());
 
-		if ($callback) call_user_func($callback, $query);
+		$this->query->mergeBindings($query->getQuery());
 
-		return $this->addHasWhere($query, $relation, $operator, $count, $boolean);
-	}
-
-	/**
-	 * Add a relationship count condition to the query with where clauses.
-	 *
-	 * @param  string  $relation
-	 * @param  \Closure  $callback
-	 * @param  string  $operator
-	 * @param  int     $count
-	 * @return \Illuminate\Database\Eloquent\Builder|static
-	 */
-	public function whereHas($relation, Closure $callback, $operator = '>=', $count = 1)
-	{
-		return $this->has($relation, $operator, $count, 'and', $callback);
+		return $this->where(new Expression('('.$query->toSql().')'), $operator, $count, $boolean);
 	}
 
 	/**
@@ -626,74 +608,6 @@ class Builder {
 	public function orHas($relation, $operator = '>=', $count = 1)
 	{
 		return $this->has($relation, $operator, $count, 'or');
-	}
-
-	/**
-	 * Add a relationship count condition to the query with where clauses and an "or".
-	 *
-	 * @param  string  $relation
-	 * @param  \Closure  $callback
-	 * @param  string  $operator
-	 * @param  int     $count
-	 * @return \Illuminate\Database\Eloquent\Builder|static
-	 */
-	public function orWhereHas($relation, Closure $callback, $operator = '>=', $count = 1)
-	{
-		return $this->has($relation, $operator, $count, 'or', $callback);
-	}
-
-	/**
-	 * Add the "has" condition where clause to the query.
-	 *
-	 * @param  \Illuminate\Database\Eloquent\Builder  $hasQuery
-	 * @param  \Illuminate\Database\Eloquent\Relations\Relation  $relation
-	 * @param  string  $operator
-	 * @param  int  $count
-	 * @param  string  $boolean
-	 * @return \Illuminate\Database\Eloquent\Builder
-	 */
-	protected function addHasWhere(Builder $hasQuery, Relation $relation, $operator, $count, $boolean)
-	{
-		$this->mergeWheresToHas($hasQuery, $relation);
-
-		return $this->where(new Expression('('.$hasQuery->toSql().')'), $operator, $count, $boolean);
-	}
-
-	/**
-	 * Merge the "wheres" from a relation query to a has query.
-	 *
-	 * @param  \Illuminate\Database\Eloquent\Builder  $hasQuery
-	 * @param  \Illuminate\Database\Eloquent\Relations\Relation  $relation
-	 * @return void
-	 */
-	protected function mergeWheresToHas(Builder $hasQuery, Relation $relation)
-	{
-		// Here we have the "has" query and the original relation. We need to copy over any
-		// where clauses the developer may have put in the relationship function over to
-		// the has query, and then copy the bindings from the "has" query to the main.
-		$relationQuery = $relation->getBaseQuery();
-
-		$hasQuery->mergeWheres(
-			$relationQuery->wheres, $relationQuery->getBindings()
-		);
-
-		$this->query->mergeBindings($hasQuery->getQuery());
-	}
-
-	/**
-	 * Get the "has relation" base query instance.
-	 *
-	 * @param  string  $relation
-	 * @return \Illuminate\Database\Eloquent\Builder
-	 */
-	protected function getHasRelationQuery($relation)
-	{
-		$me = $this;
-
-		return Relation::noConstraints(function() use ($me, $relation)
-		{
-			return $me->getModel()->$relation();
-		});
 	}
 
 	/**

@@ -45,19 +45,6 @@ class BeanstalkdQueue extends Queue implements QueueInterface {
 	{
 		$payload = $this->createPayload($job, $data);
 
-		return $this->pushRaw($this->createPayload($job, $data), $queue);
-	}
-
-	/**
-	 * Push a raw payload onto the queue.
-	 *
-	 * @param  string  $payload
-	 * @param  string  $queue
-	 * @param  array   $options
-	 * @return mixed
-	 */
-	public function pushRaw($payload, $queue = null, array $options = array())
-	{
 		return $this->pheanstalk->useTube($this->getQueue($queue))->put($payload);
 	}
 
@@ -87,13 +74,11 @@ class BeanstalkdQueue extends Queue implements QueueInterface {
 	 */
 	public function pop($queue = null)
 	{
-		$queue = $this->getQueue($queue);
-
-		$job = $this->pheanstalk->watchOnly($queue)->reserve(0);
+		$job = $this->pheanstalk->watchOnly($this->getQueue($queue))->reserve(0);
 
 		if ($job instanceof Pheanstalk_Job)
 		{
-			return new BeanstalkdJob($this->container, $this->pheanstalk, $job, $queue);
+			return new BeanstalkdJob($this->container, $this->pheanstalk, $job);
 		}
 	}
 

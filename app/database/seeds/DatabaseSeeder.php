@@ -11,28 +11,7 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
-		$this->call('SentryGroupSeeder');
-		$this->call('SentryUserSeeder');
-		$this->call('SentryUserGroupSeeder');
-		
-
-		$this->call('OrdersTableSeeder');
-		$this->call('CustomersTableSeeder');
-		$this->call('PmethodsTableSeeder');
-		$this->call('DmethodsTableSeeder');
-		$this->call('ProductsTableSeeder');
-		$this->call('EntriesTableSeeder');
-		$this->call('PtypesTableSeeder');
-		$this->call('DtypesTableSeeder');
-		
-		$this->call('DocumentsTableSeeder');
-		$this->call('CategoriesTableSeeder');
-		$this->call('Sub_catsTableSeeder');
-		$this->call('ContactsTableSeeder');
-		$this->call('UmessagesTableSeeder');
-		$this->call('NotificationsTableSeeder');
-		$this->call('TrucksTableSeeder');
+		$this->call('UsersTableSeeder');	
 	}
 
 }

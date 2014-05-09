@@ -3,6 +3,7 @@
 use PDO;
 use Closure;
 use DateTime;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Database\Query\Processors\Processor;
 use Doctrine\DBAL\Connection as DoctrineConnection;
 
@@ -14,13 +15,6 @@ class Connection implements ConnectionInterface {
 	 * @var PDO
 	 */
 	protected $pdo;
-
-	/**
-	 * The active PDO connection used for reads.
-	 *
-	 * @var PDO
-	 */
-	protected $readPdo;
 
 	/**
 	 * The query grammar implementation.
@@ -275,7 +269,7 @@ class Connection implements ConnectionInterface {
 			// For select statements, we'll simply execute the query and return an array
 			// of the database result set. Each element in the array will be a single
 			// row from the database table, and will either be an array or objects.
-			$statement = $me->getReadPdo()->prepare($query);
+			$statement = $me->getPdo()->prepare($query);
 
 			$statement->execute($me->prepareBindings($bindings));
 
@@ -411,8 +405,6 @@ class Connection implements ConnectionInterface {
 	 *
 	 * @param  Closure  $callback
 	 * @return mixed
-	 *
-	 * @throws \Exception
 	 */
 	public function transaction(Closure $callback)
 	{
@@ -516,8 +508,6 @@ class Connection implements ConnectionInterface {
 	 * @param  array    $bindings
 	 * @param  Closure  $callback
 	 * @return mixed
-	 *
-	 * @throws QueryException
 	 */
 	protected function run($query, $bindings, Closure $callback)
 	{
@@ -536,7 +526,7 @@ class Connection implements ConnectionInterface {
 		// lot more helpful to the developer instead of just the database's errors.
 		catch (\Exception $e)
 		{
-			throw new QueryException($query, $bindings, $e);
+			$this->handleQueryException($e, $query, $bindings);
 		}
 
 		// Once we have run the query we will calculate the time that it took to run and
@@ -547,6 +537,23 @@ class Connection implements ConnectionInterface {
 		$this->logQuery($query, $bindings, $time);
 
 		return $result;
+	}
+
+	/**
+	 * Handle an exception that occurred during a query.
+	 *
+	 * @param  Exception  $e
+	 * @param  string     $query
+	 * @param  array      $bindings
+	 * @return void
+	 */
+	protected function handleQueryException(\Exception $e, $query, $bindings)
+	{
+		$bindings = var_export($bindings, true);
+
+		$message = $e->getMessage()." (SQL: {$query}) (Bindings: {$bindings})";
+
+		throw new \Exception($message, 0, $e);
 	}
 
 	/**
@@ -643,39 +650,14 @@ class Connection implements ConnectionInterface {
 	}
 
 	/**
-	 * Get the current PDO connection used for reading.
-	 *
-	 * @return PDO
-	 */
-	public function getReadPdo()
-	{
-		return $this->readPdo ?: $this->pdo;
-	}
-
-	/**
 	 * Set the PDO connection.
 	 *
 	 * @param  PDO  $pdo
-	 * @return \Illuminate\Database\Connection
+	 * @return void
 	 */
 	public function setPdo(PDO $pdo)
 	{
 		$this->pdo = $pdo;
-
-		return $this;
-	}
-
-	/**
-	 * Set the PDO connection used for reading.
-	 *
-	 * @param  PDO  $pdo
-	 * @return \Illuminate\Database\Connection
-	 */
-	public function setReadPdo(PDO $pdo)
-	{
-		$this->readPdo = $pdo;
-
-		return $this;
 	}
 
 	/**

@@ -17,6 +17,13 @@ use Symfony\Component\Routing\Tests\Fixtures\CustomXmlFileLoader;
 
 class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        if (!class_exists('Symfony\Component\Config\FileLocator')) {
+            $this->markTestSkipped('The "Config" component is not available');
+        }
+    }
+
     public function testSupports()
     {
         $loader = new XmlFileLoader($this->getMock('Symfony\Component\Config\FileLocator'));
@@ -45,7 +52,6 @@ class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
             $this->assertSame('RouteCompiler', $route->getOption('compiler_class'));
             $this->assertEquals(array('GET', 'POST', 'PUT', 'OPTIONS'), $route->getMethods());
             $this->assertEquals(array('https'), $route->getSchemes());
-            $this->assertEquals('context.getMethod() == "GET"', $route->getCondition());
         }
     }
 
@@ -62,7 +68,7 @@ class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('MyBundle:Blog:show', $route->getDefault('_controller'));
         $this->assertSame('\w+', $route->getRequirement('slug'));
         $this->assertSame('en|fr|de', $route->getRequirement('_locale'));
-        $this->assertSame(null, $route->getDefault('slug'));
+        $this->assertNull($route->getDefault('slug'));
         $this->assertSame('RouteCompiler', $route->getOption('compiler_class'));
     }
 

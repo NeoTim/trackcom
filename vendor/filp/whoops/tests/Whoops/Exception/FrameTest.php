@@ -27,7 +27,7 @@ class FrameTest extends TestCase
 
     /**
      * @param  array $data
-     * @return Frame
+     * @return Whoops\Exception\Frame
      */
     private function getFrameInstance($data = null)
     {

@@ -8,10 +8,9 @@
         }
     ],
     "require": {
-        "illuminate/session": "4.1.x",
-        "illuminate/support": "4.1.x",
-        "symfony/http-foundation": "2.4.*",
-        "symfony/http-kernel": "2.4.*"
+        "illuminate/session": "4.0.x",
+        "illuminate/support": "4.0.x",
+        "symfony/http-foundation": "2.3.*"
     },
     "require-dev": {
         "mockery/mockery": "0.7.2",
@@ -25,7 +24,7 @@
     "target-dir": "Illuminate/Http",
     "extra": {
         "branch-alias": {
-            "dev-master": "4.1-dev"
+            "dev-master": "4.0-dev"
         }
     },
     "minimum-stability": "dev"

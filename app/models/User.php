@@ -3,7 +3,7 @@
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class User extends \Cartalyst\Sentry\Users\Eloquent\User implements UserInterface, RemindableInterface {
+class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	/**
 	 * The database table used by the model.
@@ -48,9 +48,19 @@ class User extends \Cartalyst\Sentry\Users\Eloquent\User implements UserInterfac
 	{
 		return $this->email;
 	}
-	public function category()
+	public function getRememberToken()
 	{
-		return $this->belongsTo('Category');
+	  return $this->remember_token;
+	}
+
+	public function setRememberToken($value)
+	{
+	  $this->remember_token = $value;
+	}
+
+	public function getRememberTokenName()
+	{
+	  return 'remember_token';
 	}
 
 }

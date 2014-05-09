@@ -3,12 +3,12 @@
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Migrations\MigrationCreator;
+use Illuminate\Database\Console\Migrations\MakeCommand;
 use Illuminate\Database\Console\Migrations\ResetCommand;
 use Illuminate\Database\Console\Migrations\RefreshCommand;
 use Illuminate\Database\Console\Migrations\InstallCommand;
 use Illuminate\Database\Console\Migrations\MigrateCommand;
 use Illuminate\Database\Console\Migrations\RollbackCommand;
-use Illuminate\Database\Console\Migrations\MigrateMakeCommand;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 
 class MigrationServiceProvider extends ServiceProvider {
@@ -44,7 +44,7 @@ class MigrationServiceProvider extends ServiceProvider {
 	 */
 	protected function registerRepository()
 	{
-		$this->app->bindShared('migration.repository', function($app)
+		$this->app['migration.repository'] = $this->app->share(function($app)
 		{
 			$table = $app['config']['database.migrations'];
 
@@ -62,7 +62,7 @@ class MigrationServiceProvider extends ServiceProvider {
 		// The migrator is responsible for actually running and rollback the migration
 		// files in the application. We'll pass in our database connection resolver
 		// so the migrator can resolve any of these connections when it needs to.
-		$this->app->bindShared('migrator', function($app)
+		$this->app['migrator'] = $this->app->share(function($app)
 		{
 			$repository = $app['migration.repository'];
 
@@ -104,7 +104,7 @@ class MigrationServiceProvider extends ServiceProvider {
 	 */
 	protected function registerMigrateCommand()
 	{
-		$this->app->bindShared('command.migrate', function($app)
+		$this->app['command.migrate'] = $this->app->share(function($app)
 		{
 			$packagePath = $app['path.base'].'/vendor';
 
@@ -119,7 +119,7 @@ class MigrationServiceProvider extends ServiceProvider {
 	 */
 	protected function registerRollbackCommand()
 	{
-		$this->app->bindShared('command.migrate.rollback', function($app)
+		$this->app['command.migrate.rollback'] = $this->app->share(function($app)
 		{
 			return new RollbackCommand($app['migrator']);
 		});
@@ -132,7 +132,7 @@ class MigrationServiceProvider extends ServiceProvider {
 	 */
 	protected function registerResetCommand()
 	{
-		$this->app->bindShared('command.migrate.reset', function($app)
+		$this->app['command.migrate.reset'] = $this->app->share(function($app)
 		{
 			return new ResetCommand($app['migrator']);
 		});
@@ -145,7 +145,7 @@ class MigrationServiceProvider extends ServiceProvider {
 	 */
 	protected function registerRefreshCommand()
 	{
-		$this->app->bindShared('command.migrate.refresh', function($app)
+		$this->app['command.migrate.refresh'] = $this->app->share(function($app)
 		{
 			return new RefreshCommand;
 		});
@@ -158,7 +158,7 @@ class MigrationServiceProvider extends ServiceProvider {
 	 */
 	protected function registerInstallCommand()
 	{
-		$this->app->bindShared('command.migrate.install', function($app)
+		$this->app['command.migrate.install'] = $this->app->share(function($app)
 		{
 			return new InstallCommand($app['migration.repository']);
 		});
@@ -171,12 +171,12 @@ class MigrationServiceProvider extends ServiceProvider {
 	 */
 	protected function registerMakeCommand()
 	{
-		$this->app->bindShared('migration.creator', function($app)
+		$this->app['migration.creator'] = $this->app->share(function($app)
 		{
 			return new MigrationCreator($app['files']);
 		});
 
-		$this->app->bindShared('command.migrate.make', function($app)
+		$this->app['command.migrate.make'] = $this->app->share(function($app)
 		{
 			// Once we have the migration creator registered, we will create the command
 			// and inject the creator. The creator is responsible for the actual file
@@ -185,7 +185,7 @@ class MigrationServiceProvider extends ServiceProvider {
 
 			$packagePath = $app['path.base'].'/vendor';
 
-			return new MigrateMakeCommand($creator, $packagePath);
+			return new MakeCommand($creator, $packagePath);
 		});
 	}
 

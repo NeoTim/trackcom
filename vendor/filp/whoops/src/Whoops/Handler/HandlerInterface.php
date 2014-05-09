@@ -17,7 +17,7 @@ interface HandlerInterface
     public function handle();
 
     /**
-     * @param Run $run
+     * @param Whoops\Run $run
      */
     public function setRun(Run $run);
 
@@ -27,7 +27,7 @@ interface HandlerInterface
     public function setException(Exception $exception);
 
     /**
-     * @param Inspector $inspector
+     * @param Whoops\Exception\Inspector $run
      */
     public function setInspector(Inspector $inspector);
 }

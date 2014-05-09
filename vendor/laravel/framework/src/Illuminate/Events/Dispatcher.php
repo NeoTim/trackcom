@@ -33,13 +33,6 @@ class Dispatcher {
 	protected $sorted = array();
 
 	/**
-	 * The event firing stack.
-	 *
-	 * @var array
-	 */
-	protected $firing = array();
-
-	/**
 	 * Create a new event dispatcher instance.
 	 *
 	 * @param  \Illuminate\Container\Container  $container
@@ -163,16 +156,6 @@ class Dispatcher {
 	}
 
 	/**
-	 * Get the event that is currently firing.
-	 *
-	 * @return string
-	 */
-	public function firing()
-	{
-		return last($this->firing);
-	}
-
-	/**
 	 * Fire an event and call the listeners.
 	 *
 	 * @param  string  $event
@@ -189,7 +172,7 @@ class Dispatcher {
 		// payload to each of them so that they receive each of these arguments.
 		if ( ! is_array($payload)) $payload = array($payload);
 
-		$this->firing[] = $event;
+		$payload[] = $event;
 
 		foreach ($this->getListeners($event) as $listener)
 		{
@@ -198,22 +181,18 @@ class Dispatcher {
 			// If a response is returned from the listener and event halting is enabled
 			// we will just return this response, and not call the rest of the event
 			// listeners. Otherwise we will add the response on the response list.
-			if ( ! is_null($response) && $halt)
+			if ( ! is_null($response) and $halt)
 			{
-				array_pop($this->firing);
-
 				return $response;
 			}
 
-			// If a boolean false is returned from a listener, we will stop propagating
+			// If a boolean false is returned from a listener, we will stop propogating
 			// the event to any further listeners down in the chain, else we keep on
 			// looping through the listeners and firing every one in our sequence.
 			if ($response === false) break;
 
 			$responses[] = $response;
 		}
-
-		array_pop($this->firing);
 
 		return $halt ? null : $responses;
 	}

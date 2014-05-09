@@ -1,0 +1,519 @@
+
+<!-- <div class="row info-page">
+	<div data-ng-repeat="driver in drivers" class="col-md-3 col-xs-12 col-sm-6" id="driver_{{driver.id}}">
+		<div class="info-left pull-left info-boxes-red">
+			<ul class="list-inline list-unstyled">
+				<li><i class="icon ion-ios7-person"></i></li>
+				<li><strong>driver.name</strong><p>driver.method</p></li>
+			</ul>
+		</div>
+		<ul class="list-unstyled pull-right info-right info-boxes-red">
+			<li><a href="#"><i class="fa fa-truck"></i></a></li>
+			<li><a id="slide_orders_{{driver.id}}" href="#"><i class=" icon ion-ios7-arrow-thin-down"></i></a></li>
+		</ul>
+		<div id="drop_orders_{{driver.id}}" class="order-list info-left pull-left info-boxes-red" style="display:none;">
+			<ul class="order_list_{{driver.id}} list-inline list-unstyled">
+			</ul>
+		</div>
+	</div>				
+</div> -->
+	<div class="row">
+		<div class="col-sm-3" ng-repeat="driver in drivers" id="driver_{{driver.id}}" ng-click="driverOrders=!driverOrders">
+			<section class="panel panel-box" style="border-top:none;">
+				<div class="panel-top" data-ng-class="{'bg-danger': driver.status === '0', 'bg-success': driver.status === '1'}">
+                        <i class="fa fa-truck text-large"> {{driver.truck}}</i> 
+                        </div>
+                        <div class="list-justified-container">
+                            <ul class="list-justified text-center">
+                                <li>
+                                    <p class="size-h3">{{driver.method}}</p>
+                                    <p class="text-muted">{{driver.name}}</p>
+                                </li>
+                                <li>
+                                    <p class="size-h3">23</p>
+                                    <p class="text-muted">Orders</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-bottom bg-reverse fx-fade-up" ng-show="driverOrders">
+					<ul class="list-group">
+					<li class="list-group-item" ng-repeat="order in driver.orders">{{order.customer_name}}<span class="label label-danger pull-right">{{order.number}}</span> </li>
+					</ul>
+                        </div>
+			</section>
+		</div>
+	</div>
+	<div class="row">
+	     
+		<div class="col-md-4" id="div_0">
+			<div class="panel panel-primary">
+				<div class="panel-body no-padding">
+
+					<div class="calendar-dashboard"></div>
+	                    	
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8" id="div_1">
+			<div class="panel panel-warning">
+	                	<div class="panel-heading">
+	                    	<h3 class="panel-title ">
+	                       		Production Status
+		                        <span class="panel-options">
+		                            <a href="#" class="panel-settings" >
+		                                <i class="fa fa-cogs"></i>
+		                            </a>
+		                            <a href="#" class="panel-refresh">
+		                                <i class="fa fa-refresh"></i>
+		                            </a>
+		                            <a href="#" class="panel-minimize">
+		                                <i class="fa fa-chevron-up"></i>
+		                            </a>
+		                            <a href="#" class="panel-close">
+		                                <i class="fa fa-times"></i>
+		                            </a>
+		                        </span>
+	                    	</h3>
+	                	</div>
+	                	<div class="panel-body" style="overflow:hidden;">
+	                		<!--  <span>
+					    <button ng-click="slickHandle.slickGoTo(2)">slickGoTo(2)</button>
+					    <button ng-click="slickHandle.slickPrev()">slickPrev()</button>
+					    <button ng-click="slickHandle.slickNext()">slickNext()</button>
+					    <button ng-click='slickHandle.slickAdd("<div>New</div>")'>slickAdd()</button>
+					    <button ng-click='slickHandle.slickRemove(3)'>slickRemove(3)</button>
+					    <button ng-click='slickHandle.slickPlay()'>slickPlay()</button>
+					    <button ng-click='slickHandle.slickPause()'>slickPause()</button>
+
+					  </span> -->
+					  
+					    
+					      
+					          <!-- <div ng-repeat="entry in entries">
+				            							            	
+					          </div> -->
+					   	<ul rn-carousel>
+						  <li ng-repeat="slide in slides" style="" class="slide-block">
+			
+				 		 			
+										<div class="block block-bottom" style="width:25%; float:left; padding-left:1px; padding-right:1px;" data-ng-repeat="entry in slide">
+											<div class="block-footer" style="text-align:center; font-size:15px;">
+											<strong>{{entry.sku}}</strong>
+											</div>
+											<section class="block-body bg-default" style="padding:0;">
+												<section class="block-bar bg-{{entry.color}}" style="">
+													{{entry.status}}%
+													{{entry.label}}
+												</section>
+											</section>
+										</div>
+									
+								
+						  </li>
+						</ul>	      
+					
+	                	</div>
+	                	
+	            </div>
+	            
+		</div>
+	</div>
+	<div class="row">
+
+	        
+		<!-- <div class="col-md-6" id="div_0">
+			<div class="panel panel-warning">
+	                	<div class="panel-heading">
+	                    	<h3 class="panel-title ">
+	                       		Orders
+		                        <span class="panel-options">
+		                            <a href="#" class="panel-settings" >
+		                                <i class="fa fa-cogs"></i>
+		                            </a>
+		                            <a href="#" class="panel-refresh">
+		                                <i class="fa fa-refresh"></i>
+		                            </a>
+		                            <a href="#" class="panel-minimize">
+		                                <i class="fa fa-chevron-up"></i>
+		                            </a>
+		                            <a href="#" class="panel-close">
+		                                <i class="fa fa-times"></i>
+		                            </a>
+		                        </span>
+	                    	</h3>
+	                	</div>
+	                	<div class="panel-body profile-incomplete">
+	                    	<table id="orderPicker" class="table table-bordered">
+	                    		<thead>                    			
+		                    		<tr>
+		                    			<th>Order #</th>
+		                    			<th>SKU</th>
+		                    			<th>Date</th>
+		                    			<th>Options</th>
+		                    		</tr>
+	                    		</thead>
+	                    		<tbody>
+	                    			
+	                    		</tbody>
+	                    	</table>
+	                	</div>                	
+	            </div>
+		</div> -->
+	        <!-- <div class="col-md-6" id="div_3">
+	            <div class="panel mini-chat-panel panel-primary">
+	                <div class="panel-body no-padding">
+	                    
+	                    <div class="chat-menu">
+	                        <ul class="list-inline chat-tabs">
+	                            <li><a href="#">Chat</a></li>
+	                            <li><a href="#">Profile</a></li>
+	                            <li><a href="#">Activity</a></li>
+	                            <li><a href="#">History</a></li>
+	                        </ul>
+	                        <div class="chat-box">
+	                            <ul class="chat-notifications list-unstyled">
+	                                <li class="odd">
+	                                    <div class="avatar">
+	                                        <img src="images/avatar.png" alt="">
+	                                    </div>
+	                                    <div class="message">
+	                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, in nobis cum expedita molestiae necessitatibus velit labore iusto nulla sint deserunt blanditiis fugiat soluta architecto sequi numquam non quibusdam quas.
+	                                    </div>
+	                                    <div class="time">
+	                                        23:00 , 2 Days Ago
+	                                    </div>
+	                                </li>
+	                                <li class="even">
+	                                    <div class="avatar">
+	                                        <img src="images/profiles/eleven.png" alt="">
+	                                    </div>
+	                                    <div class="message">
+	                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam, ipsam mollitia voluptatem aliquid alias exercitationem quas dolorum culpa saepe enim illo optio molestiae incidunt nihil soluta vero ab. Recusandae, aperiam.
+	                                    </div>
+	                                    <div class="time">
+	                                        23:00 , 2 Days Ago
+	                                    </div>
+
+	                                </li>
+	                                <li class="odd">
+	                                    <div class="avatar">
+	                                        <img src="images/avatar.png" alt="">
+	                                    </div>
+	                                    <div class="message">
+	                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem voluptate debitis laudantium excepturi consectetur corrupti tempore vitae! Perspiciatis, molestiae explicabo aperiam delectus nisi placeat minima expedita modi est neque vero.
+	                                    </div>
+	                                    <div class="time">
+	                                        23:00 , 2 Days Ago
+	                                    </div>
+
+	                                </li>
+	                                <li class="even">
+	                                    <div class="avatar">
+	                                        <img src="images/profiles/eleven.png" alt="">
+	                                    </div>
+	                                    <div class="message">
+	                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem voluptate debitis laudantium excepturi consectetur corrupti tempore vitae! Perspiciatis, molestiae explicabo aperiam delectus nisi placeat minima expedita modi est neque vero.
+	                                    </div>
+	                                    <div class="time">
+	                                        23:00 , 2 Days Ago
+	                                    </div>
+
+	                                </li>
+	                            </ul>
+	                            <div id="bottom">
+	                                
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="input-group message-group">
+	                        <input type="text" name="createLabel" class="form-control write-message" id="write-message" placeholder="Type here...."> 
+	                        <span class="input-group-btn">
+	                            <button class="btn btn-primary text-white" type="button" id="send-message">Send</button>
+	                        </span>
+	                    </div>
+	                    
+	                </div>
+	            </div>
+	        </div> -->
+	</div>
+
+	<div class="row">		            
+	</div>
+	<div class="row">
+	</div>
+</div>
+    <!-- <script src="/delighted/js/jquery.sparkline.min.js"></script>   -->
+    <!-- <script src="/delighted/js/sparkline-custom.js"></script>    -->
+    <!-- <script src="/delighted/js/raphael-min.js"></script> -->
+    <!-- <script src="/delighted/js/jquery.countTo.js"></script> -->
+    <script src="/delighted/js/bic_calendar.js"></script>
+    <!-- <script src="/delighted/js/mini-chat.js"></script> -->
+    <!-- <script src="/delighted/js/Chart.js"></script> -->
+    <!-- <script type="text/javascript" src="/delighted/js/slick/slick/slick.min.js"></script> -->
+	<!-- <script src="/delighted/dashboardController.js" type="text/javascript"></script> -->
+    <!-- <script type="text/javascript" src="/delighted/js/jquery.newsTicker.js"></script> -->
+    <!-- <script type="text/javascript" src="/delighted/js/jquery.totemticker.js"></script> -->
+    <script type="text/javascript">
+    
+
+       // $Orders = [];
+        //$Product = [];
+      function driverTemplate(driver){
+		var temp = ['<div class="info-left pull-left info-boxes-red">',					
+					'<ul class="list-inline list-unstyled">',
+			                	'<li><i class="icon ion-ios7-person"></i></li>',
+			                	'<li><strong>' + driver.name + '</strong><p>' + driver.method + '</p></li>',
+			            '</ul>',
+				'</div>',
+				'<ul class="list-unstyled pull-right info-right info-boxes-red">',
+					//'<li><strong>' + driver.name + '</strong><p>' + driver.method + '</p></li>',
+					//'<li><a href="#"><i class=" icon ion-ios7-arrow-thin-right"></i></a></li>',
+			            '<li><a href="#"><i class="fa fa-truck"></i></a></li>',
+			            '<li><a id="slide_orders_'+ driver.id +'" href="#"><i class=" icon ion-ios7-arrow-thin-down"></i></a></li>',
+				'</ul>',
+				'<div id="drop_orders_'+  driver.id +'" class="order-list info-left pull-left info-boxes-red" style="display:none;">',					
+					'<ul class="order_list_'+ driver.m_id +' list-inline list-unstyled">'].join('');
+			                	//'<li><strong>Oder</strong><p></p></li>',
+			                	_.each(driver.orders, function (order){
+			                		temp += '<li><strong>' +order.number+ '</strong><p>'+ order.title.split(" - ")[0] +'</p></li>';
+			                	});
+		temp += 	'</ul></div>';
+		return temp;
+      }
+      function getDateValue(string){
+      	var day = string.split("_").splice(3, 6);
+    		var d = day[0]
+    		var m = day[1]
+    		var y = day[2]
+    		return [m, d, y].join("/");
+      }
+      function displayDriver(driver){
+      	
+      	var placeholder = $("#driver_" + driver.id);
+		var driverT = $(driverTemplate(driver));
+		placeholder.append(driverT);
+		$("#slide_orders_" + driver.id).on("click", function(){
+			$("#drop_orders_" + driver.id).toggle();
+		});
+      }
+      function displayProducts(products){
+      	var t = $("#orderPicker tbody");
+      	t.children().remove();
+      	var temp = $('<tr></tr>');
+      	_.each(products, function (item){
+      		temp.append("<td>" + item.order_id + "</td><td>" + item.sku + "</td><td>" + item.ready_date + "</td><td><div class='progress active dropStatus'><div class='progress-bar progress-bar-" + item.color +"' role='progressbar' aria-waluemin='10' aria-valuemax='100' aria-valuenow='" + item.status + "' style='width: " +item.status+ "%;''>"+ item.label +" &nbsp; &nbsp; "+ item.status +"%</div></div></td>");
+      	});
+      	t.append(temp);
+
+
+      }
+      function iterateDrivers(data, orders){
+      	//console.log(orders)
+      	_.each(data, function (driver, index){
+      		driver.orders = _.where(orders, {method_id: driver.m_id});
+      		displayDriver(driver);
+      	});
+      	//getOrders();
+      }     
+      function updateDriver(){
+
+      }
+      function getDrivers(orders){
+      	$.ajax({
+      		type: "GET",
+      		url: "{{URL::to('drivers')}}",
+      		success: function(data){
+      			// /console.log(data);
+      			//var  = getOrders();
+      			iterateDrivers(data, orders);
+      		}
+      	});
+      }
+      function getOrders(){
+      	
+      	$.ajax({
+      		type: "GET",
+      		url: "{{URL::to('deliveries/show')}}",
+      		success: function(data){
+      			//console.log(data);
+      			//iterateOrders(data);      			
+      			$Orders.push(data);
+      			getDrivers(data);
+      		}
+      	});      
+      }
+      function getProducts(){
+      	
+      	$.ajax({
+      		type: "GET",
+      		url: "{{URL::to('productions/show')}}",
+      		success: function(data){
+      			_.each(data, function (item, index){      				
+      				$Product.push(item);
+      			});
+      			
+      			
+      		}
+      	});      
+      }
+      //getOrders();
+      //getProducts();
+      
+      
+
+
+
+/*
+        $('.chart').easyPieChart({
+               animate: 6000,
+               lineWidth : 8,
+               barColor: '#a0d269'
+           });
+
+            $('.timer').each(count);*/
+
+    //Calendar on right sidebar @bic calendar
+   mesos = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    dias = [ "MON", "TUE", "WED", "THU", "FRI","SAT","SUN"];
+
+  $('.calendar-dashboard').bic_calendar({
+        nombresMes: mesos,
+        dias: dias,
+        enableSelect: true,
+        req_ajax: {
+            type: 'get'
+        }
+    });
+
+    function resetCalToggles(){
+	    $(".calendar-dashboard").find("td").on("click", function (){
+	    		var date = getDateValue($(this).attr("id"));
+	    		products = [];
+	    		_.each($Product, function (item){	    			
+	    			if(item.ready_date === date){
+	    				console.log(item)
+	    				products.push(item);
+	    			}
+	    		});
+	    		displayProducts(products)
+	    		console.log(products);
+	    });
+    }
+    $(".bic_calendar .calendar-head a").on("click", function(){
+    		resetCalToggles();
+    });
+   // resetCalToggles();
+//news ticker
+/*$('.newsticker').newsTicker({
+    row_height: 100,
+    max_rows: 1,
+    speed: 300,
+    direction: 'up',
+    duration: 4000,
+    autostart: 1,
+    pauseOnHover: 0,
+    prevButton: $('.ion-ios7-arrow-up'),
+    nextButton: $('.ion-ios7-arrow-down')
+
+});    */     
+
+var slickInitor = function(){
+							
+	$(".slick-prev").append('<i class="fa fa-chevron-left"></i>');
+	$(".slick-next").append('<i class="fa fa-chevron-right"></i>');
+};
+//dashboardCtrl.init("{{ URL::to('drivers') }}", "{{ URL::to('collect/entries') }}", "{{ URL::to('collect/orders') }}");
+/*$(".slider-block").slick({
+	slidesToShow: 3,
+	slidesToScroll: 3, infinite: true, autoplay: true, cssEase: 'ease', easing: 'ease', speed: 600, slide: 'span', onInit: slickInitor, onReInit: slickInitor, draggable: true
+});*/
+
+
+
+
+//vertical ticker
+/*$('#vertical-ticker').totemticker({
+    row_height  :   '100px',
+    next:   '#ticker-next',
+    previous:   '#ticker-previous',
+    stop:   '#stop',
+    start:   '#start',
+    mousestop:   true,
+});
+*/
+//mini Timeline
+ //$(".mini-timeline").mCustomScrollbar();
+
+    //weather widget random numbers
+    /*$('.btn-refresh').click(function(){
+        var min = -13;
+        var max = 40;
+        var random = Math.floor(Math.random() * (max - min + 1)) + min;
+        //$('.weather p').html(random+'&deg;');
+
+
+        if(random>20)
+        {
+            var svgIcon="sun";
+        }
+        else if(random>15 && random<21)
+        {
+		var svgIcon="cloudLightning";
+        }
+        else if(random>5 && random<16)
+        {
+            var svgIcon="cloudHailAlt";
+        }
+        else if(random<6)
+        {
+            var svgIcon="cloudLightning";
+        }
+
+        $('.weather').html('<embed class="svg-icon" type="image/svg+xml" src="svgs/'+ svgIcon +'.svg" /><p>'+random+'&deg;</p>');
+
+        
+    });
+*/
+   /* var lineChartData = {
+        labels : ["January","February","March","April","May","June","July"],
+        datasets : [
+        {
+            fillColor : "rgba(220,220,220,0.5)",
+            strokeColor : "rgba(220,220,220,1)",
+            pointColor : "rgba(220,220,220,1)",
+            pointStrokeColor : "#fff",
+            data : [65,59,90,81,56,55,40]
+        },
+        {
+            fillColor : "#c1d6be",
+            strokeColor : "#85c179",
+            pointColor : "#5f8755",
+            pointStrokeColor : "#fff",
+            data : [28,48,40,19,96,27,100]
+        }
+        ]
+        
+    }
+
+    
+          setTimeout(function () {
+            document.getElementById("canvas").width = document.getElementById('canvas_parent').offsetWidth;;
+    document.getElementById("canvas").height = document.getElementById('canvas_parent').offsetHeight;
+ 
+                var myLine = new Chart(document.getElementById("canvas").getContext("2d")).Line(lineChartData);
+        },
+      2000);
+
+    */
+/*
+    function count(options) 
+    {
+        var $this = $(this);
+        options = $.extend({}, options || {}, $this.data('countToOptions') || {});
+        $this.countTo(options);
+    }
+*/
+
+
+</script>

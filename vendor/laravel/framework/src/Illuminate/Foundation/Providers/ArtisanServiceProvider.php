@@ -2,7 +2,6 @@
 
 use Illuminate\Foundation\Artisan;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Foundation\Console\TailCommand;
 use Illuminate\Foundation\Console\ChangesCommand;
 use Illuminate\Foundation\Console\EnvironmentCommand;
 
@@ -22,27 +21,22 @@ class ArtisanServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app->bindShared('artisan', function($app)
+		$this->app['artisan'] = $this->app->share(function($app)
 		{
 			return new Artisan($app);
 		});
 
-		$this->app->bindShared('command.tail', function($app)
-		{
-			return new TailCommand;
-		});
-
-		$this->app->bindShared('command.changes', function($app)
+		$this->app['command.changes'] = $this->app->share(function($app)
 		{
 			return new ChangesCommand;
 		});
 
-		$this->app->bindShared('command.environment', function($app)
+		$this->app['command.environment'] = $this->app->share(function($app)
 		{
 			return new EnvironmentCommand;
 		});
 
-		$this->commands('command.tail', 'command.changes', 'command.environment');
+		$this->commands('command.changes', 'command.environment');
 	}
 
 	/**

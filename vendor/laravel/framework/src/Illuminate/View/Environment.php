@@ -103,7 +103,7 @@ class Environment {
 	}
 
 	/**
-	 * Get the evaluated view contents for the given view.
+	 * Get a evaluated view contents for the given view.
 	 *
 	 * @param  string  $view
 	 * @param  array   $data
@@ -133,7 +133,7 @@ class Environment {
 	}
 
 	/**
-	 * Get the evaluated view contents for a named view.
+	 * Get a evaluated view contents for a named view.
 	 *
 	 * @param string $view
 	 * @param mixed $data
@@ -292,13 +292,13 @@ class Environment {
 	 * @param  \Closure|string  $callback
 	 * @return array
 	 */
-	public function composer($views, $callback, $priority = null)
+	public function composer($views, $callback)
 	{
 		$composers = array();
 
 		foreach ((array) $views as $view)
 		{
-			$composers[] = $this->addViewEvent($view, $callback, 'composing: ', $priority);
+			$composers[] = $this->addViewEvent($view, $callback);
 		}
 
 		return $composers;
@@ -312,17 +312,17 @@ class Environment {
 	 * @param  string  $prefix
 	 * @return Closure
 	 */
-	protected function addViewEvent($view, $callback, $prefix = 'composing: ', $priority = null)
+	protected function addViewEvent($view, $callback, $prefix = 'composing: ')
 	{
 		if ($callback instanceof Closure)
 		{
-			$this->addEventListener($prefix.$view, $callback, $priority);
+			$this->events->listen($prefix.$view, $callback);
 
 			return $callback;
 		}
 		elseif (is_string($callback))
 		{
-			return $this->addClassEvent($view, $callback, $prefix, $priority);
+			return $this->addClassEvent($view, $callback, $prefix);
 		}
 	}
 
@@ -334,7 +334,7 @@ class Environment {
 	 * @param  string   $prefix
 	 * @return \Closure
 	 */
-	protected function addClassEvent($view, $class, $prefix, $priority = null)
+	protected function addClassEvent($view, $class, $prefix)
 	{
 		$name = $prefix.$view;
 
@@ -343,28 +343,9 @@ class Environment {
 		// on the instance. This allows for convenient, testable view composers.
 		$callback = $this->buildClassEventCallback($class, $prefix);
 
-		$this->addEventListener($name, $callback, $priority);
+		$this->events->listen($name, $callback);
 
 		return $callback;
-	}
-
-	/**
-	 * Add a listener to the event dispatcher.
-	 *
-	 * @param string   $name
-	 * @param \Closure $callback
-	 * @param integer  $priority
-	 */
-	protected function addEventListener($name, $callback, $priority = null)
-	{
-		if (is_null($priority))
-		{
-			$this->events->listen($name, $callback);
-		}
-		else
-		{
-			$this->events->listen($name, $callback, $priority);
-		}
 	}
 
 	/**
@@ -445,7 +426,7 @@ class Environment {
 	{
 		if ($content === '')
 		{
-			ob_start() && $this->sectionStack[] = $section;
+			ob_start() and $this->sectionStack[] = $section;
 		}
 		else
 		{
@@ -498,27 +479,6 @@ class Environment {
 	}
 
 	/**
-	 * Stop injecting content into a section and append it.
-	 *
-	 * @return string
-	 */
-	public function appendSection()
-	{
-		$last = array_pop($this->sectionStack);
-
-		if (isset($this->sections[$last]))
-		{
-			$this->sections[$last] .= ob_get_clean();
-		}
-		else
-		{
-			$this->sections[$last] = ob_get_clean();
-		}
-
-		return $last;
-	}
-
-	/**
 	 * Append content to a given section.
 	 *
 	 * @param  string  $section
@@ -561,16 +521,6 @@ class Environment {
 		$this->sections = array();
 
 		$this->sectionStack = array();
-	}
-
-	/**
-	 * Flush all of the section contents if done rendering.
-	 *
-	 * @return void
-	 */
-	public function flushSectionsIfDoneRendering()
-	{
-		if ($this->doneRendering()) $this->flushSections();
 	}
 
 	/**
@@ -676,16 +626,6 @@ class Environment {
 	public function getFinder()
 	{
 		return $this->finder;
-	}
-
-	/**
-	 * Set the view finder instance.
-	 *
-	 * @return void
-	 */
-	public function setFinder(ViewFinderInterface $finder)
-	{
-		$this->finder = $finder;
 	}
 
 	/**

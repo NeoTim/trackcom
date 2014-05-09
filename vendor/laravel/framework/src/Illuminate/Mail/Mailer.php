@@ -54,13 +54,6 @@ class Mailer {
 	protected $pretending = false;
 
 	/**
-	 * Array of failed recipients.
-	 *
-	 * @var array
-	 */
-	protected $failedRecipients = array();
-
-	/**
 	 * Create a new Mailer instance.
 	 *
 	 * @param  \Illuminate\View\Environment  $views
@@ -259,8 +252,6 @@ class Mailer {
 	 *
 	 * @param  string|array  $view
 	 * @return array
-	 *
-	 * @throws \InvalidArgumentException
 	 */
 	protected function parseView($view)
 	{
@@ -269,7 +260,7 @@ class Mailer {
 		// If the given view is an array with numeric keys, we will just assume that
 		// both a "pretty" and "plain" view were provided, so we will return this
 		// array as is, since must should contain both views with numeric keys.
-		if (is_array($view) && isset($view[0]))
+		if (is_array($view) and isset($view[0]))
 		{
 			return $view;
 		}
@@ -283,7 +274,7 @@ class Mailer {
 				array_get($view, 'html'), array_get($view, 'text')
 			);
 		}
-
+		
 		throw new \InvalidArgumentException("Invalid view.");
 	}
 
@@ -297,13 +288,11 @@ class Mailer {
 	{
 		if ( ! $this->pretending)
 		{
-			return $this->swift->send($message, $this->failedRecipients);
+			return $this->swift->send($message);
 		}
 		elseif (isset($this->logger))
 		{
 			$this->logMessage($message);
-
-			return 1;
 		}
 	}
 
@@ -326,8 +315,6 @@ class Mailer {
 	 * @param  Closure|string  $callback
 	 * @param  \Illuminate\Mail\Message  $message
 	 * @return mixed
-	 *
-	 * @throws \InvalidArgumentException
 	 */
 	protected function callMessageBuilder($callback, $message)
 	{
@@ -404,16 +391,6 @@ class Mailer {
 	public function getSwiftMailer()
 	{
 		return $this->swift;
-	}
-
-	/**
-	 * Get the array of failed recipients.
-	 *
-	 * @return array
-	 */
-	public function failures()
-	{
-		return $this->failedRecipients;
 	}
 
 	/**

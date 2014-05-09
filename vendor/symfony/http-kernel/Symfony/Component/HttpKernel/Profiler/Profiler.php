@@ -14,7 +14,6 @@ namespace Symfony\Component\HttpKernel\Profiler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Symfony\Component\HttpKernel\DataCollector\LateDataCollectorInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -40,7 +39,7 @@ class Profiler
     private $logger;
 
     /**
-     * @var Boolean
+     * @var bool
      */
     private $enabled = true;
 
@@ -105,17 +104,10 @@ class Profiler
      *
      * @param Profile $profile A Profile instance
      *
-     * @return Boolean
+     * @return bool
      */
     public function saveProfile(Profile $profile)
     {
-        // late collect
-        foreach ($profile->getCollectors() as $collector) {
-            if ($collector instanceof LateDataCollectorInterface) {
-                $collector->lateCollect();
-            }
-        }
-
         if (!($ret = $this->storage->write($profile)) && null !== $this->logger) {
             $this->logger->warning('Unable to store the profiler information.');
         }
@@ -175,25 +167,11 @@ class Profiler
      *
      * @return array An array of tokens
      *
-     * @see http://fr2.php.net/manual/en/datetime.formats.php for the supported date/time formats
+     * @see http://php.net/manual/en/datetime.formats.php for the supported date/time formats
      */
     public function find($ip, $url, $limit, $method, $start, $end)
     {
-        if ('' != $start && null !== $start) {
-            $start = new \DateTime($start);
-            $start = $start->getTimestamp();
-        } else {
-            $start = null;
-        }
-
-        if ('' != $end && null !== $end) {
-            $end = new \DateTime($end);
-            $end = $end->getTimestamp();
-        } else {
-            $end = null;
-        }
-
-        return $this->storage->find($ip, $url, $limit, $method, $start, $end);
+        return $this->storage->find($ip, $url, $limit, $method, $this->getTimestamp($start), $this->getTimestamp($end));
     }
 
     /**
@@ -211,7 +189,7 @@ class Profiler
             return;
         }
 
-        $profile = new Profile(substr(hash('sha256', uniqid(mt_rand(), true)), 0, 6));
+        $profile = new Profile(substr(sha1(uniqid(mt_rand(), true)), 0, 6));
         $profile->setTime(time());
         $profile->setUrl($request->getUri());
         $profile->setIp($request->getClientIp());
@@ -222,8 +200,8 @@ class Profiler
         foreach ($this->collectors as $collector) {
             $collector->collect($request, $response, $exception);
 
-            // we need to clone for sub-requests
-            $profile->addCollector(clone $collector);
+            // forces collectors to become "read/only" (they loose their object dependencies)
+            $profile->addCollector(unserialize(serialize($collector)));
         }
 
         return $profile;
@@ -267,7 +245,7 @@ class Profiler
      *
      * @param string $name A collector name
      *
-     * @return Boolean
+     * @return bool
      */
     public function has($name)
     {
@@ -290,5 +268,20 @@ class Profiler
         }
 
         return $this->collectors[$name];
+    }
+
+    private function getTimestamp($value)
+    {
+        if (null === $value || '' == $value) {
+            return;
+        }
+
+        try {
+            $value = new \DateTime(is_numeric($value) ? '@'.$value : $value);
+        } catch (\Exception $e) {
+            return;
+        }
+
+        return $value->getTimestamp();
     }
 }

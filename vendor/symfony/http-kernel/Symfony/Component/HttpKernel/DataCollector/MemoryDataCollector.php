@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class MemoryDataCollector extends DataCollector implements LateDataCollectorInterface
+class MemoryDataCollector extends DataCollector
 {
     public function __construct()
     {
@@ -38,17 +38,9 @@ class MemoryDataCollector extends DataCollector implements LateDataCollectorInte
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function lateCollect()
-    {
-        $this->updateMemoryUsage();
-    }
-
-    /**
      * Gets the memory.
      *
-     * @return integer The memory
+     * @return int     The memory
      */
     public function getMemory()
     {
@@ -58,7 +50,7 @@ class MemoryDataCollector extends DataCollector implements LateDataCollectorInte
     /**
      * Gets the PHP memory limit.
      *
-     * @return integer The memory limit
+     * @return int     The memory limit
      */
     public function getMemoryLimit()
     {

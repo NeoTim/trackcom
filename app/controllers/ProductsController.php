@@ -17,8 +17,8 @@ class ProductsController extends BaseController {
 		$this->beforeFilter('csrf', array('on' => 'post'));
 
 		// Set up Auth Filters
-		$this->beforeFilter('auth', array('only' => array('change')));
-		$this->beforeFilter('inGroup:Admins', array('only' => array('show', 'index', 'destroy', 'suspend', 'unsuspend', 'ban', 'unban', 'edit', 'update')));
+		// $this->beforeFilter('auth', array('only' => array('change')));
+		// $this->beforeFilter('inGroup:Admins', array('only' => array('show', 'index', 'destroy', 'suspend', 'unsuspend', 'ban', 'unban', 'edit', 'update')));
 	}
 
 	/**
@@ -28,9 +28,7 @@ class ProductsController extends BaseController {
 	 */
 	public function index()
 	{
-		$products = $this->product->all();
-
-		return View::make('products.index', compact('products'));
+		return $this->product->all();
 	}
 
 	/**
@@ -40,7 +38,7 @@ class ProductsController extends BaseController {
 	 */
 	public function create()
 	{
-		return View::make('products.create');
+	
 	}
 
 	/**
@@ -56,13 +54,11 @@ class ProductsController extends BaseController {
 		{
 			
 			Session::flash('success', $result['message']);
-			return Redirect::route('products.index');
+	
 		}
 		else
 		{
 			Session::flash('error', $result['message']);
-			return Redirect::route('products.create')
-				->withInput();
 		}
 	}
 
@@ -74,9 +70,7 @@ class ProductsController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$product = $this->product->find($id);
-
-		return View::make('products.show', compact('product'));
+		return $this->product->find($id);
 	}
 
 	/**
@@ -87,14 +81,7 @@ class ProductsController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		$product = $this->product->find($id);
-
-		if (is_null($product))
-		{
-			return Redirect::route('products.index');
-		}
-
-		return View::make('products.edit', compact('product'));
+		
 	}
 
 	/**
@@ -104,20 +91,16 @@ class ProductsController extends BaseController {
 	 * @return Response
 	 */
 	public function update($id)
-	{
-		$input = array_except(Input::all(), '_method');
-		$result = $this->product->update($id, $input);
+	{		
+		$result = $this->product->update($id, Input::all());
 
 		if($result['success'])
 		{
-			Session::flash('success', $result['message']);
-			return Redirect::route('products.index');
+			Session::flash('success', $result['message']);			
 		}
 		else
 		{
-			Session::flash('error', $result['message']);
-			return Redirect::route('products.edit', $id)
-				->withInput();
+			Session::flash('error', $result['message']);			
 		}
 	}
 
@@ -133,13 +116,11 @@ class ProductsController extends BaseController {
 
 		if($result['success'])
 		{
-			Session::flash('success', $result['message']);
-			return Redirect::route('products.index');
+			Session::flash('success', $result['message']);			
 		}
 		else
 		{
-			Session::flash('error', $result['message']);
-			return Redirect::route('products.show', $id);
+			Session::flash('error', $result['message']);			
 		}
 	}
 

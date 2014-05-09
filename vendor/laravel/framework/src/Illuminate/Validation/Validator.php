@@ -108,7 +108,7 @@ class Validator implements MessageProviderInterface {
 	 *
 	 * @var array
 	 */
-	protected $implicitRules = array('Required', 'RequiredWith', 'RequiredWithout', 'RequiredWithoutAll', 'RequiredIf', 'Accepted');
+	protected $implicitRules = array('Required', 'RequiredWith', 'RequiredWithout', 'RequiredIf', 'Accepted');
 
 	/**
 	 * Create a new Validator instance.
@@ -119,13 +119,12 @@ class Validator implements MessageProviderInterface {
 	 * @param  array  $messages
 	 * @return void
 	 */
-	public function __construct(TranslatorInterface $translator, $data, $rules, $messages = array(), $customAttributes = array())
+	public function __construct(TranslatorInterface $translator, $data, $rules, $messages = array())
 	{
 		$this->translator = $translator;
 		$this->customMessages = $messages;
 		$this->data = $this->parseData($data);
 		$this->rules = $this->explodeRules($rules);
-		$this->customAttributes = $customAttributes;
 	}
 
 	/**
@@ -198,7 +197,7 @@ class Validator implements MessageProviderInterface {
 	 * @param  string|array  $rules
 	 * @return void
 	 */
-	public function mergeRules($attribute, $rules)
+	protected function mergeRules($attribute, $rules)
 	{
 		$current = array_get($this->rules, $attribute, array());
 
@@ -262,7 +261,7 @@ class Validator implements MessageProviderInterface {
 
 		$method = "validate{$rule}";
 
-		if ($validatable && ! $this->$method($attribute, $value, $parameters, $this))
+		if ($validatable and ! $this->$method($attribute, $value, $parameters, $this))
 		{
 			$this->addFailure($attribute, $rule, $parameters);
 		}
@@ -296,7 +295,7 @@ class Validator implements MessageProviderInterface {
 	 */
 	protected function isValidatable($rule, $attribute, $value)
 	{
-		return $this->validateRequired($attribute, $value) || $this->isImplicit($rule);
+		return $this->validateRequired($attribute, $value) or $this->isImplicit($rule);
 	}
 
 	/**
@@ -355,7 +354,7 @@ class Validator implements MessageProviderInterface {
 		{
 			return false;
 		}
-		elseif (is_string($value) && trim($value) === '')
+		elseif (is_string($value) and trim($value) === '')
 		{
 			return false;
 		}
@@ -387,26 +386,7 @@ class Validator implements MessageProviderInterface {
 	}
 
 	/**
-	 * Determine if all of the given attributes fail the required test.
-	 *
-	 * @param  array  $attributes
-	 * @return bool
-	 */
-	protected function allFailingRequired(array $attributes)
-	{
-		foreach ($attributes as $key)
-		{
-			if ($this->validateRequired($key, $this->getValue($key)))
-			{
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Validate that an attribute exists when another attribute exists.
+	 * Validate that an attribute exists when another attribute exists
 	 *
 	 * @param  string  $attribute
 	 * @param  mixed   $value
@@ -431,7 +411,7 @@ class Validator implements MessageProviderInterface {
 	}
 
 	/**
-	 * Validate that an attribute exists when another attribute does not.
+	 * Validate that an attribute exists when another attribute does not exists
 	 *
 	 * @param  string  $attribute
 	 * @param  mixed   $value
@@ -441,24 +421,6 @@ class Validator implements MessageProviderInterface {
 	protected function validateRequiredWithout($attribute, $value, $parameters)
 	{
 		if ($this->anyFailingRequired($parameters))
-		{
-			return $this->validateRequired($attribute, $value);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Validate that an attribute exists when all other attributes do not.
-	 *
-	 * @param  string  $attribute
-	 * @param  mixed   $value
-	 * @param  mixed   $parameters
-	 * @return bool
-	 */
-	protected function validateRequiredWithoutAll($attribute, $value, $parameters)
-	{
-		if ($this->allFailingRequired($parameters))
 		{
 			return $this->validateRequired($attribute, $value);
 		}
@@ -496,7 +458,7 @@ class Validator implements MessageProviderInterface {
 
 		foreach ($attributes as $key)
 		{
-			if (isset($this->data[$key]) || isset($this->files[$key]))
+			if (isset($this->data[$key]) or isset($this->files[$key]))
 			{
 				$count++;
 			}
@@ -527,9 +489,9 @@ class Validator implements MessageProviderInterface {
 	 */
 	protected function validateSame($attribute, $value, $parameters)
 	{
-		$other = array_get($this->data, $parameters[0]);
+		$other = $parameters[0];
 
-		return (isset($other) && $value == $other);
+		return (isset($this->data[$other]) and $value == $this->data[$other]);
 	}
 
 	/**
@@ -544,7 +506,7 @@ class Validator implements MessageProviderInterface {
 	{
 		$other = $parameters[0];
 
-		return isset($this->data[$other]) && $value != $this->data[$other];
+		return isset($this->data[$other]) and $value != $this->data[$other];
 	}
 
 	/**
@@ -558,9 +520,9 @@ class Validator implements MessageProviderInterface {
 	 */
 	protected function validateAccepted($attribute, $value)
 	{
-		$acceptable = array('yes', 'on', '1', 1);
+		$acceptable = array('yes', 'on', 1);
 
-		return ($this->validateRequired($attribute, $value) && in_array($value, $acceptable, true));
+		return ($this->validateRequired($attribute, $value) and in_array($value, $acceptable));
 	}
 
 	/**
@@ -624,7 +586,7 @@ class Validator implements MessageProviderInterface {
 	{
 		$length = strlen((string) $value);
 
-		return $length >= $parameters[0] && $length <= $parameters[1];
+		return $length >= $parameters[0] and $length <= $parameters[1];
 	}
 
 	/**
@@ -652,7 +614,7 @@ class Validator implements MessageProviderInterface {
 	{
 		$size = $this->getSize($attribute, $value);
 
-		return $size >= $parameters[0] && $size <= $parameters[1];
+		return $size >= $parameters[0] and $size <= $parameters[1];
 	}
 
 	/**
@@ -678,7 +640,7 @@ class Validator implements MessageProviderInterface {
 	 */
 	protected function validateMax($attribute, $value, $parameters)
 	{
-		if ($value instanceof UploadedFile && ! $value->isValid()) return false;
+		if ($value instanceof UploadedFile and ! $value->isValid()) return false;
 
 		return $this->getSize($attribute, $value) <= $parameters[0];
 	}
@@ -698,7 +660,7 @@ class Validator implements MessageProviderInterface {
 		// return the proper size accordingly. If it is a number, then number itself
 		// is the size. If it is a file, we take kilobytes, and for a string the
 		// entire length of the string will be considered the attribute size.
-		if (is_numeric($value) && $hasNumeric)
+		if (is_numeric($value) and $hasNumeric)
 		{
 			return array_get($this->data, $attribute);
 		}
@@ -896,9 +858,7 @@ class Validator implements MessageProviderInterface {
 	{
 		$extra = array();
 
-		$count = count($segments);
-
-		for ($i = 0; $i < $count; $i = $i + 2)
+		for ($i = 0; $i < count($segments); $i = $i + 2)
 		{
 			$extra[$segments[$i]] = $segments[$i + 1];
 		}
@@ -978,7 +938,7 @@ class Validator implements MessageProviderInterface {
 	 */
 	protected function validateMimes($attribute, $value, $parameters)
 	{
-		if ( ! $value instanceof File || $value->getPath() == '')
+		if ( ! $value instanceof File or $value->getPath() == '')
 		{
 			return true;
 		}
@@ -1068,7 +1028,7 @@ class Validator implements MessageProviderInterface {
 	{
 		$parsed = date_parse_from_format($parameters[0], $value);
 
-		return $parsed['error_count'] === 0 && $parsed['warning_count'] === 0;
+		return $parsed['error_count'] === 0;
 	}
 
 	/**
@@ -1081,14 +1041,7 @@ class Validator implements MessageProviderInterface {
 	 */
 	protected function validateBefore($attribute, $value, $parameters)
 	{
-		if ( ! ($date = strtotime($parameters[0])))
-		{
-			return strtotime($value) < strtotime($this->getValue($parameters[0]));
-		}
-		else
-		{
-			return strtotime($value) < $date;
-		}
+		return strtotime($value) < strtotime($parameters[0]);
 	}
 
 	/**
@@ -1101,14 +1054,7 @@ class Validator implements MessageProviderInterface {
 	 */
 	protected function validateAfter($attribute, $value, $parameters)
 	{
-		if ( ! ($date = strtotime($parameters[0])))
-		{
-			return strtotime($value) > strtotime($this->getValue($parameters[0]));
-		}
-		else
-		{
-			return strtotime($value) > $date;
-		}
+		return strtotime($value) > strtotime($parameters[0]);
 	}
 
 	/**
@@ -1120,7 +1066,7 @@ class Validator implements MessageProviderInterface {
 	 */
 	protected function getMessage($attribute, $rule)
 	{
-		$lowerRule = snake_case($rule);
+		$lowerRule = strtolower(snake_case($rule));
 
 		$inlineMessage = $this->getInlineMessage($attribute, $lowerRule);
 
@@ -1199,7 +1145,7 @@ class Validator implements MessageProviderInterface {
 	 */
 	protected function getSizeMessage($attribute, $rule)
 	{
-		$lowerRule = snake_case($rule);
+		$lowerRule = strtolower(snake_case($rule));
 
 		// There are three different types of size validations. The attribute may be
 		// either a number, file, or string so we will check a few things to know
@@ -1467,22 +1413,6 @@ class Validator implements MessageProviderInterface {
 	 * @return string
 	 */
 	protected function replaceRequiredWithout($message, $attribute, $rule, $parameters)
-	{
-		$parameters = $this->getAttributeList($parameters);
-
-		return str_replace(':values', implode(' / ', $parameters), $message);
-	}
-
-	/**
-	 * Replace all place-holders for the required_without_all rule.
-	 *
-	 * @param  string  $message
-	 * @param  string  $attribute
-	 * @param  string  $rule
-	 * @param  array   $parameters
-	 * @return string
-	 */
-	protected function replaceRequiredWithoutAll($message, $attribute, $rule, $parameters)
 	{
 		$parameters = $this->getAttributeList($parameters);
 
@@ -1788,8 +1718,6 @@ class Validator implements MessageProviderInterface {
 	 * Get the Presence Verifier implementation.
 	 *
 	 * @return \Illuminate\Validation\PresenceVerifierInterface
-	 *
-	 * @throws \RuntimeException
 	 */
 	public function getPresenceVerifier()
 	{
@@ -1892,8 +1820,6 @@ class Validator implements MessageProviderInterface {
 	 */
 	public function messages()
 	{
-		if ( ! $this->messages) $this->passes();
-
 		return $this->messages;
 	}
 
@@ -1904,8 +1830,6 @@ class Validator implements MessageProviderInterface {
 	 */
 	public function errors()
 	{
-		if ( ! $this->messages) $this->passes();
-
 		return $this->messages;
 	}
 
@@ -1952,7 +1876,7 @@ class Validator implements MessageProviderInterface {
 	}
 
 	/**
-	 * Call a class based validator extension.
+	 * Call a class baesd validator extension.
 	 *
 	 * @param  string  $callback
 	 * @param  array   $parameters
@@ -1971,8 +1895,6 @@ class Validator implements MessageProviderInterface {
 	 * @param  string  $method
 	 * @param  array   $parameters
 	 * @return mixed
-	 *
-	 * @throws \BadMethodCallException
 	 */
 	public function __call($method, $parameters)
 	{

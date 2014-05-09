@@ -2,8 +2,10 @@
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Composer;
+use Illuminate\Foundation\AssetPublisher;
 use ClassPreloader\Command\PreCompileCommand;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 
 class OptimizeCommand extends Command {
 
@@ -52,7 +54,7 @@ class OptimizeCommand extends Command {
 
 		$this->composer->dumpOptimized();
 
-		if ($this->option('force') || ! $this->laravel['config']['app.debug'])
+		if ($this->option('force') or ! $this->laravel['config']['app.debug'])
 		{
 			$this->info('Compiling common classes');
 
@@ -103,7 +105,7 @@ class OptimizeCommand extends Command {
 	 */
 	protected function registerClassPreloaderCommand()
 	{
-		$this->getApplication()->add(new PreCompileCommand);
+		$this->laravel['artisan']->add(new PreCompileCommand);
 	}
 
 	/**

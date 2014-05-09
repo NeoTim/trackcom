@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title></title>
+    <script src="../components/angular/angular.js"></script>
+    <script src="../src/Block.js"></script>
+    <script src="../src/Directives.js"></script>
+    <script src="../src/MediatorController.js"></script>
+    <script src="main.js"></script>
+    <link type="text/css" rel="stylesheet" href="mainStyle.css"/>
+    <link type="text/css" rel="stylesheet" href="../src/flexyLayout.css"/>
+</head>
+<body>
+<flexy-layout orientation="horizontal">
+    <block-container>
+        <flexy-layout orientation="vertical">
+            <block-container>
+                <div>
+                    <p>inside the block</p>
+                </div>
+            </block-container>
+            <block-container>
+                <div>
+                    <p>inside the block</p>
+                </div>
+            </block-container>
+            <block-splitter></block-splitter>
+            <block-container>
+                <div>
+                    <p>inside the block</p>
+                </div>
+            </block-container>
+        </flexy-layout>
+    </block-container>
+    <block-splitter></block-splitter>
+    <block-container>
+        <div>
+            <p>inside the block</p>
+        </div>
+    </block-container>
+    <block-container>
+        <div>
+            <p>inside the block</p>
+        </div>
+    </block-container>
+</flexy-layout>
+</body>
+</html>

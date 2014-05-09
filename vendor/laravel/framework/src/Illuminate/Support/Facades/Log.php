@@ -1,8 +1,5 @@
 <?php namespace Illuminate\Support\Facades;
 
-/**
- * @see \Illuminate\Log\Writer
- */
 class Log extends Facade {
 
 	/**

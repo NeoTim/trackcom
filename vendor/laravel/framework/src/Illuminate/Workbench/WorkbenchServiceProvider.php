@@ -19,12 +19,12 @@ class WorkbenchServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app->bindShared('package.creator', function($app)
+		$this->app['package.creator'] = $this->app->share(function($app)
 		{
 			return new PackageCreator($app['files']);
 		});
 
-		$this->app->bindShared('command.workbench', function($app)
+		$this->app['command.workbench'] = $this->app->share(function($app)
 		{
 			return new WorkbenchMakeCommand($app['package.creator']);
 		});

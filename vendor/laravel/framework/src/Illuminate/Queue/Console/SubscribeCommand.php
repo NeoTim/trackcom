@@ -33,8 +33,6 @@ class SubscribeCommand extends Command {
 	 * Execute the console command.
 	 *
 	 * @return void
-	 *
-	 * @throws \RuntimeException
 	 */
 	public function fire()
 	{
@@ -113,7 +111,7 @@ class SubscribeCommand extends Command {
 	}
 
 	/**
-	 * Get the queue information from Iron.io.
+	 * Get the queue inforamtion from Iron.io.
 	 *
 	 * @return object
 	 */

@@ -1,0 +1,242 @@
+	<div class="modal fade" id="order_Modal" tabindex="-1" role="dialog" aria-labelledby="{{method.label}}Label" aria-hidden="true" data-ng-controller="methodCtrl">
+		<div class="modal-dialog" style="width:80%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="{{Vorder.number}}Label">{{Vorder.number}}</h4>
+				</div>
+				<div class="modal-body">
+					<tabset>
+						<tab id="settings" data-ng-model="settingstab" heading="{{method.title}} Settings">
+
+							<div class="form-group">
+							<br>
+								<label>Customer : {{Vorder.customer_name}}</label>
+								<div class="ui-select">						
+									<div class="form-group">
+										<input type="text" ng-model="Vorder.customer_name" typeahead="customer.company for customer in customers | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Company" style="">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Deliver Date </label>
+								<input type="text" class="form-control" placeholder="Date x/xx/xxxx" data-ng-model="Vorder.delivery_date">
+							</div>
+							<div class="form-group">
+								<label>Location: {{Vorder.location}} </label>
+								<div class="ui-select">
+									<select ng-model="Vorder.location" style="width:100%;">
+										<option>Location</option>
+										<option>Reno</option>
+										<option>Sheridan</option>
+										<option>North Store</option>
+										<option>South Store</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Method: {{Vorder.method}} </label>
+								<div class="ui-select">
+									<select data-ng-model="Vorder.method" style="width:100%;">
+										<option ng-repeat="method in methods" value="{{method.id}}_{{method.label}}"> {{method.title}} </option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Group: {{Vorder.group}} </label>
+								<div class="ui-select">
+									<select data-ng-model="Vorder.group" style="width:100%;">
+										<option ng-repeat="group in groups" value="{{group.id}}"> {{group.title}} </option>
+									</select>
+								</div>
+							</div>
+						</tab>
+						<tab id="addOrder" heading="Entries">
+
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>
+											<button type="button" class="btn btn-success" ng-click="addEntry(Vorder.id)"><i class="fa fa-plus"></i></button>
+										</th>
+										<th>Date</th>
+										<th>SKU</th>
+										<th>Quantity</th>
+										<th>Description</th>
+										<th>Batch</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="entry in Vorder.entries">
+										<td> {{entry.id}} </td>
+										<td><input type="text" class="form-control" data-ng-model="entry.ready_date" placeholder="Date Ready" ng-focus="ShowSave === true"></td>
+										<td>
+											<input type="text" ng-model="entry.sku" typeahead="product.sku for product in products | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Search" style="" data-ng-focus="ShowSave === true">											
+										</td>
+										<td><input type="text" class="form-control" data-ng-model="entry.quantity" placeholder="Quantity" ng-focus="ShowSave === true"></td>
+										<td><input type="text" class="form-control" data-ng-model="entry.description" placeholder="Description" ng-focus="ShowSave === true"></td>
+										<td>
+											<input type="text" ng-model="entry.batch_id" typeahead="batch.number for batch in batches | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Search" style="" data-ng-focus="ShowSave === true">
+										</td>
+										<td>
+											<button type="button" class="btn btn-default" ng-hide="ShowSave" ng-click="removeEntry(entry.id, Vorder.id)"><i class="fa fa-times"></i></button>
+											<button type="button" class="btn btn-default" ng-show="ShowSave" ng-click="saveEntry(entry, entry.id); ShowSave === false "><i class="fa fa-times"></i></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</tab>						
+					</tabset>
+				</div>
+				<div class="modal-footer">
+					
+					<!-- <button type="button" id="newOrder" class="btn btn-success pull-left">New Order</button> -->
+
+					<button type="button" class="btn btn-success" data-ng-click="saveEntries(Vorder)">Save Entries</button>
+					<button type="button" class="btn btn-primary" data-ng-click="updateVorder(Vorder, Vorder.id)" data-dismiss="modal">Done</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<!-- <button id="" ng-click="saveMethod()" type="button" class="btn btn-primary">Save</button> -->
+				</div>
+			</div>
+		</div>
+	</div>	
+
+<div class="panel mini-box fx-fade-up" ng-hide="showNew">
+	<span class="box-icon bg-info pull-right" ng-click="showNew = true">
+		<i class="fa fa-plus"></i>
+      </span>
+	<div class="box-info">
+        	<p class="size-h2">34</p>
+  		<p class="text-muted">Orders</p>
+	</div>
+</div>
+<div class="list-group-item fx-fade-up" ng-show="showNew">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>DOC</th><th>Customer</th><th>Delivery Date</th><th>Method</th><th>Group</th><th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+			<td>
+				<input type="text" class="form-control" data-ng-model="newOrder.number" placeholder="Order #">
+			</td>
+			<td>
+				<input type="text" ng-model="newOrder.customer_name" typeahead="customer.company for customer in customers | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Search" style="">
+			</td>
+			<td>
+				<input type="text" class="form-control" data-ng-model="newOrder.delivery_date" placeholder="Delivery Date x/xx/xxxx">
+			</td>
+			<!-- <td>
+				<span class="ui-select">
+					<select ng-model="newOrder.location">
+						<option>Location</option>
+						<option>Reno</option>
+						<option>Sheridan</option>
+						<option>North Store</option>
+						<option>South Store</option>
+					</select>
+				</span>	
+			</td> -->
+			<td>
+				<span class="ui-select">
+					<select ng-model="newOrder.method" >
+						<option>Shipping</option>
+						<option>Will Call</option>
+						<option>North</option>
+						<option>South</option>
+						<option>East</option>
+						<option>West</option>
+						<option>Dallas</option>
+						<option>Tulsa</option>
+						<option>Stillwater</option>
+						<option>Shawnee</option>
+					</select>
+				</span>
+			</td>
+			<td>
+				<span class="ui-select">
+					<select ng-model="newOrder.group_id" >
+						<option data-ng-repeat="(key, group) in groups" value="{{group.id}}"> {{group.title}} </option>
+					</select>
+				</span>
+			</td>
+
+			<td>	
+				<button  type="button"				
+							data-ng-click="saveOrder({id: newOrder.number, number: newOrder.number, customer_name:newOrder.customer_name, delivery_date: newOrder.delivery_date, method:newOrder.method, group_id: newOrder.group_id});"
+							class="btn btn-primary">Done</button>
+			</td>
+			</tr>		
+		</tbody>
+	</table>
+</div>
+
+<div class="panel">
+	<div class="panel-heading">
+		<div class="panel-title">
+			<input type="text" ng-model="filter.$" class="form-control" placeholder="Search..">
+		</div>
+	</div>
+	<div class="panel-body">
+  		<table class="table table-bordered">
+  			<thead>
+  				<tr>
+  					<th>Options</th>
+  					<th>DOC</th>
+  					<th>Customer</th>
+  					<th>Delivery Date</th>
+  					<th>Location</th>
+  					<th>Method</th>
+  					<th>Group</th>
+  					
+  					<th>Edit</th>
+  				</tr>
+  			</thead>
+  			<tbody data-ng-repeat="(ind, order) in orders | filter:filter.$" data-ng-include="'partials/orderRow.html'" scope="order" onload="">
+  				<!-- <tr data-ng-include="'partials/orderRow.html'" scope="order" onload=""></tr> -->
+  				
+  			</tbody>
+  		</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+			<!-- <table ng-table="tableParams" class="table table-bordered table-striped">
+	  			<tbody data-ng-repeat="group in $groups">
+					<tr class="ng-table-group">
+				           <td colspan="{{$columns.length}}">
+				                	<a href="" ng-click="group.$hideRows = !group.$hideRows">
+				                    	<span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+				                    	<strong>{{ group.value }}</strong>
+				                	</a>
+				           </td>
+				      </tr>
+					<tr ng-hide="group.$hideRows" ng-repeat="order in group.data" ng-click="">
+						<td sortable="id" data-title="'DOC'">
+							{{order.id}}
+						</td>						
+						<td sortable="customer_name" data-title="'Customer'">
+							{{order.customer_name}}
+							<input type="text" ng-model="order.customer_name" ng-show="editable" ng-blue="updateOrder({customer_name}, order.id)">
+						</td>
+						<td sortable="delivery_date" data-title="'Delivery Date'">
+							<input style="height:inherit; width:100%; color:#666666; border:none; padding: 10px 0;" value="{{order.delivery_date}}" type="text" ng-model="order.delivery_date" ng-blur="updateOrder(order.delivery_date, 'delivery_date', order.delivery_date)">
+						</td>
+						<td sortable="location" data-title="'Location'">
+							{{order.method}}							
+						</td>
+						<td sortable="groups" data-title="'Group'">
+							{{order.group}}
+						</td>
+					</tr>
+				</tbody>
+			</table> -->

@@ -7,7 +7,7 @@ class Order extends Eloquent {
 
 
 	public static $rules = array(
-		'number' => 'required',
+		//'number' => 'required',
 	);
 	public function truck()
 	{
@@ -17,27 +17,22 @@ class Order extends Eloquent {
 	{
 		return $this->hasMany('Entry');
 	}
-	public function dmethod()
-	{
-		return $this->belongsTo('Dmethod');
-	}
-
-	public function dtype()
-	{
-		return $this->belongsTo('Dtype');
-	}
-
 	public function customer()
 	{
 		return $this->belongsTo('Customer');
 	}
-	public function category()
-	{
-		return $this->belongsTo('Category');
-	}
+	
 	public function grp()
 	{
 		return $this->belongsTo('Grp');
+	}
+	public function driver()
+	{
+		return $this->belongsTo('Driver');
+	}
+	public function method()
+	{
+		return $this->belongsTo('Method');
 	}
 	protected static function boot() {
         parent::boot();

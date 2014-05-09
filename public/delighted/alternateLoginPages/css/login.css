@@ -1,0 +1,85 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,200,300,100,600);
+body {
+  background: url(../images/login.jpg) no-repeat center fixed;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.login-box {
+  background: url(../images/box1.png);
+  min-height: 300px;
+  width: 350px;
+  margin: 0px auto;
+  margin-top: 200px;
+  box-shadow: 0px 0px 5px #aeaeae;
+}
+.login-box .fa-crosshairs {
+  color: #0ba09b;
+}
+.login-box h1 {
+  color: #2f4051;
+  font-size: 25px;
+  padding-top: 10px;
+  font-family: 'Raleway', Helvetica, Arial;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 20px;
+}
+.login-box hr {
+  border-width: 1px;
+  border-color: #2e393b;
+  opacity: 0.1;
+}
+.login-box h5 {
+  text-align: center;
+  font-family: 'Raleway';
+  font-weight: 600;
+  color: #0ba09b;
+  font-size: 15px;
+}
+.login-box .input-box {
+  margin-top: 20px;
+}
+.login-box .input-box .input-group-addon {
+  background: #2e393b;
+  border: 0px;
+  color: #b4b4b4;
+  border-radius: 0px;
+}
+.login-box .input-box input {
+  background: #b4b4b4;
+  border-radius: 0px;
+  border: none;
+  color: #2e393b !important;
+}
+.login-box .input-box input .form-control:focus {
+  border-color: #dfdfd5 !important;
+}
+.login-box .input-box .form-control:-moz-placeholder {
+  color: #2e393b;
+}
+.login-box .input-box .form-control::-moz-placeholder {
+  color: #2e393b;
+}
+.login-box .input-box .form-control:-ms-input-placeholder {
+  color: #2e393b;
+}
+.login-box .input-box .form-control::-webkit-input-placeholder {
+  color: #2e393b;
+}
+.login-box .input-box .form-control:focus {
+  box-shadow: none;
+}
+.login-box .input-box .btn {
+  background: #0ba09b;
+  color: #FFFFFF;
+  border-radius: 0px;
+  outline: none !important;
+}
+@media (max-width: 400px) {
+  .login-box {
+    width: 260px;
+  }
+}

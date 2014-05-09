@@ -1,0 +1,404 @@
+<div data-ng-repeat="group in groups" class="modal fade" id="group_modal_{{group.id}}" tabindex="-1" role="dialog" aria-labelledby="{{group.title}}Label" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="{{group.title}}Label">{{group.title}}</h4>
+				</div>
+				<div class="modal-body">
+					<tabset>
+						<tab id="settings" data-ng-model="settingstab" heading="{{group.title}} Settings">
+
+							<div class="form-group">
+							<br>
+								<label>Driver : {{group.driver}}</label>
+								<div class="ui-select">						
+									<select data-ng-model="group.driver" ng-change="changeDriver(group.driver, group)" style="width:100%;">
+										<option data-ng-repeat="driver in drivers" value="{{driver.id}}_{{driver.name}}"> {{driver.name}} </option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Truck #</label>
+								<div class="ui-select">						
+									<select data-ng-model="group.truck" ng-change="changeTruck(group.truck, group)" style="width:100%;">
+										<option>13</option>
+										<option>14</option>
+										<option>21</option>
+										<option>22</option>
+										<option>30</option>
+										<option>33</option>
+										<option>88</option>
+										<option>007</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group" data-ng-init="initSwitch(group.status, group.id)">
+								<label>Status? <strong ng-if="status[group.id] === true">Delivering</strong><strong ng-if="status[group.id] === false">Not Delivering</strong></label><br>
+								<label class="switch switch-success">
+								<input ng-model="status[group.id]" type="checkbox" class="ng-pristine ng-valid" ng-change="changeStatus(status[group.id], group)"><i></i></label>
+
+								
+							</div>							
+
+						</tab>
+						<tab id="addOrder" data-ng-model="addGroupOrder" heading="Add Order">
+
+							<div class="form-group">
+							<br>
+								<label>Find Your Order</label>
+								<input type="text" ng-model="addGroupOrder" typeahead="order.number for order in orders | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Orders" style="">
+							</div>	
+							<div class="form-group">
+								<button type="button" class="btn btn-primary" ng-click="addOrder(addGroupOrder, group)">Add Order</button>
+							</div>
+
+						</tab>
+						<tab id="newOrder" data-ng-model="newGroupOrder" heading="New Order">
+							
+							<div class="form-group">
+							<br>
+								<label>Order Number</label>
+								<input type="text" id="newOrderNumber" ng-model="newGroupOrder.number" class="form-control" placeholder="Order Number">
+							</div>								
+							<div class="form-group">
+								<label>Order Customer</label>
+								<input type="text" ng-model="newGroupOrder.customer" typeahead="customer.company for customer in customers | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Company" style="">
+							</div>
+							<div class="form-group">
+								<button type="button" class="btn btn-primary" ng-click="addNewOrder(newGroupOrder, group)">Save and Add</button>
+							</div>
+
+						</tab>
+					</tabset>
+				</div>
+				<div class="modal-footer">
+					
+					<!-- <button type="button" id="newOrder" class="btn btn-success pull-left">New Order</button> -->
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<!-- <button id="" ng-click="saveMethod()" type="button" class="btn btn-primary">Save</button> -->
+				</div>
+			</div>
+		</div>
+	</div>	
+
+
+
+<div class="row" data-ng-controller="CalendarCtrl">
+	<div class="col-md-3">
+		<div class="col-md-12 info-page">		
+			<form ng-submit="addEvent(newGroup)">
+				<div class="info-left pull-left info-left-small info-boxes-red">
+					<ul class="list-inline list-unstyled">						
+						<li style="padding-top:11px;">
+							<input type="text" class="form-noshow" data-ng-model="newGroup" placeholder="new group. . .">
+						</li>
+					</ul>
+				</div>
+				<ul class="list-unstyled pull-right info-right-small info-right info-boxes-red" ng-click="addEvent(newGroup)">
+					<li><a id=""><i class=" fa fa-plus"></i></a></li>
+				</ul>
+				<div id="" class="order-list info-left pull-left info-boxes-red" style="display:none;">
+					<ul class="list-inline list-unstyled">
+					</ul>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-12">
+
+			<div ng-model="groups" class="groups sortableConfig sortableCal fx-rotate-clock-left" ui-sortable="sortableConfig">
+				<div class="panel" data-ng-model="group" id="group_{{group.id}}"  ng-repeat="group in groups track by group.id" style="border-top:none;">								
+					<div class="panel-heading bg-{{group.bgColor}}" data-ng-click="showOrders=!showOrders">
+						<p class=""><strong>{{group.title}}</strong> 
+							<span class="pull-right pointer" data-toggle="modal" data-target="#group_modal_{{group.id}}">
+								 <i class="fa fa-plus"></i>
+								 <!-- {{group.start | date:"MMM dd"}} &nbsp;&nbsp;&nbsp; -->
+							</span>
+						</p>
+					</div>
+					
+					
+					
+					<ul class="list-group fx-fade-up" ng-show="showOrders">
+						<li class="list-group-item" ng-repeat="order in group.orders track by order.id">
+							<span class="label pull-right" data-ng-class="{'label-success': status[group.id] === true, 'label-danger': status[group.id] === false }" >{{order.number}}</span>
+							<i class="fa fa-tags"></i>
+							{{order.number}}
+						</li>
+						<li class="list-group-item">
+							<ul class="list-inline predefined-themes groupColor fx-fade-in" id="groupColor_id" style="margin-bottom:10px;"> 								
+								<li><a class="badge" style="background-color:#e87352" ng-click="changeBG({bgColor: 'danger', backgroundColor: '#e87352'}, group); group.bgColor = 'danger' "> &nbsp; </a></li>
+								<li><a class="badge" style="background-color:#eec95a"  ng-click="changeBG({bgColor: 'warning', backgroundColor: '#eec95a'}, group); group.bgColor = 'warning' "> &nbsp; </a></li>
+								<li><a class="badge" style="background-color:#60cd9b"  ng-click="changeBG({bgColor: 'success', backgroundColor: '#60cd9b'}, group); group.bgColor = 'success' "> &nbsp; </a></li>
+								<li><a class="badge" style="background-color:#31c0be"  ng-click="changeBG({bgColor: 'primary', backgroundColor: '#31c0be'}, group); group.bgColor = 'primary' "> &nbsp; </a></li>
+								<li><a class="badge" style="background-color:#66b5d7"  ng-click="changeBG({bgColor: 'info', backgroundColor: '#66b5d7'}, group); group.bgColor = 'info'"> &nbsp; </a></li>
+								<li><a class="badge" style="background-color:#767676"  ng-click="changeBG({bgColor: 'inverse', backgroundColor: '#767676'}, group); group.bgColor = 'inverse'"> &nbsp; </a></li>
+								<li ng-click="removeGroup(group.id, group)" class="pull-right"><i class="fa fa-trash-o"></i></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+					
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="panel panel-warning">
+			<div class="panel-heading">
+				<h3 class="panel-title ">
+					Production Status
+					<span class="panel-options">
+					<a href="#" class="panel-settings" >
+						<i class="fa fa-cogs"></i>
+					</a>
+					<a href="#" class="panel-refresh">
+						<i class="fa fa-refresh"></i>
+					</a>
+					<a href="#" class="panel-minimize">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a href="#" class="panel-close">
+						<i class="fa fa-times"></i>
+					</a>
+					</span>
+				</h3>
+			</div>
+			<div class="panel-body" style="overflow:hidden;">
+			
+				
+				<section id="directives-calendar" >
+
+  					
+						
+          						<!-- <div class="col-md-4">                                               
+				                        <div class="btn-group calTools">				                          
+				                          <button class="btn" ng-click="addRemoveEventSource(eventSources,eventSource)">
+				                            Toggle Source
+				                          </button>
+				                          <button type="button" class="btn btn-primary" ng-click="addEvent()">
+				                            Add Event
+				                          </button>
+				                        </div>
+
+				                        <ul class="unstyled">
+				                            <li ng-repeat="e in events">
+				                                <div class="alert alert-info">
+				                                    <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
+				                                    <b> <input ng-model="e.title"></b> 
+				                                    {{e.start | date:"MMM dd"}} - {{e.end | date:"MMM dd"}}
+				                                </div>
+				                            </li>
+				                        </ul>
+
+          						</div>
+ -->
+							
+				                       <!--  <tabset>
+				                            <tab select="renderCalender(myCalendar1);">
+				                              <tab-heading>
+				                               <i class="glyphicon glyphicon-bell"></i> Calendar One
+				                              </tab-heading> -->
+				                              <div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
+				                                <h4>{{alertMessage}}</h4>
+				                              </div>
+				                              <div class="btn-toolbar">
+				                                <p class="pull-right lead">Calendar One View Options</p>
+				                                <div class="btn-group">
+				                                    <button class="btn btn-success" ng-click="changeView('agendaDay', myCalendar1)">AgendaDay</button>
+				                                    <button class="btn btn-success" ng-click="changeView('agendaWeek', myCalendar1)">AgendaWeek</button>
+				                                    <button class="btn btn-success" ng-click="changeView('month', myCalendar1)">Month</button>
+				                                </div>
+				                              </div>
+				                            <div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+				                          <!--  </tab>
+				                           <tab select="renderCalender(myCalendar2);">
+				                            <tab-heading>
+				                              <i class="glyphicon glyphicon-bell"></i> Calendar Two
+				                            </tab-heading>
+				                              <div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
+				                                <h4>{{alertMessage}}</h4>
+				                              </div>
+				                              <div class="btn-toolbar">
+				                                <p class="pull-right lead">Calendar Two View Options</p>
+				                                <div class="btn-group">
+				                                    <button class="btn btn-success" ng-click="changeView('agendaDay', myCalendar2)">AgendaDay</button>
+				                                    <button class="btn btn-success" ng-click="changeView('agendaWeek', myCalendar2)">AgendaWeek</button>
+				                                    <button class="btn btn-success" ng-click="changeView('month', myCalendar2)">Month</button>
+				                                </div>
+				                              </div>
+				                            <div class="calendar" ng-model="eventSources" calendar="myCalendar2" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+				                           </tab>
+				                           <tab select="renderCalender(myCalendar3);">
+				                            <tab-heading>
+				                              <i class="glyphicon glyphicon-bell"></i> Calendar Three
+				                            </tab-heading>
+				                              <div class="alert-success calAlert">
+				                                <h4>This calendar uses the extended form</h4>
+				                              </div>
+				                              <div class="btn-toolbar">
+				                                <p class="pull-right lead">Calendar Three View Options</p>
+				                                <div class="btn-group">
+				                                    <button class="btn btn-success" ng-click="changeView('agendaDay', myCalendar3)">AgendaDay</button>
+				                                    <button class="btn btn-success" ng-click="changeView('agendaWeek', myCalendar3)">AgendaWeek</button>
+				                                    <button class="btn btn-success" ng-click="changeView('month', myCalendar3)">Month</button>
+				                                </div>
+				                              </div>
+				                            <div class="calendar" ng-model="eventSources2" calendar="myCalendar3" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+				                           </tab>
+				                        </tabset> -->
+                    				
+                				
+            			
+            
+        			</section>
+				<!-- <div class="calendar" ui-calendar="uiConfig.calendar" ng-model="groups"></div> -->
+<!-- 
+
+				<tabset>
+					<tab heading="Static title"  heading="This week">
+						<table class="cal-table" id="week1">
+							<thead>					
+								<tr>
+									<th class="monday" id="monday"> {{week1.day1[0]}} </th>
+									<th class="tuesday" id="tuesday">{{week1.day2[0]}} </th>
+									<th class="wednesday" id="wednesday">{{week1.day3[0]}} </th>
+									<th class="thursday" id="thursday">{{week1.day4[0]}}  </th>
+									<th class="friday" id="friday">{{week1.day5[0]}} </th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									
+									<td data-date="{{ week1.day1[1] }}" ng-model="monday1" class="sortableCal monday list-group" ui-sortable="sotableConfig" id="monday1">
+
+										<li class="list-group-item btn-{{group.bgColor}}" data-ng-repeat="group in monday1 track by group.id" ng-mode="group" id="group_{{group.$index}}_{{group.id}}">										
+													<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</li>
+
+									
+									</td>
+									
+									<td data-date="{{ week1.day2[1] }}" ng-model="tuesday1" class="sortableCal tuesday list-group" ui-sortable="sotableConfig" id="tuesday1">
+
+										<li class="list-group-item btn-{{group.bgColor}}" data-ng-repeat="group in tuesday1 track by group.id" ng-mode="group" id="group_{{$index}}_{{group.id}}">												
+													<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</li>
+
+									
+									</td>
+									<td data-date="{{ week1.day3[1] }} " ng-model="wednesday1" class="sortableCal wednesday list-group" ui-sortable="sotableConfig"  id="wednesday1">
+
+										<li class="list-group-item btn-primary btn-{{group.bgColor}}" data-ng-repeat="group in wednesday1 track by group.id" ng-mode="group" id="group_{{group.$index}}_{{group.id}}">												
+													<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</li>
+
+									</td>
+									<td data-date="{{ week1.day4[1] }}" ng-model="thursday1" class="sortableCal thursday list-group" ui-sortable="sotableConfig"  id="thursday1">
+										<li class="list-group-item btn-{{group.bgColor}}" data-ng-repeat="group in thursday1 track by group.id" ng-mode="group" id="group_{{group.$index}}_{{group.id}}">												
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</li>
+									</td>
+									<td data-date="{{ week1.day5[1] }}" ng-model="friday1" class="sortableCal friday list-group"  ui-sortable="sotableConfig"  id="friday1">
+										<li class="list-group-item btn-{{group.bgColor}}" data-ng-repeat="group in friday1 track by group.id" ng-mode="group" id="group_{{group.$index}}_{{group.id}}">							
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</li>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</tab>
+			    		<tab heading="Next week">
+						<table class="cal-table" id="week2">
+							<thead>					
+								<tr>
+									<th class="monday" id="monday">{{week2.day1[1]}}</th>
+									<th class="tuesday" id="tuesday">{{week2.day2[1]}}</th>
+									<th class="wednesday" id="wednesday">{{week2.day3[1]}}</th>
+									<th class="thursday" id="thursday">{{week2.day4[1]}}</th>
+									<th class="friday" id="friday">{{week2.day5[1]}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td data-date="{{ week2.day1[1] }}" ng-model="monday2" class="sortableCal monday list-group" ui-sortable="sotableConfig"id="monday2">
+										<div class="list-group-item" data-ng-repeat="group in monday2 track by $index" ng-mode="group">
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</div>
+									</td>
+									<td data-date="{{ week2.day2[1] }}" ng-model="tuesday2" class="sortableCal tuesday list-group" ui-sortable="sotableConfig"id="tuesday2">
+										<div class="list-group-item" data-ng-repeat="group in tuesday2 track by $index" ng-mode="group">
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</div>
+									</td>
+									<td data-date="{{ week2.day3[1] }}" ng-model="wednesday2" class="sortableCal wednesday list-group" ui-sortable="sotableConfig" id="wednesday2">
+										<div class="list-group-item" data-ng-repeat="group in wednesday2 track by $index" ng-mode="group">
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</div>
+									</td>
+									<td data-date="{{ week2.day4[1] }}" ng-model="thursday2" class="sortableCal thursday list-group" ui-sortable="sotableConfig" id="thursday2">
+										<div class="list-group-item" data-ng-repeat="group in thursday2 track by $index" ng-mode="group">
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</div>
+									</td>
+									<td data-date="{{ week2.day5[1] }}" ng-model="friday2" class="sortableCal friday list-group" ui-sortable="sotableConfig" id="friday2">
+										<div class="list-group-item" data-ng-repeat="group in friday2 track by $index" ng-mode="group">
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+			    		</tab>
+			    		<tab heading="Two weeks">
+			      		<table class="cal-table" id="week3">
+							<thead>					
+								<tr>
+									<th class="monday" id="monday">{{week3.day1[1]}}</th>
+									<th class="tuesday" id="tuesday">{{week3.day2[1]}}</th>
+									<th class="wednesday" id="wednesday">{{week3.day3[1]}}</th>
+									<th class="thursday" id="thursday">{{week3.day4[1]}}</th>
+									<th class="friday" id="friday">{{week3.day5[1]}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td data-date="{{ week3.day1[1] }}" ng-model="monday3" class="sortableCal monday list-group" ui-sortable="sotableConfig"id="monday3">
+										<div class="list-group-item" data-ng-repeat="group in monday3 track by $index" ng-mode="group">
+											<table><tr><td styl="min-width:60px;"><i class="mover mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</div>
+									</td>
+									<td data-date="{{ week3.day2[1] }}" ng-model="tuesday3" class="sortableCal monday list-group" ui-sortable="sotableConfig"id="tuesday3">
+										<div class="list-group-item" data-ng-repeat="group in tuesday3 track by $index" ng-mode="group">
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</div>
+									</td>
+									<td data-date="{{ week3.day3[1] }}" ng-model="wednesday3" class="sortableCal monday list-group" ui-sortable="sotableConfig"id="wednesday3">
+										<div class="list-group-item" data-ng-repeat="group in wednesday3 track by $index" ng-mode="group">
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</div>
+									</td>
+									<td data-date="{{ week3.day4[1] }}" ng-model="thursday3" class="sortableCal thursday list-group" ui-sortable="sotableConfig" id="thursday3">
+										<div class="list-group-item" data-ng-repeat="group in thursday3 track by $index" ng-mode="group">
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</div>
+									</td>
+									<td data-date="{{ week3.day5[1] }}" ng-model="friday3" class="sortableCal friday list-group" ui-sortable="sotableConfig" id="friday3">
+										<div class="list-group-item" data-ng-repeat="group in friday3 track by $index" ng-mode="group">
+											<table><tr><td styl="min-width:60px;"><i class="mover fa fa-bars"></i></td><td>{{group.title}}</td></tr></table>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+			    		</tab>
+				  </tabset>
+
+				
+ -->
+
+			</div>
+
+		</div>		
+	</div>
+
+</div>

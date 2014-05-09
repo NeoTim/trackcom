@@ -1,0 +1,205 @@
+<div class="col-md-4">
+
+	<section class="panel"  style="border-top:none;">
+	        <div class="panel-heading bg-info" style="text-align:right;">
+	            <i class=" pull-left fa fa-user text-large stat-icon"></i>
+	            <p class="size-h4 no-margin">{{cust.company}}</p>
+	            <p class="text-muted no-margin"><span data-i18n="Growth">{{cust.website}}</span></p>
+	        </div>
+	       	 <ul class="list-group">
+                    <li class="list-group-item">                        
+                        <i class="fa fa-envelope-o"></i>
+                       <strong>{{cust.email}}</strong>
+                    </li>
+                    <li class="list-group-item">
+                        <!-- <span class="badge badge-warning">2</span> -->
+                        <i class="fa fa-phone"></i>
+                        <strong>{{cust.phone}}</strong>
+                    </li>
+                    <li class="list-group-item">
+                        <!-- <span class="badge badge-info">1</span> -->
+                        <i class="fa fa-home"></i>
+                        <strong ng-if="cust.city">{{cust.city}},</strong><strong> {{cust.state}} {{cust.zip}}</strong>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="badge badge-success">3</span>
+                        <i class="fa fa-bars"></i>
+                       <strong>{{cust.division}}</strong>
+                    </li>
+                    
+                </ul>
+
+	       
+	</section>	
+
+</div>
+<div class="col-md-8">
+	<div class="row">
+		<div class="col-md-6" data-ng-repeat="contact in cust.contacts">
+			<section class="panel" style="border-top:none;">
+				<div class="panel-heading bg-warning">
+			            <i class=" pull-right fa fa-group text-large stat-icon"></i>
+			            <p class="size-h4 no-margin">{{contact.first}} {{contact.last}}</p>
+			            <p class="no-margin"><span>{{contact.title}}</span></p>	            
+				</div>
+				<ul class="list-group" data-ng-mouseenter="showOptions = true" data-ng-mouseleave="showOptions = false">
+				<li class="list-group-item fx-fade-up" ng-show="showEdit">
+	                    	<div class="input-group">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">	                    				
+	                        			<i class="fa fa-user"></i>
+	                    			</button>
+	                    		</span>
+	                       		<input type="text" data-ng-model="contact.first" class="form-control" placeholder="First Name">
+	                       </div>
+	                    </li>
+	                    <li class="list-group-item fx-fade-up" ng-show="showEdit">
+	                    	<div class="input-group">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">
+			                        	<i class="fa fa-user"></i>	                    				
+	                    			</button>
+	                    		</span>
+	                       		<input type="text" data-ng-model="contact.last" class="form-control" placeholder="Last Name">
+	                       	</div>
+	                    </li>
+	                     <li class="list-group-item fx-fade-up" ng-show="showEdit">                        
+	                    	<div class="input-group">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">	                    				
+	                        			<i class="fa fa-tag"></i>
+	                    			</button>
+	                    		</span>
+	                       		<input type="text" data-ng-model="contact.title" class="form-control" placeholder="Title">
+	                       	</div>
+	                    </li>
+	                    <li class="list-group-item">                        
+	                        <i ng-hide="showEdit" class="fa fa-envelope-o"></i>
+	                       <strong ng-hide="showEdit">{{contact.email}}</strong>
+	                       <div class="input-group" ng-show="showEdit">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">
+	                        			<i class="fa fa-envelope-o"></i>	                    				
+	                    			</button>
+	                    		</span>
+	                       		<input type="email" data-ng-model="contact.email" class="form-control" placeholder="Email">
+	                       	</div>
+	                    </li>
+	                    <li class="list-group-item">
+	                        <!-- <span class="badge badge-warning">2</span> -->
+	                        <i ng-hide="showEdit" class="fa fa-phone"></i>
+	                        <strong ng-hide="showEdit">{{contact.phone}}</strong>
+	                        <div class="input-group" ng-show="showEdit">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">
+	                        			<i class="fa fa-envelope-o"></i>	                    				
+	                    			</button>
+	                    		</span>
+	                       		<input type="tel" data-ng-model="contact.phone" class="form-control" placeholder="Phone">
+	                       	</div>
+	                    </li>                    
+	                    <li class="list-group-item">
+	                        <!-- <span class="badge badge-success">3</span> -->
+	                        <i ng-hide="showEdit" class="fa fa-print"></i>
+	                       <strong ng-hide="showEdit">{{contact.fax}}</strong>
+	                       <div class="input-group" ng-show="showEdit">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">
+	                        			<i class="fa fa-envelope-o"></i>	                    				
+	                    			</button>
+	                    		</span>
+	                       		<input type="tel" data-ng-model="contact.fax" class="form-control" placeholder="Fax">
+	                       	</div>
+	                    </li>
+	                    <li class="list-group-item" style="min-height:70px">
+	                    	<div class="btn-group fx-fade-up" ng-show="showOptions">
+		                    	<button type="button" class="btn btn-danger" ng-click="removeContact(contact.id)">Delete</button>
+		                    	<button type="button" class="btn btn-warning" ng-click="showEdit = true" ng-hide="showEdit">Edit</button>
+		                    	<button type="button" class="btn btn-primary" ng-show="showEdit" ng-click="updateContact(contact); showEdit = false">Done</button>
+		                    </div>
+	                    </li>
+	                </ul>
+			</section>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-md-6">
+			<div class="panel mini-box fx-fade-up" ng-click="newContact = true" ng-hide="newContact"  style="border-top:none;">
+                        <span class="box-icon bg-success">
+                            <i class="fa fa-plus"></i>
+                        </span>
+                        <div class="box-info">
+                            <p class="size-h2">Contact</p>                            
+                        </div>
+                   </div>
+                   <div class="panel fx-fade-up"  style="border-top:none;" ng-show="newContact">
+                   	<ul class="list-group">
+	                    <li class="list-group-item">
+	                    	<div class="input-group">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">	                    				
+	                        			<i class="fa fa-user"></i>
+	                    			</button>
+	                    		</span>
+	                       		<input type="text" data-ng-model="Ncontact.first" class="form-control" placeholder="First Name">
+	                       </div>
+	                    </li>
+	                    <li class="list-group-item">
+	                    	<div class="input-group">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">
+			                        	<i class="fa fa-user"></i>	                    				
+	                    			</button>
+	                    		</span>
+	                       		<input type="text" data-ng-model="Ncontact.last" class="form-control" placeholder="Last Name">
+	                       	</div>
+	                    </li>
+	                    <li class="list-group-item">                        
+	                    	<div class="input-group">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">	                    				
+	                        			<i class="fa fa-tag"></i>
+	                    			</button>
+	                    		</span>
+	                       		<input type="text" data-ng-model="Ncontact.title" class="form-control" placeholder="Title">
+	                       	</div>
+	                    </li>
+	                    <li class="list-group-item">                        
+	                    	<div class="input-group">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">
+	                        			<i class="fa fa-envelope-o"></i>	                    				
+	                    			</button>
+	                    		</span>
+	                       		<input type="email" data-ng-model="Ncontact.email" class="form-control" placeholder="Email">
+	                       	</div>
+	                    </li>
+	                    <li class="list-group-item">
+	                        <div class="input-group">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">
+	                        			<i class="fa fa-phone"></i>	                    				
+	                    			</button>
+	                    		</span>
+	                       		<input type="tel" data-ng-model="Ncontact.phone" class="form-control" placeholder="Phone">	                        
+					</div>
+	                    </li>                    
+	                    <li class="list-group-item">
+	                        <div class="input-group">
+	                    		<span class="input-group-btn">
+	                    			<button type="button" class="btn btn-primary">
+	                        			<i class="fa fa-print"></i>	                    				
+	                    			</button>
+	                    		</span>
+	                       		<input type="tel" data-ng-model="Ncontact.fax" class="form-control" placeholder="Fax">	                       
+	                       	</div>
+	                    </li>
+	                    <li class="list-group-item">
+	                    	<button type="button" class="btn btn-success" ng-click="saveContact(Ncontact); newContact = false">Save</button>
+	                    	<button type="button" class="btn btn-danger" ng-click="newContact = false">Cancel</button>
+	                    </li>
+	                </ul>
+                   </div>
+		</div>
+	</div>
+
+</div>

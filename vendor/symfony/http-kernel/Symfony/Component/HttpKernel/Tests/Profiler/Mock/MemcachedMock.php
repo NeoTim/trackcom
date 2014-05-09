@@ -18,16 +18,22 @@ namespace Symfony\Component\HttpKernel\Tests\Profiler\Mock;
  */
 class MemcachedMock
 {
-    private $connected = false;
-    private $storage = array();
+    private $connected;
+    private $storage;
+
+    public function __construct()
+    {
+        $this->connected = false;
+        $this->storage = array();
+    }
 
     /**
      * Set a Memcached option
      *
-     * @param integer $option
+     * @param int     $option
      * @param mixed   $value
      *
-     * @return boolean
+     * @return bool
      */
     public function setOption($option, $value)
     {
@@ -38,10 +44,10 @@ class MemcachedMock
      * Add a memcached server to connection pool
      *
      * @param string  $host
-     * @param integer $port
-     * @param integer $weight
+     * @param int     $port
+     * @param int     $weight
      *
-     * @return boolean
+     * @return bool
      */
     public function addServer($host, $port = 11211, $weight = 0)
     {
@@ -59,9 +65,9 @@ class MemcachedMock
      *
      * @param string  $key
      * @param mixed   $value
-     * @param integer $expiration
+     * @param int     $expiration
      *
-     * @return boolean
+     * @return bool
      */
     public function add($key, $value, $expiration = 0)
     {
@@ -83,9 +89,9 @@ class MemcachedMock
      *
      * @param string  $key
      * @param mixed   $value
-     * @param integer $expiration
+     * @param int     $expiration
      *
-     * @return boolean
+     * @return bool
      */
     public function set($key, $value, $expiration = null)
     {
@@ -103,9 +109,9 @@ class MemcachedMock
      *
      * @param string  $key
      * @param mixed   $value
-     * @param integer $expiration
+     * @param int     $expiration
      *
-     * @return boolean
+     * @return bool
      */
     public function replace($key, $value, $expiration = null)
     {
@@ -129,7 +135,7 @@ class MemcachedMock
      * @param callable $cache_cb
      * @param float    $cas_token
      *
-     * @return boolean
+     * @return bool
      */
     public function get($key, $cache_cb = null, &$cas_token = null)
     {
@@ -146,7 +152,7 @@ class MemcachedMock
      * @param string $key
      * @param string $value
      *
-     * @return boolean
+     * @return bool
      */
     public function append($key, $value)
     {
@@ -168,7 +174,7 @@ class MemcachedMock
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function delete($key)
     {
@@ -188,7 +194,7 @@ class MemcachedMock
     /**
      * Flush all existing items at the server
      *
-     * @return boolean
+     * @return bool
      */
     public function flush()
     {

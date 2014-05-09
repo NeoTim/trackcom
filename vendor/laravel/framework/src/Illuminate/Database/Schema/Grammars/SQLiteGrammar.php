@@ -38,17 +38,6 @@ class SQLiteGrammar extends Grammar {
 	}
 
 	/**
-	 * Compile the query to determine the list of columns.
-	 *
-	 * @param  string  $table
-	 * @return string
-	 */
-	public function compileColumnExists($table)
-	{
-		return 'pragma table_info('.str_replace('.', '__', $table).')';
-	}
-
-	/**
 	 * Compile a create table command.
 	 *
 	 * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
@@ -437,7 +426,7 @@ class SQLiteGrammar extends Grammar {
 	}
 
 	/**
-	 * Create the column definition for an enum type.
+	 * Create the column definition for a enum type.
 	 *
 	 * @param  \Illuminate\Support\Fluent  $column
 	 * @return string

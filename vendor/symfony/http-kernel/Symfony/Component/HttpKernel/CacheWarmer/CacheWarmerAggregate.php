@@ -18,14 +18,13 @@ namespace Symfony\Component\HttpKernel\CacheWarmer;
  */
 class CacheWarmerAggregate implements CacheWarmerInterface
 {
-    protected $warmers = array();
-    protected $optionalsEnabled = false;
+    protected $warmers;
+    protected $optionalsEnabled;
 
     public function __construct(array $warmers = array())
     {
-        foreach ($warmers as $warmer) {
-            $this->add($warmer);
-        }
+        $this->setWarmers($warmers);
+        $this->optionalsEnabled = false;
     }
 
     public function enableOptionalWarmers()
@@ -52,7 +51,7 @@ class CacheWarmerAggregate implements CacheWarmerInterface
     /**
      * Checks whether this warmer is optional or not.
      *
-     * @return Boolean always true
+     * @return bool    always true
      */
     public function isOptional()
     {

@@ -1,8 +1,5 @@
 <?php namespace Illuminate\Support\Facades;
 
-/**
- * @see \Illuminate\Translation\Translator
- */
 class Lang extends Facade {
 
 	/**

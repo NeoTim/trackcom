@@ -23,19 +23,16 @@ class BeanstalkdJob extends Job {
 	/**
 	 * Create a new job instance.
 	 *
-	 * @param  \Illuminate\Container\Container  $container
+	 * @param  \Illuminate\Container  $container
 	 * @param  Pheanstalk  $pheanstalk
 	 * @param  Pheanstalk_Job  $job
-	 * @param  string  $queue
 	 * @return void
 	 */
 	public function __construct(Container $container,
                                 Pheanstalk $pheanstalk,
-                                Pheanstalk_Job $job,
-                                $queue)
+                                Pheanstalk_Job $job)
 	{
 		$this->job = $job;
-		$this->queue = $queue;
 		$this->container = $container;
 		$this->pheanstalk = $pheanstalk;
 	}
@@ -47,17 +44,7 @@ class BeanstalkdJob extends Job {
 	 */
 	public function fire()
 	{
-		$this->resolveAndFire(json_decode($this->getRawBody(), true));
-	}
-
-	/**
-	 * Get the raw body string for the job.
-	 *
-	 * @return string
-	 */
-	public function getRawBody()
-	{
-		return $this->job->getData();
+		$this->resolveAndFire(json_decode($this->job->getData(), true));
 	}
 
 	/**
@@ -67,8 +54,6 @@ class BeanstalkdJob extends Job {
 	 */
 	public function delete()
 	{
-		parent::delete();
-
 		$this->pheanstalk->delete($this->job);
 	}
 
@@ -110,7 +95,7 @@ class BeanstalkdJob extends Job {
 	/**
 	 * Get the IoC container instance.
 	 *
-	 * @return \Illuminate\Container\Container
+	 * @return \Illuminate\Container
 	 */
 	public function getContainer()
 	{

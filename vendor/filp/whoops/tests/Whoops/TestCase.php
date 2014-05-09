@@ -10,7 +10,7 @@ use Whoops\Run;
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @return Run
+     * @return Whoops\Run
      */
     protected function getRunInstance()
     {

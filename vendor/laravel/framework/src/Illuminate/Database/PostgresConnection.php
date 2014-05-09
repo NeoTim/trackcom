@@ -38,7 +38,7 @@ class PostgresConnection extends Connection {
 	}
 
 	/**
-	 * Get the Doctrine DBAL driver.
+	 * Get the Doctrine DBAL Driver.
 	 *
 	 * @return \Doctrine\DBAL\Driver\PDOPgSql\Driver
 	 */

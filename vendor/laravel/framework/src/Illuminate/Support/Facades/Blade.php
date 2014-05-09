@@ -1,8 +1,5 @@
 <?php namespace Illuminate\Support\Facades;
 
-/**
- * @see \Illuminate\View\Compilers\BladeCompiler
- */
 class Blade extends Facade {
 
 	/**

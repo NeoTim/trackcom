@@ -38,15 +38,13 @@ class ServeCommand extends Command {
 
 		$this->info("Laravel development server started on http://{$host}:{$port}");
 
-		passthru('"'.PHP_BINARY.'"'." -S {$host}:{$port} -t \"{$public}\" server.php");
+		passthru("php -S {$host}:{$port} -t \"{$public}\" server.php");
 	}
 
 	/**
 	 * Check the current PHP version is >= 5.4.
 	 *
 	 * @return void
-	 *
-	 * @throws \Exception
 	 */
 	protected function checkPhpVersion()
 	{

@@ -1,4 +1,17 @@
-v0.8.5 (2013-xx-xx)
+v0.8.6 (2014-xx-xx)
+================================================================================
+
+- Switched to Redis 2.8 as the default server profile as there are no changes
+  that would break compatibility with previous releases.
+
+- Minor tweaks to make this version of Predis compatible with HHVM >= 2.4.0.
+
+- Add support for key hash tags when using redis-cluster (Redis 3.0.0b1).
+
+- __FIX__: redis-sentinel does not break the parsing of responses to `INFO`.
+
+
+v0.8.5 (2014-01-16)
 ================================================================================
 
 - Added `2.8` in the server profiles aliases list for Redis 2.8. `2.6` is still

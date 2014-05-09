@@ -2,7 +2,7 @@
 
 use Illuminate\Redis\Database as Redis;
 
-class RedisStore extends TaggableStore implements StoreInterface {
+class RedisStore implements StoreInterface {
 
 	/**
 	 * The Redis database connection.
@@ -36,8 +36,8 @@ class RedisStore extends TaggableStore implements StoreInterface {
 	public function __construct(Redis $redis, $prefix = '', $connection = 'default')
 	{
 		$this->redis = $redis;
+		$this->prefix = $prefix.':';
 		$this->connection = $connection;
-		$this->prefix = strlen($prefix) > 0 ? $prefix.':' : '';
 	}
 
 	/**
@@ -131,14 +131,14 @@ class RedisStore extends TaggableStore implements StoreInterface {
 	}
 
 	/**
-	 * Begin executing a new tags operation.
+	 * Begin executing a new section operation.
 	 *
-	 * @param  array|dynamic  $names
-	 * @return \Illuminate\Cache\RedisTaggedCache
+	 * @param  string  $name
+	 * @return \Illuminate\Cache\RedisSection
 	 */
-	public function tags($names)
+	public function section($name)
 	{
-		return new RedisTaggedCache($this, new TagSet($this, is_array($names) ? $names : func_get_args()));
+		return new RedisSection($this, $name);
 	}
 
 	/**

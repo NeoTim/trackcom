@@ -8,6 +8,8 @@ interface ContactRepositoryInterface {
 
 	public function find($id);
 
+	public function findByCustomer($customerId);
+
 	public function store($input);
 
 	public function update($id, $input);

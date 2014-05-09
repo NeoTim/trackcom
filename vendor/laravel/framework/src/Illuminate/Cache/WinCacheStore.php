@@ -1,6 +1,6 @@
 <?php namespace Illuminate\Cache;
 
-class WinCacheStore extends TaggableStore implements StoreInterface {
+class WinCacheStore implements StoreInterface {
 
 	/**
 	 * A string that should be prepended to keys.
@@ -104,6 +104,17 @@ class WinCacheStore extends TaggableStore implements StoreInterface {
 	public function flush()
 	{
 		wincache_ucache_clear();
+	}
+
+	/**
+	 * Begin executing a new section operation.
+	 *
+	 * @param  string  $name
+	 * @return \Illuminate\Cache\Section
+	 */
+	public function section($name)
+	{
+		return new Section($this, $name);
 	}
 
 	/**
