@@ -91,11 +91,19 @@ class BatchesController extends BaseController {
 	 * @return Response
 	 */
 	public function update($id)
-	{		
-		$result = $this->batch->update($id, Input::all());
-		$batch = $this->batch->find($id);
-		Event::fire(UpdateEntriesEventHandler::EVENT, array($batch));
-		return $batch;
+	{	
+		if(Input::get('batches')){
+			if(Input::get('batches') === "all"){
+				$batches = $this->batch->all();
+				$batches['all'] = true;
+				Event::fire(UpdateEntriesEventHandler::EVENT, array($batches));
+			}
+		} else {			
+			$result = $this->batch->update($id, Input::all());
+			$batch = $this->batch->find($id);
+			Event::fire(UpdateEntriesEventHandler::EVENT, array($batch));
+			return $batch;
+		}
 		/*if ($result['success'])
 		{		
 			//Event::fire(UpdateEntriesStatusEventHandler::EVENT, array($batch) );

@@ -1,10 +1,10 @@
 
-<div class="modal fade" id="newBatchModal" tabindex="-1" role="dialog" aria-labelledby="newBatchLabel" aria-hidden="true">
+	<div class="modal fade" id="newBatchModalToday" tabindex="-1" role="dialog" aria-labelledby="newBatchTodayLabel" aria-hidden="true">
 		<div class="modal-dialog" style="width:80%;">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="newBatchLabel">New Batch</h4>
+					<h4 class="modal-title" id="newBatchTodayLabel">New Batch</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
@@ -27,7 +27,41 @@
 				</div>
 				<div class="modal-footer">
 										
-					<button type="button" class="btn btn-primary" data-ng-click="createBatch(newBatch)" data-dismiss="modal">Done</button>
+					<button type="button" class="btn btn-primary" data-ng-click="createBatch(newBatch, 'today')" data-dismiss="modal">Done</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>					
+				</div>
+			</div>
+		</div>
+	</div>	
+	<div class="modal fade" id="newBatchModalLater" tabindex="-1" role="dialog" aria-labelledby="newBatchLaterLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:80%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="newBatchLaterLabel">New Batch</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Batch Number</label>
+						<input type="text" class="form-control" data-ng-model="newBatch.number" placeholder="Batch Number">
+					</div>
+					<div class="form-group">
+						<label>Gallons</label>
+						<input type="text" class="form-control" data-ng-model="newBatch.gallons" placeholder="Batch Gallons">
+					</div>
+					<div class="form-group">
+						<label>Product SKU</label>						
+						<input type="text" ng-model="newBatch.sku" typeahead="product for product in products | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Batch SKU" style="z-index:5000;">
+					</div>
+					<div class="form-group">
+						<label>Date Ready</label>
+						<input type="text" class="form-control" data-ng-model="newBatch.ready_date" placeholder="Batch Date">
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+										
+					<button type="button" class="btn btn-primary" data-ng-click="createBatch(newBatch, 'later')" data-dismiss="modal">Done</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>					
 				</div>
 			</div>
@@ -135,57 +169,200 @@
 	 					<h2 class="text-center">New Batch</h2>
 	 			</div>
  			</ul> -->
+<div class="row">
 <div class="col-md-12">
+ 			<div class="panel">
+				<input type="text" ng-model="filter.$" class="form-control" placeholder="Search..">
+			</div>
+
  			<tabset>
- 				<tab heading="Batches" data-ng-controller="batchesCtrl">
- 					<ul class="list-group" ng-model="entries" ui-sortable="BproductionConfig">
- 						<div class="list-group-item">
-		    					<input type="text" ng-model="filter.$" class="form-control" placeholder="Search..">
-		    				</div>
-		    				<div class="list-group-item">
-		    					<table style="border:none; width:100%; min-width:100%;">
-			    					<tr>
-			    						<td class="" style="min-width:50px; text-align:left;">
-			    							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newBatchModal"><i class="fa fa-plus"></i></button>
-			    						</td>
-				        				<td style="min-width:120px; width:100px; height:40px;" class=""> Batch #</td>
-				        				<td style="min-width:120px; height:40px;" class=""> SKU </td>				        				
-				        				<td style="min-width:120px; height:40px;" class=""> Qty </td>
-				        				<td style="min-width:120px; height:40px;" class=""> Date </td>
-				        				<td style="width:100%; height:40px;" class="">
-				        					Status
-				        				</td>
-				        				<td style="min-width:120px; height:40px; text-align:center;" class="">
-				        					Options
-				        				</td>	        				
-				        			</tr>
-			    				</table>
-		    				</div>
-			    			<li ng-repeat="batch in batches | filter:filter.$" ng-model="batch.priority" class="list-group-item sortableItem">
-			    				<table style="border:none; width:100%; min-width:100%;">
-			    					<tr>
-			    						<td class="mover" style="min-width:50px; text-align:left;"><i class="fa fa-bars"></i></td>				        				
-				        				<td style="min-width:120px; height:40px;" class=""> {{batch.number}} </td>
-				        				<td style="min-width:120px; height:40px;" class=""> {{batch.sku}} </td>
-				        				<td style="min-width:120px; height:40px;" class=""> {{batch.quantity}} </td>
-				        				<td style="min-width:120px; height:40px;" class=""> {{batch.ready_date}} </td>
-				        				<td style="width:100%; height:40px;" class="">
-				        					<div>
-				        						<progressbar animate="false" value="batch.status" type="{{batch.color}}"><b>{{batch.status}}%  {{batch.label}}</b></progressbar>
-				        					</div>
-				        				</td>
-				        				<td style="min-width:120px; height:40px; text-align:center;" class="">
-				        					<button type="button" class="btn btn-default" data-ng-click="BstatusDown(batch.status, batch.id, batch.entries)" ><i class="fa fa-chevron-left"></i></button>
-				        					<button type="button" class="btn btn-default" data-ng-click="BstatusUp(batch.status, batch.id, batch.entries)"><i class="fa fa-chevron-right"></i></button>
-				        					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#batch_modal" data-ng-click="setVbatch(batch)"><i class="fa fa-edit"></i></button>
-				        				</td>
-				        			</tr>
-			    				</table>
+ 				<tab heading="Batches">
+	 				<div class="row">		
+	 					<div class="col-md-12">
+	 					<button type="button" class="btn btn-success btn-block fx-fade-up" ng-show="saveBatches" data-ng-click="updateBatches()">Save Batches</button>
+	 					</div>
+		 				<div class="col-md-6">		 					
+			    				<div class="panel" style="border-top:none;">
+			    					<table style="border:none; width:100%; min-width:100%;">
+				    					<tr>
+				    						<th class="" style="min-width:70px; text-align:left;">
+				    							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newBatchModalToday"><i class="fa fa-plus"></i></button>
+				    						</th>
+					        				<th style="min-width:100px; width:100px; height:40px;" class=""> Batch #</th>
+					        				<th style="min-width:100px; height:40px;" class=""> SKU </th>					        				
+					        				<th style="min-width:100px; height:40px;" class=""> Date </th>
+					        				<th style="width:100%; height:40px;" class="">Status</th>
+					        				<th style="min-width:120px; height:40px; text-align:center;" class="">Options</th>	        				
+					        			</tr>
+				    				</table>
+			    				</div>
+				    			
+		 					<ul class="list-group sortableIncomplete" ng-model="today" ui-sortable="sortableIncomplete" id="today"  style="min-height:100px;">
+					    			<li ng-repeat="(index, batch) in today | filter:filter.$" ng-if="batch.status !== '100'" ng-model="batch.priority" class="list-group-item sortableItem" id="sortable_today_{{batch.id}}">
+					    				<table style="border:none; width:100%; min-width:100%;">
+					    					<tr>
+					    						<td class="mover" style="min-width:50px; text-align:left;"><i class="fa fa-bars"></i></td>				        				
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.number}} </td>
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.sku}} </td>					        				
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.ready_date}} </td>
+						        				<td style="width:100%; height:40px;" class="">
+						        					<div>
+						        						<progressbar animate="false" value="batch.status" type="{{batch.color}}"><b>{{batch.status}}%  {{batch.label}}</b></progressbar>
+						        					</div>
+						        				</td>
+						        				<td style="min-width:120px; height:40px; text-align:center;" class="">
+						        					<button type="button" class="btn btn-default btn-xs" data-ng-click="BstatusDown(batch.status, batch.id, batch.entries)" ><i class="fa fa-chevron-left"></i></button>
+						        					<button type="button" class="btn btn-default btn-xs" data-ng-click="BstatusUp(batch.status, batch.id, batch.entries)"><i class="fa fa-chevron-right"></i></button>
+						        					<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#batch_modal" data-ng-click="setVbatch(batch)"><i class="fa fa-edit"></i></button>
+						        				</td>
+						        			</tr>
+					    				</table>
 
-			    			</li>
+					    			</li>
 
-		    			</ul>	
+				    			</ul>
+				    		</div>
+				    		<div class="col-md-6">						
+			    				<div class="panel" style="border-top:none;">
+			    					<table style="border:none; width:100%; min-width:100%;">
+				    					<tr>
+				    						<th class="" style="min-width:70px; text-align:left;">
+				    							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newBatchModalLater"><i class="fa fa-plus"></i></button>
+				    						</th>
+					        				<th style="min-width:100px; width:100px; height:40px;" class=""> Batch #</th>
+					        				<th style="min-width:100px; height:40px;" class=""> SKU </th>				        									        				
+					        				<th style="min-width:100px; height:40px;" class=""> Date </th>
+					        				<th style="width:100%; height:40px;" class="">Status</th>
+					        				<th style="min-width:120px; height:40px; text-align:center;" class="">Options</th>
+					        			</tr>
+				    				</table>
+			    				</div>
+				    			
+				    			<ul class="list-group sortableIncomplete" ng-model="later" ui-sortable="sortableIncomplete" id="later" style="min-height:100px;">
+					    			<li ng-repeat="(index, batch) in later | filter:filter.$" ng-if="batch.status !== '100'" ng-model="batch.priority" class="list-group-item sortableItem" id="sortable_later_{{batch.id}}">
+					    				<table style="border:none; width:100%; min-width:100%;">
+					    					<tr>
+					    						<td class="mover" style="min-width:50px; text-align:left;"><i class="fa fa-bars"></i></td>				        				
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.number}} </td>
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.sku}} </td>					        				
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.ready_date}} </td>
+						        				<td style="width:100%; height:40px;" class="">
+						        					<div>
+						        						<progressbar animate="false" value="batch.status" type="{{batch.color}}"><b>{{batch.status}}%  {{batch.label}}</b></progressbar>
+						        					</div>
+						        				</td>
+						        				<td style="min-width:120px; height:40px; text-align:center;" class="">
+						        					<button type="button" class="btn btn-default btn-xs" data-ng-click="BstatusDown(batch.status, batch.id, batch.entries)" ><i class="fa fa-chevron-left"></i></button>
+						        					<button type="button" class="btn btn-default btn-xs" data-ng-click="BstatusUp(batch.status, batch.id, batch.entries)"><i class="fa fa-chevron-right"></i></button>
+						        					<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#batch_modal" data-ng-click="setVbatch(batch)"><i class="fa fa-edit"></i></button>
+						        				</td>
+						        			</tr>
+					    				</table>
+
+					    			</li>
+
+				    			</ul>
+
+				    		</div>
+				    	</div>
  				</tab>
+
+ 				<!-- COMPLETED TAB -->
+
+ 				<tab heading="Completed">
+ 					<div class="row">		
+	 					<div class="col-md-12">
+	 					<button type="button" class="btn btn-success btn-block fx-fade-up" ng-show="saveBatches" data-ng-click="updateBatches()">Save Batches</button>
+	 					</div>
+		 				<div class="col-md-6">		 					
+			    				<div class="panel" style="border-top:none;">
+			    					<table style="border:none; width:100%; min-width:100%;">
+				    					<tr>
+				    						<th class="" style="min-width:70px; text-align:left;">
+				    							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newBatchModalToday"><i class="fa fa-plus"></i></button>
+				    						</th>
+					        				<th style="min-width:100px; width:100px; height:40px;" class=""> Batch #</th>
+					        				<th style="min-width:100px; height:40px;" class=""> SKU </th>					        				
+					        				<th style="min-width:100px; height:40px;" class=""> Date </th>
+					        				<th style="width:100%; height:40px;" class="">Status</th>
+					        				<th style="min-width:120px; height:40px; text-align:center;" class="">Options</th>	        				
+					        			</tr>
+				    				</table>
+			    				</div>
+				    			
+		 					<ul class="list-group sortablecomplete" ng-model="today" ui-sortable="sortablecomplete" id="completed_today"  style="min-height:100px;">
+					    			<li ng-repeat="(index, batch) in today | filter:filter.$" ng-if="batch.status === '100'" ng-model="batch.priority" class="list-group-item sortableItem" id="completed_today_{{batch.id}}">
+					    				<table style="border:none; width:100%; min-width:100%;">
+					    					<tr>
+					    						<td class="mover" style="min-width:50px; text-align:left;"><i class="fa fa-bars"></i></td>				        				
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.number}} </td>
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.sku}} </td>					        				
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.ready_date}} </td>
+						        				<td style="width:100%; height:40px;" class="">
+						        					<div>
+						        						<progressbar animate="false" value="batch.status" type="{{batch.color}}"><b>{{batch.status}}%  {{batch.label}}</b></progressbar>
+						        					</div>
+						        				</td>
+						        				<td style="min-width:120px; height:40px; text-align:center;" class="">
+						        					<button type="button" class="btn btn-default btn-xs" data-ng-click="BstatusDown(batch.status, batch.id, batch.entries)" ><i class="fa fa-chevron-left"></i></button>
+						        					<button type="button" class="btn btn-default btn-xs" data-ng-click="BstatusUp(batch.status, batch.id, batch.entries)"><i class="fa fa-chevron-right"></i></button>
+						        					<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#batch_modal" data-ng-click="setVbatch(batch)"><i class="fa fa-edit"></i></button>
+						        				</td>
+						        			</tr>
+					    				</table>
+
+					    			</li>
+
+				    			</ul>
+				    		</div>
+				    		<div class="col-md-6">						
+			    				<div class="panel" style="border-top:none;">
+			    					<table style="border:none; width:100%; min-width:100%;">
+				    					<tr>
+				    						<th class="" style="min-width:70px; text-align:left;">
+				    							<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newBatchModalLater"><i class="fa fa-plus"></i></button>
+				    						</th>
+					        				<th style="min-width:100px; width:100px; height:40px;" class=""> Batch #</th>
+					        				<th style="min-width:100px; height:40px;" class=""> SKU </th>				        									        				
+					        				<th style="min-width:100px; height:40px;" class=""> Date </th>
+					        				<th style="width:100%; height:40px;" class="">Status</th>
+					        				<th style="min-width:120px; height:40px; text-align:center;" class="">Options</th>
+					        			</tr>
+				    				</table>
+			    				</div>
+				    			
+				    			<ul class="list-group sortablecomplete" ng-model="later" ui-sortable="sortablecomplete" id="completed_later" style="min-height:100px;">
+					    			<li ng-repeat="(index, batch) in later | filter:filter.$" ng-if="batch.status === '100'" ng-model="batch.priority" class="list-group-item sortableItem" id="completed_later_{{batch.id}}">
+					    				<table style="border:none; width:100%; min-width:100%;">
+					    					<tr>
+					    						<td class="mover" style="min-width:50px; text-align:left;"><i class="fa fa-bars"></i></td>				        				
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.number}} </td>
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.sku}} </td>					        				
+						        				<td style="min-width:100px; height:40px;" class=""> {{batch.ready_date}} </td>
+						        				<td style="width:100%; height:40px;" class="">
+						        					<div>
+						        						<progressbar animate="false" value="batch.status" type="{{batch.color}}"><b>{{batch.status}}%  {{batch.label}}</b></progressbar>
+						        					</div>
+						        				</td>
+						        				<td style="min-width:120px; height:40px; text-align:center;" class="">
+						        					<button type="button" class="btn btn-default btn-xs" data-ng-click="BstatusDown(batch.status, batch.id, batch.entries)" ><i class="fa fa-chevron-left"></i></button>
+						        					<button type="button" class="btn btn-default btn-xs" data-ng-click="BstatusUp(batch.status, batch.id, batch.entries)"><i class="fa fa-chevron-right"></i></button>
+						        					<button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#batch_modal" data-ng-click="setVbatch(batch)"><i class="fa fa-edit"></i></button>
+						        				</td>
+						        			</tr>
+					    				</table>
+
+					    			</li>
+
+				    			</ul>
+
+				    		</div>
+				    	</div>
+ 				</tab>
+
+
+ 				<!-- ALL TAB -->
+
  				<tab heading="All">
 		    			<ul class="list-group" ng-model="entries" ui-sortable="productionConfig">
 		    				<div class="list-group-item">
@@ -240,8 +417,11 @@
 
 		    			</ul>	
 		    		</tab>
+		    		
 		    	</tabset>
 </div>
+</div>
+
 
 <!-- 	        </div>
     	</div>                	
