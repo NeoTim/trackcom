@@ -320,12 +320,12 @@
 												</div> -->
 											</div>
 											<div data-ng-model="orders"  id="drop-onorder" class="connectedSortable sort-drop on-order" ui-sortable="sortableConfig">
-												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'onorder'" class="list-group-item" data-ng-class="{'bg-success': methods.onorder.status === '1', 'bg-danger': methods.onorder.status === '0', }">
-													<table style="width:100%;"><tr>
-														<td> <i class="fa fa-circle-o"></i> </td>
-														<td> {{order.customer_name}} </td>
-														<td> <i class="fa fa-times"></i> </td>
-													</tr></table>
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'onorder'"  class="list-group-item" >												
+													<strong>{{order.customer_name}}</strong>
+													<span class="pull-right">														
+														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
+														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
+													</span>
 												</li>
 											</div>											
 										</div>
@@ -505,7 +505,13 @@
 										</div> -->
 									</div>
 									<div data-ng-model="orders"  id="drop-west" class="connectedSortable sort-drop west"  ui-sortable="sortableConfig">
-									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'west'" class="list-group-item" data-ng-class="{'bg-success': methods.west.status === '1', 'bg-danger': methods.west.status === '0', }"> <strong>{{order.number}}</strong> </li>				
+									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'west'"  class="list-group-item" >												
+													<strong>{{order.customer_name}}</strong>
+													<span class="pull-right">														
+														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
+														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
+													</span>
+												</li>	
 									</div>
 								</div>
 								<!-- SPLIT 2 - 1 - 2 -->
@@ -524,13 +530,13 @@
 										</div> -->
 									</div>
 									<div data-ng-model="orders"  id="drop-tulsa" class="connectedSortable sort-drop tulsa" ui-sortable="sortableConfig">
-										<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'tulsa'" class="list-group-item" data-ng-class="{'bg-success': methods.tulsa.status === '1', 'bg-danger': methods.tulsa.status === '0', }">
-										 	<table style="width:100%;"><tr>
-											<td> <i class="fa fa-circle-o"></i> </td>
-											<td> {{order.customer_name}} </td>
-											<td> <i class="fa fa-times"></i> </td>
-											</tr></table>
-										</li>
+										<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'tulsa'"  class="list-group-item" >												
+													<strong>{{order.customer_name}}</strong>
+													<span class="pull-right">														
+														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
+														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
+													</span>
+												</li>
 									</div>
 								</div>
 							</div>
@@ -553,14 +559,14 @@
 											</div>
 											<div data-ng-model="orders"  id="drop-east" class="connectedSortable sort-drop east" ui-sortable="sortableConfig">
 												
-												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'east'"  class="list-group-item" >
-													<!-- <table style="width:100%;"><tr>
-														<td> <i class="fa fa-circle-o"></i> </td>
-														<td> {{order.customer_name}} </td>
-														<td> <i class="fa fa-times"></i> </td>
-													</tr></table> -->
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'east'"  class="list-group-item" >												
 													<strong>{{order.customer_name}}</strong>
-													<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
+													<span class="pull-right">														
+														<span class="pull-right">														
+														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
+														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
+													</span>
+													</span>
 												</li>
 											</div>
 										</div>
@@ -573,7 +579,15 @@
 												<p> {{methods.dallas.driver}}  <i class="fa fa-truck pull-right">{{methods.dallas.truck}}</i></p>
 											</div>
 											<div data-ng-model="orders"  id="drop-dallas" class="connectedSortable sort-drop dallas" ui-sortable="sortableConfig">
-												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'dallas'" class="list-group-item" data-ng-class="{'bg-success': methods.dallas.status === '1', 'bg-danger': methods.dallas.status === '0', }"> <strong>{{order.number}}</strong> </li>
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'dallas'"  class="list-group-item" >												
+													<strong>{{order.customer_name}}</strong>
+													<span class="pull-right">														
+														<span class="pull-right">														
+														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
+														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
+													</span>
+													</span>
+												</li>
 												
 											</div>
 										</div>
@@ -597,7 +611,13 @@
 												<p> {{methods.shipping.driver}}  <i class="fa fa-truck pull-right">{{methods.shipping.truck}}</i></p>
 											</div>
 											<div data-ng-model="orders"  id="drop-shipping" class="connectedSortable sort-drop shipping" ui-sortable="sortableConfig">
-												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shipping'" class="list-group-item" data-ng-class="{'bg-success': methods.shipping.status === '1', 'bg-danger': methods.shipping.status === '0', }"> <strong>{{order.number}}</strong> </li>
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shipping'"  class="list-group-item" >												
+													<strong>{{order.customer_name}}</strong>
+													<span class="pull-right">														
+														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
+														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
+													</span>
+												</li>
 												
 											</div>
 										</div>
@@ -617,7 +637,13 @@
 												</div> -->
 											</div>
 											<div data-ng-model="orders"  id="drop-stillwater" class="connectedSortable sort-drop stillwater" ui-sortable="sortableConfig">
-											<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'stillwater'" class="list-group-item" data-ng-class="{'bg-success': methods.stillwater.status === '1', 'bg-danger': methods.stillwater.status === '0', }"> <strong>{{order.number}}</strong> </li>
+											<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'stillwater'"  class="list-group-item" >												
+													<strong>{{order.customer_name}}</strong>
+													<span class="pull-right">														
+														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
+														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
+													</span>
+												</li>
 											</div>
 										</div>
 									</div>
@@ -642,7 +668,13 @@
 										</div> -->
 									</div>
 									<div data-ng-model="orders"  id="drop-wilcall" class="connectedSortable sort-drop will-call" ui-sortable="sortableConfig">
-									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'willcall'" class="list-group-item" data-ng-class="{'bg-success': methods.willcall.status === '1', 'bg-danger': methods.willcall.status === '0', }"> <strong>{{order.number}}</strong> </li>
+									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'will-call'"  class="list-group-item" >												
+													<strong>{{order.customer_name}}</strong>
+													<span class="pull-right">														
+														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
+														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
+													</span>
+												</li>
 									</div>
 								</div>
 								<!-- SPLIT 2 - 2 - 2 -->
@@ -661,7 +693,13 @@
 										</div> -->
 									</div>
 									<div data-ng-model="orders"  id="drop-shawnee" class="connectedSortable sort-drop shawnee" ui-sortable="sortableConfig">											
-									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shawnee'" class="list-group-item" data-ng-class="{'bg-success': methods.shawnee.status === '1', 'bg-danger': methods.shawnee.status === '0', }"> <strong>{{order.number}}</strong> </li>
+									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shawnee'"  class="list-group-item" >												
+													<strong>{{order.customer_name}}</strong>
+													<span class="pull-right">														
+														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
+														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
+													</span>
+												</li>
 									</div>
 								</div>
 							</div>					

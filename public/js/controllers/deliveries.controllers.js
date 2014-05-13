@@ -315,5 +315,16 @@ controller('northCtrl', ['$scope', 'syncData',  function ($scope, syncData) {
 		});
 		OrdersService.update({bgColor: bgColor}, id);
 	};
+	$scope.deleteOrder = function(id){
+		OrdersService.destroy(id);
+		_.each($scope.orders, function (order, index){
+			if(order.id === id){
+				$scope.orders.splice(index, 1);
+			}
+		});
+		/*OrdersService.get().success(function (data){
+			$scope.orders = data;
+		});*/
+	};
 
 }]);
