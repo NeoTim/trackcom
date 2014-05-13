@@ -41,6 +41,19 @@
 	        border: 2px dotted #ccc !important;
 	        background: none !important;
 	    	}
+	    .label {
+		  display: inline;
+		  padding: .2em .6em .3em;
+		  font-size: 100%;
+		  font-weight: bold;
+		  line-height: 1;
+		  color: #fff;
+		  text-align: center;
+		  white-space: nowrap;
+		  vertical-align: baseline;
+		  border-radius: 0;
+		  cursor: pointer;
+		}
   	</style>
 	<!-- <link rel="stylesheet" href="/css/foundation.min.css"> -->
 	<!-- <link rel="stylesheet" href="/css/style.css"> -->
