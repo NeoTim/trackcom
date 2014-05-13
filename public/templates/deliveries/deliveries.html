@@ -320,7 +320,13 @@
 												</div> -->
 											</div>
 											<div data-ng-model="orders"  id="drop-onorder" class="connectedSortable sort-drop on-order" ui-sortable="sortableConfig">
-												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'onorder'" class="list-group-item" data-ng-class="{'bg-success': methods.onorder.status === '1', 'bg-danger': methods.onorder.status === '0', }"> <strong>{{order.number}}</strong> </li>
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'onorder'" class="list-group-item" data-ng-class="{'bg-success': methods.onorder.status === '1', 'bg-danger': methods.onorder.status === '0', }">
+													<table style="width:100%;"><tr>
+														<td> <i class="fa fa-circle-o"></i> </td>
+														<td> {{order.customer_name}} </td>
+														<td> <i class="fa fa-times"></i> </td>
+													</tr></table>
+												</li>
 											</div>											
 										</div>
 									<!-- SPLIT 2 - 1 - 1 - 2 -->
@@ -382,7 +388,13 @@
 														</div> -->
 													</div>
 													<div data-ng-model="orders"  id="drop-north" class="connectedSortable sort-drop north" ui-sortable="sortableConfig">	
-													<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'north'" class="list-group-item" data-ng-class="{'bg-success': methods.north.status === '1', 'bg-danger': methods.north.status === '0', }"> <strong>{{order.number}}</strong> </button>
+													<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'north'" class="list-group-item" data-ng-class="{'bg-success': methods.north.status === '1', 'bg-danger': methods.north.status === '0', }">
+													 <table style="width:100%;"><tr>
+														<td> <i class="fa fa-circle-o"></i> </td>
+														<td> {{order.customer_name}} </td>
+														<td> <i class="fa fa-times"></i> </td>
+													</tr></table>
+													 </li>
 													</div>
 												</div>
 												<div>
@@ -400,7 +412,13 @@
 														</div> -->
 													</div>
 													<div data-ng-model="orders"  id="drop-south" class="connectedSortable sort-drop south" ui-sortable="sortableConfig">							
-													<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'south'" class="list-group-item" data-ng-class="{'bg-success': methods.south.status === '1', 'bg-danger': methods.south.status === '0', }"> <strong>{{order.number}}</strong> </li>
+													<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'south'" class="list-group-item" data-ng-class="{'bg-success': methods.south.status === '1', 'bg-danger': methods.south.status === '0', }"> 
+													<table style="width:100%;"><tr>
+														<td> <i class="fa fa-circle-o"></i> </td>
+														<td> {{order.customer_name}} </td>
+														<td> <i class="fa fa-times"></i> </td>
+													</tr></table>
+													</li>
 													</div>
 												</div>
 											</div>
@@ -482,7 +500,13 @@
 										</div> -->
 									</div>
 									<div data-ng-model="orders"  id="drop-tulsa" class="connectedSortable sort-drop tulsa" ui-sortable="sortableConfig">
-										<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'tulsa'" class="list-group-item" data-ng-class="{'bg-success': methods.tulsa.status === '1', 'bg-danger': methods.tulsa.status === '0', }"> <strong>{{order.number}}</strong> </li>
+										<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'tulsa'" class="list-group-item" data-ng-class="{'bg-success': methods.tulsa.status === '1', 'bg-danger': methods.tulsa.status === '0', }">
+										 	<table style="width:100%;"><tr>
+											<td> <i class="fa fa-circle-o"></i> </td>
+											<td> {{order.customer_name}} </td>
+											<td> <i class="fa fa-times"></i> </td>
+											</tr></table>
+										</li>
 									</div>
 								</div>
 							</div>
@@ -505,7 +529,15 @@
 											</div>
 											<div data-ng-model="orders"  id="drop-east" class="connectedSortable sort-drop east" ui-sortable="sortableConfig">
 												
-											<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'east'"  class="list-group-item" data-ng-class="{'bg-success': methods.east.status === '1', 'bg-danger': methods.east.status === '0', }"> <strong>{{order.number}}</strong> </li>
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'east'"  class="list-group-item" >
+													<!-- <table style="width:100%;"><tr>
+														<td> <i class="fa fa-circle-o"></i> </td>
+														<td> {{order.customer_name}} </td>
+														<td> <i class="fa fa-times"></i> </td>
+													</tr></table> -->
+													<strong>{{order.customer_name}}</strong>
+													<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> {{order.number}} </label>
+												</li>
 											</div>
 										</div>
 										<!-- SPLIT 2 - 2 - 1 - 1 -->

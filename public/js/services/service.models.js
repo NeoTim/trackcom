@@ -6,16 +6,16 @@
 */
 angular.module('service.models', [])
 
-// .factory('socket', function (socketFactory) {
-//     return socketFactory({
-//     	ioSocket: io.connect('http://192.184.87.146:3000')
-//     });
-// })
 .factory('socket', function (socketFactory) {
+    return socketFactory({
+    	ioSocket: io.connect('http://192.184.87.146:3000')
+    });
+})
+/*.factory('socket', function (socketFactory) {
     return socketFactory({
     	ioSocket: io.connect('http://joels-imac.local:3000')
     });
-})
+})*/
 
 .factory("BookService", function($http) {
   return {

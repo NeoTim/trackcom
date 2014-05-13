@@ -251,13 +251,28 @@ controller('dropoffCtrl', ['$scope', 'syncData',  function ($scope, syncData) {
 		});
 		// else do nothing
 		
-	}
+	};
 	$scope.driverStatus = function(driver){
 		var orders = _.where($scope.orders, {driver_id: driver.id});
 		_.each(orders, function (item){
 			$scope.updateOrder({status: "In Transit"}, item.id);
 		});
 		DriversService.update({status: "In Transit"}, driver.id);
-	}
+	};
 
-}])
+	$scope.changeOrderBg = function(bg, id){
+		
+		var bgColor;
+		if(bg === "danger"){
+			bgColor = "warning";
+		} else if (bg === "warning"){
+			bgColor = "primary";
+		} else if(bg === "primary"){
+			bgColor = "success";
+		} else {
+			bgColor = "danger";
+		}
+		OrdersService.update({bgColor: bgColor}, id);
+	};
+
+}]);

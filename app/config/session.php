@@ -16,7 +16,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'native',
+	'driver' => 'array',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -120,6 +120,6 @@ return array(
 	|
 	*/
 
-	'domain' => null,
+	'domain' => 'www.example.com',
 
 );

@@ -25,7 +25,7 @@ angular.module('app.controllers', ['dashboard.controllers', 'production.controll
 		$scope.Vorder = order;
 		console.log($scope.Vorder.entries);
 		$("#order_Modal").modal('show');
-	}
+	};
 	CustomerService.get()
 		.success(function (data){
 			$scope.customers = data;
@@ -48,7 +48,7 @@ angular.module('app.controllers', ['dashboard.controllers', 'production.controll
 			$scope.products = data;
 		});
 
-	$scope.Norder = {}
+	$scope.Norder = {};
 
 	$scope.saveNorder = function(O){
 		var method = O.method.split("_")[1];
@@ -56,11 +56,11 @@ angular.module('app.controllers', ['dashboard.controllers', 'production.controll
 		var order = {id: O.number, number: O.number, customer_name: O.customer_name, delivery_date: O.delivery_date, location: O.location, method: method, method_id: method_id, group_id: O.group_id};
 		OrdersService.save(order);
 		_.each(O.entries, function (E, index){
-			var entry = {sku: E.sku, order_id: O.number, ready_date: E.ready_date, batch_id: E.batch_id, quantity: E.quantity}
+			var entry = {sku: E.sku, order_id: O.number, ready_date: E.ready_date, batch_id: E.batch_id, quantity: E.quantity};
 			ProductionService.save(entry);
 		});
+	};
 
-	}
 		// $scope.getEntries = function(orderId){
 		// 	console.log(orderId)
 		// 	$scope.entries = _.where($scope.products, {order_id: orderId});
@@ -87,28 +87,28 @@ angular.module('app.controllers', ['dashboard.controllers', 'production.controll
 						$scope.showNew = false;
 					});
 			});
-	}
+	};
 	$scope.removeOrder = function(id, index){
 		OrdersService.destroy(id)
 			.success(function (data){
 				//console.log(data)
 				console.log($scope.orders.splice(index, 1));
-			})
-	}
+			});
+	};
 	$scope.updateOrder = function(data, id){
 		OrdersService.update(data, id);
-	}
+	};
 	$scope.updateVorder = function(V, id){
 		var method = V.method.split("_")[1];
 		var method_id = V.method.split("_")[0];
-		var data = {customer_name: V.customer_name, method: method, method_id:method_id, location: V.location, delivery_date: V.delivery_date}
+		var data = {customer_name: V.customer_name, method: method, method_id:method_id, location: V.location, delivery_date: V.delivery_date};
 		OrdersService.update(data, V.id);
-	}
+	};
 	$scope.addEntry = function(orderId){
 		ProductionService.save({order_id:orderId})
 			.success(function (data){
 				var entry = data.pop();
-				console.log(entry)
+				console.log(entry);
 				_.each($scope.orders, function (order, index){
 					if(order.id === orderId){
 						$scope.orders[index].entries.push(entry);
@@ -122,16 +122,19 @@ angular.module('app.controllers', ['dashboard.controllers', 'production.controll
 			ProductionService.update({sku: item.sku, ready_date: item.ready_date, batch_id: item.batch_id, quantity: item.quantity}, item.id);
 			//console.log(item);
 		});
-	}
+	};
 	$scope.updateEntry = function(data, id){
 		ProductionService.update(data, id);
-	}
+	};
 	$scope.removeEntry = function(id, orderId){
 		ProductionService.destroy(id)
 			.success(function (data){			
-				$scope.orders = data
+				$scope.orders = data;
 			});
-	}
+	};
+
+	
+
 }])
 
 
