@@ -5,22 +5,58 @@
 */
 angular.module('deliveries.controllers', ['firebase']).
 
-controller('dropoffCtrl', ['$scope', 'syncData',  function ($scope, syncData) {
+controller('northCtrl', ['$scope', 'syncData',  function ($scope, syncData) {
+	$scope.norths = syncData('norths');
+	$scope.newNorth = function(title){
+		$scope.norths.$add({title:title, complete: false});
+		$scope.title = "";
+	};
+	$scope.completeNorth = function(id, complete){
+		if(complete === true){
+			$scope.norths.$child(id).$child('complete').$set(false);
+		} else {
+			$scope.norths.$child(id).$child('complete').$set(true);			
+		}
+	};
+	$scope.removeNorth = function(id){
+		$scope.norths.$remove(id);
+	};
+}])
+
+.controller('southCtrl', ['$scope', 'syncData',  function ($scope, syncData) {
+	$scope.souths = syncData('souths');
+	$scope.newSouth = function(title){
+		$scope.souths.$add({title:title, complete: false});
+		$scope.title = "";
+	};
+	$scope.completeNorth = function(id, complete){
+		if(complete === true){
+			$scope.souths.$child(id).$child('complete').$set(false);
+		} else {
+			$scope.souths.$child(id).$child('complete').$set(true);			
+		}
+	};
+	$scope.removeSouth = function(id){
+		$scope.souths.$remove(id);
+	};
+}])
+
+.controller('dropoffCtrl', ['$scope', 'syncData',  function ($scope, syncData) {
 	$scope.dropoffs = syncData('dropoffs');
 	$scope.newDropoff = function(title){
 		$scope.dropoffs.$add({title:title, complete: false});
 		$scope.title = "";
-	}
+	};
 	$scope.completeDropoff = function(id, complete){
 		if(complete === true){
 			$scope.dropoffs.$child(id).$child('complete').$set(false);
 		} else {
 			$scope.dropoffs.$child(id).$child('complete').$set(true);			
 		}
-	}
+	};
 	$scope.removeDropoff = function(id){
 		$scope.dropoffs.$remove(id);
-	}
+	};
 }])
 
 .controller('pickupCtrl', ['$scope', 'syncData',  function ($scope, syncData) {
@@ -272,6 +308,11 @@ controller('dropoffCtrl', ['$scope', 'syncData',  function ($scope, syncData) {
 		} else {
 			bgColor = "danger";
 		}
+		_.each($scope.orders, function (order, index){
+			if(order.id === id){
+				$scope.orders[index].bgColor = bgColor;
+			}
+		});
 		OrdersService.update({bgColor: bgColor}, id);
 	};
 

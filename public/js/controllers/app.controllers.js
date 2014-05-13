@@ -182,7 +182,7 @@ angular.module('app.controllers', ['dashboard.controllers', 'production.controll
 	$scope.getDetails = function(id){
 		$scope.details = id;
 
-	}
+	};
 	
 }])
 

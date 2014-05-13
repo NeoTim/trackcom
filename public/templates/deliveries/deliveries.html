@@ -374,52 +374,76 @@
 										<div>
 											<div id="split_2_1_1_2_1">
 												<div>
-													<div id="method-2_1_1_2_1_t">
-													<h1><strong>North</strong>
-													<button type="button" data-toggle="modal" data-target="#north_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
-													</h1> 
-													<p> {{methods.north.driver}}  <i class="fa fa-truck pull-right">{{methods.north.truck}}</i></p>
-														<!-- <div class="input-group">
-															<input class="form-control north" type="text" id="input-2_1_1_2_1_t" value="North">
-															<span class="input-group-btn">
-																<button id="top-2_1_1_2_1" type="button" class="top btn btn-default btn-sm"><i class="fa fa-times"></i></button>
-																<button id="top-add-2_1_1_2_1_t" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
-															</span>
-														</div> -->
-													</div>
-													<div data-ng-model="orders"  id="drop-north" class="connectedSortable sort-drop north" ui-sortable="sortableConfig">	
-													<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'north'" class="list-group-item" data-ng-class="{'bg-success': methods.north.status === '1', 'bg-danger': methods.north.status === '0', }">
-													 <table style="width:100%;"><tr>
-														<td> <i class="fa fa-circle-o"></i> </td>
-														<td> {{order.customer_name}} </td>
-														<td> <i class="fa fa-times"></i> </td>
-													</tr></table>
-													 </li>
-													</div>
+													<div id="" data-ng-controller="northCtrl">
+														<div class="input-group">
+															<h1><strong>North</strong></h1>
+														</div>
+														<div class="sort-drop pickup-alkyd" id="drop-2_1_1_1_b">
+																
+																	
+															<div class="" style="padding:0;">
+																<table id='pickupList' class="table table-bordered" style="background-color:#ffffff;">
+																	<thead>
+																		<tr>
+																			<th style="width: 10%" ng-click="newNorth(title)"><i class="fa fa-plus"></i>
+																		</th>
+																		<th style="width: 80%; padding-bottom:0;">
+																			<input type='text' data-ng-model="title" placeholder='Title' class="form-control" style="font-size:14px;">
+																		</th>
+																			<th style="width: 10%"></th>
+																		</tr>
+																	</thead>
+																	<tbody class="pickupTbody">
+																		<tr data-ng-repeat="(key, pick) in norths">
+																			<td data-ng-click="completeNorth(key, pick.complete)"><i class="fa fa-circle-o" data-ng-class="{'fa-check': pick.complete === true, 'fa-circle-o':pick.complete === false}"></i></td>
+																			<td> 
+																				<strike data-ng-if="pick.complete">{{pick.title}}</strike>
+																				<strong data-ng-if="!pick.complete">{{pick.title}}</strong>
+																			</td>
+																			<td data-ng-click="removeNorth(key)"> <i class="fa fa-times"></i> </td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+																	
+														</div>
+													</div>													
 												</div>
 												<div>
-													<div id="method-2_1_1_2_1_b">
-													<h1><strong>South</strong>
-													<button type="button" data-toggle="modal" data-target="#south_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
-													</h1> 
-													<p> {{methods.south.driver}}  <i class="fa fa-truck pull-right">{{methods.south.truck}}</i></p>
-														<!-- <div class="input-group">
-															<input class="form-control South" type="text" id="input-2_1_1_2_1_b" value="South">
-															<span class="input-group-btn">
-																<button id="bot-2_1_1_2_1" type="button" class="bot btn btn-default btn-sm"><i class="fa fa-times"></i></button>
-																<button id="bot-add-2_1_1_2_1_b" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
-															</span>
-														</div> -->
-													</div>
-													<div data-ng-model="orders"  id="drop-south" class="connectedSortable sort-drop south" ui-sortable="sortableConfig">							
-													<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'south'" class="list-group-item" data-ng-class="{'bg-success': methods.south.status === '1', 'bg-danger': methods.south.status === '0', }"> 
-													<table style="width:100%;"><tr>
-														<td> <i class="fa fa-circle-o"></i> </td>
-														<td> {{order.customer_name}} </td>
-														<td> <i class="fa fa-times"></i> </td>
-													</tr></table>
-													</li>
-													</div>
+													<div id="" data-ng-controller="southCtrl">
+														<div class="input-group">
+															<h1><strong>South</strong></h1>
+														</div>
+														<div class="sort-drop pickup-alkyd" id="drop-2_1_1_1_b">
+																
+																	
+															<div class="" style="padding:0;">
+																<table id='pickupList' class="table table-bordered" style="background-color:#ffffff;">
+																	<thead>
+																		<tr>
+																			<th style="width: 10%" ng-click="newSouth(title)"><i class="fa fa-plus"></i>
+																		</th>
+																		<th style="width: 80%; padding-bottom:0;">
+																			<input type='text' data-ng-model="title" placeholder='Title' class="form-control" style="font-size:14px;">
+																		</th>
+																			<th style="width: 10%"></th>
+																		</tr>
+																	</thead>
+																	<tbody class="pickupTbody">
+																		<tr data-ng-repeat="(key, pick) in souths">
+																			<td data-ng-click="completeSouths(key, pick.complete)"><i class="fa fa-circle-o" data-ng-class="{'fa-check': pick.complete === true, 'fa-circle-o':pick.complete === false}"></i></td>
+																			<td> 
+																				<strike data-ng-if="pick.complete">{{pick.title}}</strike>
+																				<strong data-ng-if="!pick.complete">{{pick.title}}</strong>
+																			</td>
+																			<td data-ng-click="removeSouth(key)"> <i class="fa fa-times"></i> </td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+																	
+														</div>
+													</div>	
 												</div>
 											</div>
 										</div>
@@ -536,7 +560,7 @@
 														<td> <i class="fa fa-times"></i> </td>
 													</tr></table> -->
 													<strong>{{order.customer_name}}</strong>
-													<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> {{order.number}} </label>
+													<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
 												</li>
 											</div>
 										</div>
