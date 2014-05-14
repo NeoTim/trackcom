@@ -309,15 +309,22 @@
 											<div data-ng-model="orders" id="drop-onorder" class="connectedSortable sort-drop on-order" ui-sortable="sortableConfig">
 												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'onorder'" class="list-group-item pointer" style="padding:5px;">
 													<div ng-click="showOrder=!showOrder">
-														<strong>{{order.customer_name}}</strong>														
-														<span class="pull-right">														
-															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
-																<i class="fa fa-times"></i>
-															</label>
-															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
-																<strong>{{order.number}}</strong>
-															</label>
-														</span>
+														<table style="width:100%;">
+															<tr>
+																<td style="width:70%; overflow:hidden;">
+																	<strong>{{order.customer_name}}</strong>																															
+																</td>
+																<td>
+																	<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																		<i class="fa fa-times"></i>
+																	</label>
+																	<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																		<strong>{{order.number}}</strong>
+																	</label>
+																	
+																</td>
+															</tr>
+														</table>			
 													</div>
 													<div class="notes fx-fade-up" ng-show="showOrder">
 														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
@@ -502,15 +509,22 @@
 											<div data-ng-model="orders" id="drop-west" class="connectedSortable sort-drop west" ui-sortable="sortableConfig">
 												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'west'" class="list-group-item pointer" style="padding:5px;">
 													<div ng-click="showOrder=!showOrder">
-														<strong>{{order.customer_name}}</strong>														
-														<span class="pull-right">														
-															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
-																<i class="fa fa-times"></i>
-															</label>
-															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
-																<strong>{{order.number}}</strong>
-															</label>
-														</span>
+														<table style="width:100%;">
+															<tr>
+																<td style="width:70%; overflow:hidden;">
+																	<strong>{{order.customer_name}}</strong>																															
+																</td>
+																<td>
+																	<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																		<i class="fa fa-times"></i>
+																	</label>
+																	<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																		<strong>{{order.number}}</strong>
+																	</label>
+																	
+																</td>
+															</tr>
+														</table>														
 													</div>
 													<div class="notes fx-fade-up" ng-show="showOrder">
 														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
@@ -540,15 +554,22 @@
 											<div data-ng-model="orders" id="drop-tulsa" class="connectedSortable sort-drop tulsa" ui-sortable="sortableConfig">
 												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'tulsa'" class="list-group-item pointer" style="padding:5px;">
 													<div ng-click="showOrder=!showOrder">
-														<strong>{{order.customer_name}}</strong>
-														<span class="pull-right">														
-															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
-																<i class="fa fa-times"></i>
-															</label>
-															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
-																<strong>{{order.number}}</strong>
-															</label>
-														</span>
+														<table style="width:100%;">
+															<tr>
+																<td style="width:70%; overflow:hidden;">
+																	<strong>{{order.customer_name}}</strong>																															
+																</td>
+																<td>
+																	<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																		<i class="fa fa-times"></i>
+																	</label>
+																	<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																		<strong>{{order.number}}</strong>
+																	</label>
+																	
+																</td>
+															</tr>
+														</table>			
 													</div>
 													<div class="notes fx-fade-up" ng-show="showOrder">
 														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
@@ -585,15 +606,22 @@
 											<div data-ng-model="orders" id="drop-east" class="connectedSortable sort-drop east" ui-sortable="sortableConfig">
 												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'east'" class="list-group-item pointer" style="padding:5px;">
 													<div ng-click="showOrder=!showOrder">
-														<strong>{{order.customer_name}}</strong>
-														<span class="pull-right">														
-															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
-																<i class="fa fa-times"></i>
-															</label>
-															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
-																<strong>{{order.number}}</strong>
-															</label>
-														</span>
+														<table style="width:100%;">
+															<tr>
+																<td style="width:70%; overflow:hidden;">
+																	<strong>{{order.customer_name}}</strong>																															
+																</td>
+																<td>
+																	<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																		<i class="fa fa-times"></i>
+																	</label>
+																	<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																		<strong>{{order.number}}</strong>
+																	</label>
+																	
+																</td>
+															</tr>
+														</table>			
 													</div>
 													<div class="notes fx-fade-up" ng-show="showOrder">
 														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
@@ -620,15 +648,22 @@
 											<div data-ng-model="orders" id="drop-dallas" class="connectedSortable sort-drop dallas" ui-sortable="sortableConfig">
 												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'dallas'" class="list-group-item pointer" style="padding:5px;">
 													<div ng-click="showOrder=!showOrder">
-														<strong>{{order.customer_name}}</strong>
-														<span class="pull-right">														
-															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
-																<i class="fa fa-times"></i>
-															</label>
-															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
-																<strong>{{order.number}}</strong>
-															</label>
-														</span>
+														<table style="width:100%;">
+															<tr>
+																<td style="width:70%; overflow:hidden;">
+																	<strong>{{order.customer_name}}</strong>																															
+																</td>
+																<td>
+																	<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																		<i class="fa fa-times"></i>
+																	</label>
+																	<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																		<strong>{{order.number}}</strong>
+																	</label>
+																	
+																</td>
+															</tr>
+														</table>			
 													</div>
 													<div class="notes fx-fade-up" ng-show="showOrder">
 														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
@@ -659,15 +694,22 @@
 											<div data-ng-model="orders" id="drop-shipping" class="connectedSortable sort-drop shipping" ui-sortable="sortableConfig">
 												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shipping'" class="list-group-item pointer" style="padding:5px;">
 													<div ng-click="showOrder=!showOrder">
-														<strong>{{order.customer_name}}</strong>
-														<span class="pull-right">														
-															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
-																<i class="fa fa-times"></i>
-															</label>
-															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
-																<strong>{{order.number}}</strong>
-															</label>
-														</span>
+														<table style="width:100%;">
+															<tr>
+																<td style="width:70%; overflow:hidden;">
+																	<strong>{{order.customer_name}}</strong>																															
+																</td>
+																<td>
+																	<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																		<i class="fa fa-times"></i>
+																	</label>
+																	<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																		<strong>{{order.number}}</strong>
+																	</label>
+																	
+																</td>
+															</tr>
+														</table>			
 													</div>
 													<div class="notes fx-fade-up" ng-show="showOrder">
 														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
@@ -694,15 +736,22 @@
 											<div data-ng-model="orders" id="drop-stillwater" class="connectedSortable sort-drop stillwater" ui-sortable="sortableConfig">
 												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'stillwater'" class="list-group-item pointer" style="padding:5px;">
 													<div ng-click="showOrder=!showOrder">
-														<strong>{{order.customer_name}}</strong>
-														<span class="pull-right">														
-															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
-																<i class="fa fa-times"></i>
-															</label>
-															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
-																<strong>{{order.number}}</strong>
-															</label>
-														</span>
+														<table style="width:100%;">
+															<tr>
+																<td style="width:70%; overflow:hidden;">
+																	<strong>{{order.customer_name}}</strong>																															
+																</td>
+																<td>
+																	<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																		<i class="fa fa-times"></i>
+																	</label>
+																	<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																		<strong>{{order.number}}</strong>
+																	</label>
+																	
+																</td>
+															</tr>
+														</table>			
 													</div>
 													<div class="notes fx-fade-up" ng-show="showOrder">
 														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
@@ -736,15 +785,22 @@
 											<div data-ng-model="orders" id="drop-willcall" class="connectedSortable sort-drop willcall" ui-sortable="sortableConfig">
 												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'willcall'" class="list-group-item pointer" style="padding:5px;">
 													<div ng-click="showOrder=!showOrder">
-														<strong>{{order.customer_name}}</strong>
-														<span class="pull-right">														
-															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
-																<i class="fa fa-times"></i>
-															</label>
-															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
-																<strong>{{order.number}}</strong>
-															</label>
-														</span>
+														<table style="width:100%;">
+															<tr>
+																<td style="width:70%; overflow:hidden;">
+																	<strong>{{order.customer_name}}</strong>																															
+																</td>
+																<td>
+																	<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																		<i class="fa fa-times"></i>
+																	</label>
+																	<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																		<strong>{{order.number}}</strong>
+																	</label>
+																	
+																</td>
+															</tr>
+														</table>			
 													</div>
 													<div class="notes fx-fade-up" ng-show="showOrder">
 														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
@@ -771,15 +827,22 @@
 											<div data-ng-model="orders" id="drop-shawnee" class="connectedSortable sort-drop shawnee" ui-sortable="sortableConfig">
 												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shawnee'" class="list-group-item pointer" style="padding:5px;">
 													<div ng-click="showOrder=!showOrder">
-														<strong>{{order.customer_name}}</strong>
-														<span class="pull-right">														
-															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
-																<i class="fa fa-times"></i>
-															</label>
-															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
-																<strong>{{order.number}}</strong>
-															</label>
-														</span>
+														<table style="width:100%;">
+															<tr>
+																<td style="width:70%; overflow:hidden;">
+																	<strong>{{order.customer_name}}</strong>																															
+																</td>
+																<td>
+																	<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																		<i class="fa fa-times"></i>
+																	</label>
+																	<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																		<strong>{{order.number}}</strong>
+																	</label>
+																	
+																</td>
+															</tr>
+														</table>			
 													</div>
 													<div class="notes fx-fade-up" ng-show="showOrder">
 														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
