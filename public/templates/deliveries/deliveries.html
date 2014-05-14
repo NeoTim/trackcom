@@ -7,7 +7,7 @@
 				</div>
 				<div class="modal-body">
 					<tabset>
-						<tab id="settings" data-ng-model="settingstab" heading="{{method.title}} Settings">
+						<!-- <tab id="settings" data-ng-model="settingstab" heading="{{method.title}} Settings">
 
 							<div class="form-group">
 							<br>
@@ -41,7 +41,7 @@
 								
 							</div>							
 
-						</tab>
+						</tab> -->
 						<tab id="addOrder" data-ng-model="addMethodOrder" heading="Add Order">
 
 							<div class="form-group">
@@ -155,55 +155,6 @@
 							</div>
 						</div>
 					</div>
-				
-					<!-- <div class="form-group">
-						<div class="row clearfix">
-							<div class="col-md-12 column">
-								<table class="table table-bordered table-hover" id="tab_logic" data-ng-model="newOrder.entries">
-									<thead>
-										<tr >
-											<th class="text-center" style="width:80px;">
-												#
-											</th>
-											<th class="text-center" style="width:80px">
-												Quantity
-											</th>
-											<th class="text-center" style="width:100px;">
-												Size
-											</th>
-											<th class="text-center">
-												Description
-											</th>
-											<th class="text-center" style="width:160px;">
-												SKU
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr id='addr0' ng-repeat="entry in newOrder.entries">
-											<td>
-												1
-											</td>
-											<td>
-												<input type="text" name='name0' ng-model="entry.quantity"  placeholder='Quantity' class="form-control"/>
-											</td>
-											<td>
-												<input type="text" name='mail0' ng-model="entry.size" placeholder='Size' class="form-control"/>
-											</td>
-											<td>
-												<input type="text" name='mail0' ng-model="entry.description" placeholder='Description' class="form-control"/>
-											</td>
-											<td>
-												<input type="text" name='mobile0' ng-model="entry.sku" placeholder='SKU' class="form-control"/>
-											</td>
-										</tr>
-					                    <tr id='addr1'></tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<a id="add_row" class="btn btn-default pull-left" ng-click="newOrder.entries.push({})">Add Row</a><a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
-					</div> -->
 				</div>
 
 				<div class="modal-footer">
@@ -214,29 +165,69 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="row">
 		<div class="col-sm-3" ng-repeat="driver in drivers" id="driver_{{driver.id}}" >
 			<section class="panel" style="border-top:none;">
-				<div class="panel-heading" data-ng-class="{'bg-danger': driver.status === '0', 'bg-success': driver.status === '1'}" ng-click="driverOrders=!driverOrders" >
+				<div class="panel-heading" data-ng-class="{'bg-primary': driver.status === '0', 'bg-success': driver.status === '1', 'bg-warning': driver.status === '2'}" ng-click="driverOrders=!driverOrders" >
 					<strong>{{driver.name}}</strong>
 					<span class="pull-right">
+						{{driver.method}}
 						<i class="fa fa-truck"></i>
 					</span>
-                        </div>
-                        <div class="panel-bottom bg-reverse fx-fade-up" ng-show="driverOrders">
-	                        <ul class="list-group">
-                        	<li class="list-group-item">
-                        		<p ng-click="editDriver = true" ng-hide="editDriver"><strong>{{driver.name}}</strong></p>
-                        		<div class="input-group" ng-show="editDriver">
-                        			<input type="text" ng-model="driver.name" class="form-control" placeholder="Driver Name">
-                        			<span class="input-group-btn">
-                        				<button ng-click="updateDriver({name: driver.name}, driver.id); editDriver = false" type="button" class="btn btn-primary">Save</button>
-                        			</span>
-                        		</div>
-                        	</li>	
-						<li class="list-group-item" ng-repeat="order in driver.orders">{{order.customer_name}}<span class="label label-danger pull-right">{{order.number}}</span> </li>
+				</div>
+				<div class="panel-bottom bg-reverse fx-fade-up" ng-show="driverOrders">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<table style="width:100%;">
+								<tr>
+									<td>Method</td>
+									<td>
+										<span class="ui-select">
+										<select style="width:100%;" ng-model="driver.method" ng-change="updateDriver({method: driver.method}, driver.id)">
+											
+											<option>Unnasigned</option>											
+											<option>West</option>
+											<option>East</option>
+											<option>Dallas</option>
+											<option>Tulsa</option>											
+											<option>Sillwater</option>
+											<option>Shawnee</option>
+										</select>
+										</span>
+									</td>
+								</tr>
+						</table>	
+					</li>
+					<li class="list-group-item">
+						<table style="width:100%;">
+							<tr>
+								<td>Availability</td>
+								<td>
+									<span class="ui-select">
+										<select style="width:100%;" ng-model="driver.status" ng-change="updateDriver({status: driver.status}, driver.id)">
+											<option value="0">Available</option>
+											<option value="1">Delivering</option>
+											<option value="2">Absent</option>											
+										</select>
+										</span>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<!-- <li class="list-group-item">
+							<p ng-click="editDriver = true" ng-hide="editDriver"><strong>{{driver.name}}</strong></p>
+							<div class="input-group" ng-show="editDriver">
+								<input type="text" ng-model="driver.name" class="form-control" placeholder="Driver Name">
+								<span class="input-group-btn">
+									<button ng-click="updateDriver({name: driver.name}, driver.id); editDriver = false" type="button" class="btn btn-primary">Save</button>
+							</span>
+						</div>
+					</li>	
+						<li class="list-group-item" ng-repeat="order in driver.orders">{{order.customer_name}}<span class="label label-danger pull-right">{{order.number}}</span>
+						</li> -->
 					</ul>	                        
-                        </div>
+				</div>
 			</section>
 		</div>
 	</div>
@@ -305,47 +296,55 @@
 								<div>
 									<div id="split_2_1_1_1">
 										<div>
-											<div id="method-2_1_1_1_t">
-											<h1><strong> {{methods.onorder.title}} </strong>
-												<button type="button" data-toggle="modal" data-target="#onorder_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
-											</h1> 
-											<p> {{method.onorder.driver}}  <i class="fa fa-truck pull-right">{{methods.onorder.truck}}</i></p>
-												<!-- <div class="input-group">
-													<input class="form-control on-order" type="text" id="input-2_1_1_1_t" value="On Order"> 
-													<span class="input-group-btn">
 
-														<button id="top-2_1_1_1" type="button" class="top btn btn-default btn-sm "><i class="fa fa-times"></i></button>
-														<button id="top-add-2_1_1_1_t" type="button" class=" btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>													
-													</span>
-												</div> -->
+											<!-- ================== ON ORDER =================== -->
+
+											<div id="method-2_1_1_1_t">
+												<h1><strong> {{methods.onorder.title}} </strong>
+													<button type="button" data-toggle="modal" data-target="#onorder_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+												</h1> 
+												<p> {{method.onorder.driver}}  <i class="fa fa-truck pull-right">{{methods.onorder.truck}}</i></p>
 											</div>
-											<div data-ng-model="orders"  id="drop-onorder" class="connectedSortable sort-drop on-order" ui-sortable="sortableConfig">
-												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'onorder'"  class="list-group-item" >												
-													<strong>{{order.customer_name}}</strong>
-													<span class="pull-right">														
-														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
-														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
-													</span>
+
+											<div data-ng-model="orders" id="drop-onorder" class="connectedSortable sort-drop on-order" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'onorder'" class="list-group-item pointer" style="padding:5px;">
+													<div ng-click="showOrder=!showOrder">
+														<strong>{{order.customer_name}}</strong>														
+														<span class="pull-right">														
+															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																<i class="fa fa-times"></i>
+															</label>
+															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																<strong>{{order.number}}</strong>
+															</label>
+														</span>
+													</div>
+													<div class="notes fx-fade-up" ng-show="showOrder">
+														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
+															
+														</textarea>														
+													</div>
 												</li>
-											</div>											
+											</div>
+
+											<!-- =================== END ON ORDER =================== -->
+
 										</div>
 									<!-- SPLIT 2 - 1 - 1 - 2 -->
 										<div>
-											<div id="" data-ng-controller="pickupCtrl">
+											<div id="" data-ng-controller="pickupCtrl" ng-mouseenter="showHeader = true" ng-mouseleave="showHeader = false">
 												<div class="input-group">
 													<h1><strong>Pickup Alkyd</strong></h1>
 												</div>
 												<div class="sort-drop pickup-alkyd" id="drop-2_1_1_1_b">
-														
-															
 													<div class="" style="padding:0;">
 														<table id='pickupList' class="table table-bordered" style="background-color:#ffffff;">
-															<thead>
+															<thead class="fx-fade-up" ng-show="showHeader">
 																<tr>
 																	<th style="width: 10%" ng-click="newPickup(title)"><i class="fa fa-plus"></i>
 																</th>
 																<th style="width: 80%; padding-bottom:0;">
-																	<input type='text' data-ng-model="title" placeholder='Title' class="form-control" style="font-size:14px;">
+																	<input type='text' data-ng-model="title" placeholder='' class="form-control" style="font-size:14px;">
 																</th>
 																	<th style="width: 10%"></th>
 																</tr>
@@ -362,7 +361,6 @@
 															</tbody>
 														</table>
 													</div>
-															
 												</div>
 											</div>
 										</div>
@@ -374,7 +372,7 @@
 										<div>
 											<div id="split_2_1_1_2_1">
 												<div>
-													<div id="" data-ng-controller="northCtrl">
+													<div id="" data-ng-controller="northCtrl" ng-mouseenter="showHeader = true" ng-mouseleave="showHeader = false">
 														<div class="input-group">
 															<h1><strong>North</strong></h1>
 														</div>
@@ -383,7 +381,7 @@
 																	
 															<div class="" style="padding:0;">
 																<table id='pickupList' class="table table-bordered" style="background-color:#ffffff;">
-																	<thead>
+																	<thead class="fx-fade-up" ng-show="showHeader">
 																		<tr>
 																			<th style="width: 10%" ng-click="newNorth(title)"><i class="fa fa-plus"></i>
 																		</th>
@@ -410,7 +408,7 @@
 													</div>													
 												</div>
 												<div>
-													<div id="" data-ng-controller="southCtrl">
+													<div id="" data-ng-controller="southCtrl" ng-mouseenter="showHeader = true" ng-mouseleave="showHeader = false">
 														<div class="input-group">
 															<h1><strong>South</strong></h1>
 														</div>
@@ -419,7 +417,7 @@
 																	
 															<div class="" style="padding:0;">
 																<table id='pickupList' class="table table-bordered" style="background-color:#ffffff;">
-																	<thead>
+																	<thead class="fx-fade-up" ng-show="showHeader">
 																		<tr>
 																			<th style="width: 10%" ng-click="newSouth(title)"><i class="fa fa-plus"></i>
 																		</th>
@@ -448,7 +446,7 @@
 											</div>
 										</div>
 									<!-- SPLIT 2 - 1 - 1 - 2 -->
-										<div data-ng-controller="dropoffCtrl">
+										<div data-ng-controller="dropoffCtrl" ng-mouseenter="showHeader= true" ng-mouseleave="showHeader = false">
 											
 											<div class="input-group">
 												<h1><strong>Drop Off Alkyd</strong></h1>
@@ -458,7 +456,7 @@
 												
 												<div class="" style="padding:0;">
 													<table id='dropoffList' class="table table-bordered" style="background-color:#ffffff;">
-														<thead>
+														<thead class="fx-fade-up" ng-show="showHeader">
 															<tr>
 																<th style="width: 10%" ng-click="newDropoff(title)"><i class="fa fa-plus"></i>
 															</th>
@@ -491,53 +489,77 @@
 						<div >
 							<div id="split_2_1_2">
 								<div>
-									<div id="method-2_1_2_t">
-									<h1><strong>West</strong>
-										<button type="button" data-toggle="modal" data-target="#west_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
-									</h1> 
-									<p> {{methods.west.driver}}  <i class="fa fa-truck pull-right">{{methods.west.truck}}</i></p>
-										<!-- <div class="input-group">
-											<input class="form-control west" type="text" id="input-2_1_2_t" value="WEST">
-											<span class="input-group-btn">
-												<button id="top-2_1_2" type="button" class="top btn btn-default btn-sm"><i class="fa fa-times"></i></button>
-												<button id="top-add-2_1_2_t" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
-											</span>
-										</div> -->
-									</div>
-									<div data-ng-model="orders"  id="drop-west" class="connectedSortable sort-drop west"  ui-sortable="sortableConfig">
-									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'west'"  class="list-group-item" >												
-													<strong>{{order.customer_name}}</strong>
-													<span class="pull-right">														
-														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
-														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
-													</span>
-												</li>	
-									</div>
+
+											<!-- ================== WEST =================== -->
+
+											<div id="method-2_1_2_t">
+												<h1><strong> West </strong>
+													<button type="button" data-toggle="modal" data-target="#west_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+												</h1> 
+												<p> {{method.west.driver}}  <i class="fa fa-truck pull-right">{{methods.west.truck}}</i></p>
+											</div>
+
+											<div data-ng-model="orders" id="drop-west" class="connectedSortable sort-drop west" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'west'" class="list-group-item pointer" style="padding:5px;">
+													<div ng-click="showOrder=!showOrder">
+														<strong>{{order.customer_name}}</strong>														
+														<span class="pull-right">														
+															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																<i class="fa fa-times"></i>
+															</label>
+															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																<strong>{{order.number}}</strong>
+															</label>
+														</span>
+													</div>
+													<div class="notes fx-fade-up" ng-show="showOrder">
+														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
+															
+														</textarea>														
+													</div>
+												</li>
+											</div>
+
+											<!-- =================== END WEST =================== -->
+
 								</div>
 								<!-- SPLIT 2 - 1 - 2 -->
 								<div>
-									<div id="method-2_1_2_b">
-									<h1><strong>Tulsa</strong>
-										<button type="button" data-toggle="modal" data-target="#tulsa_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
-									</h1> 
-									<p> {{methods.tulsa.driver}}  <i class="fa fa-truck pull-right">{{methods.tulsa.truck}}</i></p>
-										<!-- <div class="input-group">
-											<input class="form-control tulsa" type="text" id="input-2_1_2_b" value="Tulsa">
-											<span class="input-group-btn">
-												<button id="bot-2_1_2" type="button" class="bot btn btn-default btn-sm"><i class="fa fa-times"></i></button>
-												<button id="bot-add-2_1_2_b" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
-											</span>
-										</div> -->
-									</div>
-									<div data-ng-model="orders"  id="drop-tulsa" class="connectedSortable sort-drop tulsa" ui-sortable="sortableConfig">
-										<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'tulsa'"  class="list-group-item" >												
-													<strong>{{order.customer_name}}</strong>
-													<span class="pull-right">														
-														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
-														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
-													</span>
+
+
+
+										<!-- ================== Tulsa =================== -->
+
+											<div id="method-2_1_2_b">
+												<h1><strong> Tulsa </strong>
+													<button type="button" data-toggle="modal" data-target="#tulsa_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+												</h1> 
+												<p> {{method.tulsa.driver}}  <i class="fa fa-truck pull-right">{{methods.tulsa.truck}}</i></p>
+											</div>
+
+											<div data-ng-model="orders" id="drop-tulsa" class="connectedSortable sort-drop tulsa" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'tulsa'" class="list-group-item pointer" style="padding:5px;">
+													<div ng-click="showOrder=!showOrder">
+														<strong>{{order.customer_name}}</strong>
+														<span class="pull-right">														
+															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																<i class="fa fa-times"></i>
+															</label>
+															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																<strong>{{order.number}}</strong>
+															</label>
+														</span>
+													</div>
+													<div class="notes fx-fade-up" ng-show="showOrder">
+														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
+															
+														</textarea>														
+													</div>
 												</li>
-									</div>
+											</div>
+
+											<!-- =================== END TULSA =================== -->
+														
 								</div>
 							</div>
 						</div>
@@ -550,46 +572,74 @@
 							<div id="split_2_2_1">
 								<div >
 									<div id="split_2_2_1_1">
-										<div>							
+										<div>	
+			
+												<!-- ================== EAST =================== -->
+
 											<div id="method-2_2_1_1_t">
-											<h1><strong>East</strong>
-												<button type="button" data-toggle="modal" data-target="#east_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
-											</h1> 
-											<p> {{methods.east.driver}}  <i class="fa fa-truck pull-right">{{methods.east.truck}}</i></p>
+												<h1><strong> East </strong>
+													<button type="button" data-toggle="modal" data-target="#east_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+												</h1> 
+												<p> {{method.east.driver}}  <i class="fa fa-truck pull-right">{{methods.east.truck}}</i></p>
 											</div>
-											<div data-ng-model="orders"  id="drop-east" class="connectedSortable sort-drop east" ui-sortable="sortableConfig">
-												
-												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'east'"  class="list-group-item" >												
-													<strong>{{order.customer_name}}</strong>
-													<span class="pull-right">														
+											<div data-ng-model="orders" id="drop-east" class="connectedSortable sort-drop east" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'east'" class="list-group-item pointer" style="padding:5px;">
+													<div ng-click="showOrder=!showOrder">
+														<strong>{{order.customer_name}}</strong>
 														<span class="pull-right">														
-														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
-														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
-													</span>
-													</span>
+															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																<i class="fa fa-times"></i>
+															</label>
+															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																<strong>{{order.number}}</strong>
+															</label>
+														</span>
+													</div>
+													<div class="notes fx-fade-up" ng-show="showOrder">
+														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
+															
+														</textarea>														
+													</div>
 												</li>
 											</div>
+
+											<!-- =================== END EAST =================== -->
+
 										</div>
 										<!-- SPLIT 2 - 2 - 1 - 1 -->
 										<div>
+
+											<!-- ================== DALLAS =================== -->
+
 											<div id="method-2_2_1_1_b">
-												<h1><strong>Dallas</strong>
+												<h1><strong> Dallas </strong>
 													<button type="button" data-toggle="modal" data-target="#dallas_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
 												</h1> 
-												<p> {{methods.dallas.driver}}  <i class="fa fa-truck pull-right">{{methods.dallas.truck}}</i></p>
+												<p> {{method.dallas.driver}}  <i class="fa fa-truck pull-right">{{methods.dallas.truck}}</i></p>
 											</div>
-											<div data-ng-model="orders"  id="drop-dallas" class="connectedSortable sort-drop dallas" ui-sortable="sortableConfig">
-												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'dallas'"  class="list-group-item" >												
-													<strong>{{order.customer_name}}</strong>
-													<span class="pull-right">														
+											<div data-ng-model="orders" id="drop-dallas" class="connectedSortable sort-drop dallas" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'dallas'" class="list-group-item pointer" style="padding:5px;">
+													<div ng-click="showOrder=!showOrder">
+														<strong>{{order.customer_name}}</strong>
 														<span class="pull-right">														
-														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
-														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
-													</span>
-													</span>
+															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																<i class="fa fa-times"></i>
+															</label>
+															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																<strong>{{order.number}}</strong>
+															</label>
+														</span>
+													</div>
+													<div class="notes fx-fade-up" ng-show="showOrder">
+														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
+															
+														</textarea>														
+													</div>
 												</li>
-												
 											</div>
+
+											<!-- =================== END DALLAS =================== -->
+															
 										</div>
 									</div>
 								</div>
@@ -597,54 +647,74 @@
 								<div>
 									<div id="split_2_2_1_2">
 										<div>
+
+											<!-- ================== SHIPPING =================== -->
+
 											<div id="method-2_2_1_2_t">
-											<!-- 	<div class="input-group">
-													<input class="form-control shipping" type="text" id="input-2_2_1_2_t" value="Shipping">
-													<span class="input-group-btn">
-														<button id="top-2_2_1_2" type="button" class="top btn btn-default btn-sm"><i class="fa fa-times"></i></button>
-														<button id="top-add-2_2_1_2_t" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
-													</span>
-												</div> -->
-												<h1><strong>shipping</strong>
+												<h1><strong> Shipping </strong>
 													<button type="button" data-toggle="modal" data-target="#shipping_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
 												</h1> 
-												<p> {{methods.shipping.driver}}  <i class="fa fa-truck pull-right">{{methods.shipping.truck}}</i></p>
+												<p> {{method.shipping.driver}}  <i class="fa fa-truck pull-right">{{methods.shipping.truck}}</i></p>
 											</div>
-											<div data-ng-model="orders"  id="drop-shipping" class="connectedSortable sort-drop shipping" ui-sortable="sortableConfig">
-												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shipping'"  class="list-group-item" >												
-													<strong>{{order.customer_name}}</strong>
-													<span class="pull-right">														
-														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
-														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
-													</span>
+											<div data-ng-model="orders" id="drop-shipping" class="connectedSortable sort-drop shipping" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shipping'" class="list-group-item pointer" style="padding:5px;">
+													<div ng-click="showOrder=!showOrder">
+														<strong>{{order.customer_name}}</strong>
+														<span class="pull-right">														
+															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																<i class="fa fa-times"></i>
+															</label>
+															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																<strong>{{order.number}}</strong>
+															</label>
+														</span>
+													</div>
+													<div class="notes fx-fade-up" ng-show="showOrder">
+														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
+															
+														</textarea>														
+													</div>
 												</li>
-												
 											</div>
+
+											<!-- =================== END SHIPPING =================== -->
+
 										</div>
 										<!-- SPLIT 2 - 2 - 1 - 2 -->
 										<div>
-											<div id="method-2_2_1_2_b">
-											<h1><strong>Stillwater</strong>
-												<button type="button" data-toggle="modal" data-target="#stillwater_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
-											</h1> 
-											<p> {{methods.stillwater.driver}}  <i class="fa fa-truck pull-right">{{methods.stillwater.truck}}</i></p>
-												<!-- <div class="input-group">
-													<input class="form-control stillwater" type="text" id="input-2_2_1_2_b" value="Stillwater">
-													<span class="input-group-btn">
-														<button id="bot-2_2_1_2" type="button" class="bot btn btn-default btn-sm"><i class="fa fa-times"></i></button>
-														<button id="bot-add-2_2_1_2_b" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
-													</span>
-												</div> -->
+
+										<!-- ================== STILLWATER =================== -->
+
+											<div id="method-2_2_1_2_B">
+												<h1><strong> Stillwater </strong>
+													<button type="button" data-toggle="modal" data-target="#stillwater_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+												</h1> 
+												<p> {{method.stillwater.driver}}  <i class="fa fa-truck pull-right">{{methods.stillwater.truck}}</i></p>
 											</div>
-											<div data-ng-model="orders"  id="drop-stillwater" class="connectedSortable sort-drop stillwater" ui-sortable="sortableConfig">
-											<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'stillwater'"  class="list-group-item" >												
-													<strong>{{order.customer_name}}</strong>
-													<span class="pull-right">														
-														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
-														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
-													</span>
+											<div data-ng-model="orders" id="drop-stillwater" class="connectedSortable sort-drop stillwater" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'stillwater'" class="list-group-item pointer" style="padding:5px;">
+													<div ng-click="showOrder=!showOrder">
+														<strong>{{order.customer_name}}</strong>
+														<span class="pull-right">														
+															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																<i class="fa fa-times"></i>
+															</label>
+															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																<strong>{{order.number}}</strong>
+															</label>
+														</span>
+													</div>
+													<div class="notes fx-fade-up" ng-show="showOrder">
+														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
+															
+														</textarea>														
+													</div>
 												</li>
 											</div>
+
+											<!-- =================== END STILLWATER =================== -->
+
+											
 										</div>
 									</div>
 								</div>
@@ -654,53 +724,73 @@
 						<div >
 							<div id="split_2_2_2">
 								<div>
-									<div id="method-2_2_2_t">
-									<h1><strong>Will Call</strong>
-										<button type="button" data-toggle="modal" data-target="#willcall_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
-									</h1> 
-									<p> {{methods.willcall.driver}}  <i class="fa fa-truck pull-right">{{methods.willcall.truck}}</i></p>
-										<!-- <div class="input-group">
-											<input class="form-control will-call" type="text" id="input-2_2_2_t" value="WILL CALL">
-											<span class="input-group-btn">
-												<button id="top-2_2_2" type="button" class="top btn btn-default btn-sm"><i class="fa fa-times"></i></button>
-												<button id="top-add-2_2_2_t" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
-											</span>
-										</div> -->
-									</div>
-									<div data-ng-model="orders"  id="drop-wilcall" class="connectedSortable sort-drop will-call" ui-sortable="sortableConfig">
-									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'will-call'"  class="list-group-item" >												
-													<strong>{{order.customer_name}}</strong>
-													<span class="pull-right">														
-														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
-														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
-													</span>
+
+										<!-- ================== STILLWATER =================== -->
+
+											<div id="method-2_2_2_t">
+												<h1><strong> Will Call </strong>
+													<button type="button" data-toggle="modal" data-target="#willcall_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+												</h1> 
+												<p> {{method.willcall.driver}}  <i class="fa fa-truck pull-right">{{methods.willcall.truck}}</i></p>
+											</div>
+											<div data-ng-model="orders" id="drop-willcall" class="connectedSortable sort-drop willcall" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'willcall'" class="list-group-item pointer" style="padding:5px;">
+													<div ng-click="showOrder=!showOrder">
+														<strong>{{order.customer_name}}</strong>
+														<span class="pull-right">														
+															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																<i class="fa fa-times"></i>
+															</label>
+															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																<strong>{{order.number}}</strong>
+															</label>
+														</span>
+													</div>
+													<div class="notes fx-fade-up" ng-show="showOrder">
+														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
+															
+														</textarea>
+													</div>
 												</li>
-									</div>
+											</div>
+
+											<!-- =================== END STILLWATER =================== -->
+
 								</div>
 								<!-- SPLIT 2 - 2 - 2 -->
 								<div>
-									<div id="method-2_2_2_b">
-									<h1><strong>Shawnee</strong>
-										<button type="button" data-toggle="modal" data-target="#shawnee_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
-									</h1> 
-									<p> {{methods.shawnee.driver}}  <i class="fa fa-truck pull-right">{{methods.shawnee.truck}}</i></p>
-<!-- 										<div class="input-group">
-											<input class="form-control shawnee" type="text" id="input-2_2_2_b" value="Shawnee">
-											<span class="input-group-btn">
-												<button id="bot-2_2_2" type="button" class="bot btn btn-default btn-sm"><i class="fa fa-times"></i></button>
-												<button id="bot-add-2_2_2_b" type="button" class="pop btn btn-default btn-sm"><i class="fa fa-chevron-down"></i></button>
-											</span>
-										</div> -->
-									</div>
-									<div data-ng-model="orders"  id="drop-shawnee" class="connectedSortable sort-drop shawnee" ui-sortable="sortableConfig">											
-									<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shawnee'"  class="list-group-item" >												
-													<strong>{{order.customer_name}}</strong>
-													<span class="pull-right">														
-														<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)"><i class="fa fa-times"></i></label>
-														<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)"> <strong>{{order.number}}</strong> </label>
-													</span>
+
+											<!-- ================== SHAWNEE =================== -->
+
+											<div id="method-2_2_2_b">
+												<h1><strong> Shawnee </strong>
+													<button type="button" data-toggle="modal" data-target="#shawnee_Modal" class="btn btn-default pull-right"><i class="fa fa-cogs"></i> </button>
+												</h1> 
+												<p> {{method.shawnee.driver}}  <i class="fa fa-truck pull-right">{{methods.shawnee.truck}}</i></p>
+											</div>
+											<div data-ng-model="orders" id="drop-shawnee" class="connectedSortable sort-drop shawnee" ui-sortable="sortableConfig">
+												<li id="order_{{order.id}}" ng-repeat="order in orders" ng-if="order.method == 'shawnee'" class="list-group-item pointer" style="padding:5px;">
+													<div ng-click="showOrder=!showOrder">
+														<strong>{{order.customer_name}}</strong>
+														<span class="pull-right">														
+															<label class="label label-default pull-right" data-ng-click="deleteOrder(order.id)">
+																<i class="fa fa-times"></i>
+															</label>
+															<label class="pull-right label label-{{order.bgColor}}" data-ng-click="changeOrderBg(order.bgColor, order.id)">
+																<strong>{{order.number}}</strong>
+															</label>
+														</span>
+													</div>
+													<div class="notes fx-fade-up" ng-show="showOrder">
+														<textarea class="form-control" ng-change="updateOrder({notes: order.notes}, order.id)" data-ng-model="order.notes" placeholder="Notes">
+															
+														</textarea>														
+													</div>
 												</li>
-									</div>
+											</div>
+
+											<!-- =================== END SHAWNEE =================== -->
+
 								</div>
 							</div>					
 						</div>
@@ -714,39 +804,8 @@
 	
 	
 
-		
-		<!-- <script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxwindow.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxcalendar.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxtooltip.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxtabs.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/globalization/globalize.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxdocking.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxdockpanel.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxlistbox.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxbuttons.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxpanel.js"></script>
-		<script type="text/javascript" src="/js/libs/jqw/jqwidgets/jqwidgets/jqxsplitter.js"></script>
-
- -->
-
-<!-- <script src="//rawgithub.com/stidges/jquery-searchable/master/dist/jquery.searchable-1.0.0.min.js"></script> -->
-
 <script type="text/javascript">
-        // $(document).ready(function () {
-        	/*$.Order.getAll("{{URL::to('deliveries')}}");*/
-		/*$.Driver.getDrivers("{{URL::to('drivers')}}");*/
-		//$.Order.init("{{URL::to('deliveries')}}");
 
-
-		/*$("#bot-add-2_2_1_1_b, #bot-add-2_2_1_1_t").gpopover({
-			preventHide:true
-		});*/
-				
-		//$Driver.init("drivers");
-		//$Method.init("methods");
-		//$Truck.init("trucks");
 				
 			var panels = {};
 		/*$.jStorage.set("panel_2_1_1_t",  {size: "50%", collapsible: false});
@@ -908,12 +967,12 @@
 
 	            	$("#addOrderModal").modal("show");
 	            });
-	           $(".sort-drop").on("dblclick", function(){
-	            	dropId = $(this).attr("id").split("-")[1];
-	            	//dropName = $("input-" + dropId).val();	            	
+	           // $(".sort-drop").on("dblclick", function(){
+	           //  	dropId = $(this).attr("id").split("-")[1];
+	           //  	//dropName = $("input-" + dropId).val();	            	
 
-	            	$("#"+dropId + "_Modal").modal("show");
-	            });
+	           //  	$("#"+dropId + "_Modal").modal("show");
+	           //  });
 			$("#newOrder").on("click", function(){
 				$("#addOrderModal").modal("hide");
 				$("#newOrderModal").modal("show");
