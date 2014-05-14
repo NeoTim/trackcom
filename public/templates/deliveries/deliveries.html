@@ -169,7 +169,7 @@
 	<div class="row">
 		<div class="col-sm-3" ng-repeat="driver in drivers" id="driver_{{driver.id}}" >
 			<section class="panel" style="border-top:none;">
-				<div class="panel-heading" data-ng-class="{'bg-primary': driver.status === '0', 'bg-success': driver.status === '1', 'bg-warning': driver.status === '2'}" ng-click="driverOrders=!driverOrders" >
+				<div class="panel-heading" data-ng-class="{'bg-danger': driver.status === '0', 'bg-success': driver.status === '1', 'bg-warning': driver.status === '2'}" ng-click="driverOrders=!driverOrders" >
 					<strong>{{driver.name}}</strong>
 					<span class="pull-right">
 						{{driver.method}}
