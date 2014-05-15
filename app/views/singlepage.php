@@ -180,6 +180,7 @@
 	<script src="/js/controllers/calendar.controllers.js"></script>
 	<script src="/js/controllers/deliveries.controllers.js"></script>
 	<script src="/js/controllers/customers.controllers.js"></script>
+	<script src="/js/controllers/orders.controllers.js"></script>
 	<script>
 
 

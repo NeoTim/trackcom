@@ -299,8 +299,8 @@
   					<th>Edit</th>
   				</tr>
   			</thead>
-  			<tbody data-ng-repeat="(ind, order) in orders | filter:filter.$" data-ng-include="'partials/orderRow.html'" scope="order" onload="">
-  				<!-- <tr data-ng-include="'partials/orderRow.html'" scope="order" onload=""></tr> -->
+  			<tbody data-ng-repeat="(ind, order) in orders | filter:filter.$" data-ng-include="'partials/row.html'" scope="order" onload="">
+  				
   				
   			</tbody>
   		</table>

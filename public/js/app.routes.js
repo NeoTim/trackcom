@@ -64,6 +64,11 @@
 			}
 		}
 	});
+	$routeProvider.when('/orders/:orderId', {
+		authRequired: true,
+		templateUrl: 'templates/orders/orders.single.html',
+		controller: 'orderCtrl'
+	});
 
 
 	$routeProvider.when('/products', {

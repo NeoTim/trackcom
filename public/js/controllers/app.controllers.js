@@ -3,7 +3,7 @@
 *
 * Description
 */
-angular.module('app.controllers', ['dashboard.controllers', 'production.controllers', 'calendar.controllers', 'deliveries.controllers', 'customers.controllers'])
+angular.module('app.controllers', ['dashboard.controllers', 'production.controllers', 'calendar.controllers', 'deliveries.controllers', 'customers.controllers', 'orders.controllers'])
 
 
 .controller("BooksController", function($scope, books) {
@@ -80,19 +80,24 @@ angular.module('app.controllers', ['dashboard.controllers', 'production.controll
 	$scope.saveOrder = function(order){
 		OrdersService.save(order)
 			.success(function (data){
-				OrdersService.show(order.id)
-					.success(function (obj){
-						$scope.orders.unshift(obj);
-						$scope.newOrder = false;
-						$scope.showNew = false;
-					});
+				window.location = "#/orders/" + order.id
+				// OrdersService.show(order.id)
+				// 	.success(function (obj){
+				// 		$scope.orders.unshift(obj);
+				// 		$scope.newOrder = false;
+				// 		$scope.showNew = false;
+				// 	});
 			});
 	};
-	$scope.removeOrder = function(id, index){
+	$scope.removeOrder = function(id){
 		OrdersService.destroy(id)
 			.success(function (data){
 				//console.log(data)
-				console.log($scope.orders.splice(index, 1));
+				_.each($scope.orders, function (item, index){
+					if(item.id === id){
+						$scope.orders.splice(index, 1);
+					}
+				})
 			});
 	};
 	$scope.updateOrder = function(data, id){
