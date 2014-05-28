@@ -4879,7 +4879,8 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
 }
 
 .label-primary {
-  background-color: #31c0be
+  /*background-color: #31c0be*/
+  background-color: #15aaff;
 }
 
 .label-primary[href]:hover,.label-primary[href]:focus {
