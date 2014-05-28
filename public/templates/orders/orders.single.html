@@ -1,75 +1,74 @@
-<div class="col-md-4">
-	<section class="panel"  style="border-top:none;">
-		<div class="panel-heading bg-info" style="text-align:right;">
-			<i class=" pull-left fa fa-barcode text-large stat-icon"></i>
-				<p class="size-h4 no-margin">{{order.customer_name}}</p>
-				<p class="text-muted no-margin"><span style="color:white">{{order.number}}</span></p>
-		</div>
-		<ul class="list-group">
-			<li class="list-group-item">                        				
-				<input type="date" class=form-control ng-model="order.delivery_date" ng-change="updateOrder({delivery_date: order.delivery_date}, order.id)" placeholder="Delivery Date">
-			</li>			
-			<li class="list-group-item">
-			<label>
-				Location
-				<span class="ui-select">
-					<select ng-model="order.location" ng-change="updateOrder({location: order.location}, order.id)">
-						<option> location </option> 
-						<option> sheridan </option>
-						<option> reno </option>
-					</select>				
-				</span>
-			</label>
-			</li>
-			<li class="list-group-item">
+	<div class="col-md-4">
+		<section class="panel"  style="border-top:none;">
+			<div class="panel-heading bg-info" style="text-align:right;">
+				<i class=" pull-left fa fa-barcode text-large stat-icon"></i>
+					<p class="size-h4 no-margin">{{order.customer_name}}</p>
+					<p class="text-muted no-margin"><span style="color:white">{{order.number}}</span></p>
+			</div>
+			<ul class="list-group">
+				<li class="list-group-item">                        				
+					<input type="date" class=form-control ng-model="order.delivery_date" ng-change="updateOrder({delivery_date: order.delivery_date}, order.id)" placeholder="Delivery Date">
+				</li>			
+				<li class="list-group-item">
 				<label>
-					Method
+					Location
 					<span class="ui-select">
-						<select ng-model="order.method" ng-change="updateOrder({method: order.method}, order.id)">
-							<option ng-repeat="method in methods"> {{method.label}} </option>
-						</select>
+						<select ng-model="order.location" ng-change="updateOrder({location: order.location}, order.id)">
+							<option> location </option> 
+							<option> sheridan </option>
+							<option> reno </option>
+						</select>				
 					</span>
 				</label>
-			</li>			
-		</ul>
-	</section>	
-</div>
-<div class="col-md-8">
-	<div class="panel">
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>
-						<button type="button" class="btn btn-success" ng-click="addEntry(order.id)"><i class="fa fa-plus"></i></button>
-					</th>
-					<th>Date</th>
-					<th>SKU</th>
-					<th>Quantity</th>
-					<th>Description</th>
-					<th>Batch</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr data-ng-repeat="entry in entries">
-					<td> {{entry.id}} </td>
-					<td><input type="text" class="form-control" data-ng-model="entry.ready_date" ng-change="updateEntry({ready_date: entry.ready_date}, entry.id)" placeholder="Date Ready" ng-focus="ShowSave = true"></td>
-					<td>
-						<input type="text" ng-change="updateEntry({sku: entry.sku}, entry.id)" ng-model="entry.sku" typeahead="product.sku for product in products | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Search" style="" data-ng-focus="ShowSave = true">
-					</td>
-					<td><input type="text" class="form-control" ng-change="updateEntry({quantity: entry.quantity}, entry.id)" data-ng-model="entry.quantity" placeholder="Quantity" ng-focus="ShowSave = true"></td>
-					<td><input type="text" class="form-control" ng-change="updateEntry({description: entry.description}, entry.id)" data-ng-model="entry.description" placeholder="Description" ng-focus="ShowSave = true"></td>
-					<td>
-						<input type="text" ng-change="updateEntry({batch_id: entry.batch_id}, entry.id)" ng-model="entry.batch_id" typeahead="batch.number for batch in batches | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Search" style="" data-ng-focus="ShowSave = true">
-					</td>
-					<td>
-						<button type="button" class="btn btn-default" ng-hide="ShowSave" ng-click="removeEntry(entry.id)"><i class="fa fa-times"></i></button>
-						<button type="button" class="btn btn-primary" ng-show="ShowSave" ng-click="updateEntry({ready_date: entry.ready_date, sku:entry.sku, quantity:entry.quantity, description: entry.description, batch_id: entry.batch_id}, entry.id); ShowSave = false ">Done</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+				</li>
+				<li class="list-group-item">
+					<label>
+						Method
+						<span class="ui-select">
+							<select ng-model="order.method" ng-change="updateOrder({method: order.method}, order.id)">
+								<option ng-repeat="method in methods"> {{method.label}} </option>
+							</select>
+						</span>
+					</label>
+				</li>			
+			</ul>
+		</section>	
 	</div>
+	<div class="col-md-8">
+		<div class="panel">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>
+							<button type="button" class="btn btn-success" ng-click="addEntry(order.id)"><i class="fa fa-plus"></i></button>
+						</th>
+						<th>Date</th>
+						<th>SKU</th>
+						<th>Quantity</th>
+						<th>Description</th>
+						<th>Batch</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="entry in entries">
+						<td> {{entry.id}} </td>
+						<td><input type="date" class="form-control" data-ng-model="entry.ready_date" ng-change="updateEntry({ready_date: entry.ready_date}, entry.id)" placeholder="Date Ready" ng-focus="ShowSave = true"></td>
+						<td>
+							<input type="text" ng-change="updateEntry({sku: entry.sku}, entry.id)" ng-model="entry.sku" typeahead="product.sku for product in products | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Search" style="" data-ng-focus="ShowSave = true">
+						</td>
+						<td><input type="text" class="form-control" ng-change="updateEntry({quantity: entry.quantity}, entry.id)" data-ng-model="entry.quantity" placeholder="Quantity" ng-focus="ShowSave = true"></td>
+						<td><input type="text" class="form-control" ng-change="updateEntry({description: entry.description}, entry.id)" data-ng-model="entry.description" placeholder="Description" ng-focus="ShowSave = true"></td>
+						<td>
+							<input type="text" ng-change="updateEntry({batch_id: entry.batch_id}, entry.id)" ng-model="entry.batch_id" typeahead="batch.number for batch in batches | filter:$viewValue | limitTo:8" class="form-control ng-valid ng-dirty ng-valid-editable" placeholder="Search" style="" data-ng-focus="ShowSave = true">
+						</td>
+						<td>
+							<button type="button" class="btn btn-default" ng-hide="ShowSave" ng-click="removeEntry(entry.id)"><i class="fa fa-times"></i></button>
+							<button type="button" class="btn btn-primary" ng-show="ShowSave" ng-click="updateEntry({ready_date: entry.ready_date, sku:entry.sku, quantity:entry.quantity, description: entry.description, batch_id: entry.batch_id}, entry.id); ShowSave = false ">Done</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
-</div>
-
+	</div>
