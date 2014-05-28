@@ -13,9 +13,15 @@ angular.module('orders.controllers', [])
 
 		$scope.orderId = $routeParams.orderId;
 
+		$scope.entries =[];
 		function getEntries(){
 			ProductionService.get().success(function (data){
-				$scope.entries = _.where(data, {order_id : $scope.orderId});
+				//$scope.entries = _.where(data, {order_id : $scope.orderId});
+				_.each(data, function (item, index){
+					if(item.order_id === $scope.orderId){
+						$scope.entries.push(item);
+					}
+				});
 			});		
 		}
 
@@ -40,8 +46,17 @@ angular.module('orders.controllers', [])
 		});
 
 		$scope.updateOrder = function(data, id){
+			console.log(data)
 			OrdersService.update(data, id).success(function (data){
 				// Notification
+				console.log(data);
+			});
+		};
+		$scope.updateEntry = function(data, id){
+			console.log(data)
+			ProductionService.update(data, id).success(function (data){
+				// Notification
+				console.log(data);
 			});
 		};
 
