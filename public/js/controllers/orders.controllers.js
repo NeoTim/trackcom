@@ -13,8 +13,8 @@ angular.module('orders.controllers', [])
 
 		$scope.orderId = $routeParams.orderId;
 
-		$scope.entries =[];
 		function getEntries(){
+		$scope.entries =[];
 			ProductionService.get().success(function (data){
 				//$scope.entries = _.where(data, {order_id : $scope.orderId});
 				_.each(data, function (item, index){
